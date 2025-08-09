@@ -11,3 +11,7 @@ elif bmi >= 25.0:
     print('Overweight')
 else: 
     print('Healthy')
+
+bmi = weight / height ** 2
+
+
