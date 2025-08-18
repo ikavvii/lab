@@ -5,22 +5,27 @@
 int main() {
     int a, b, c;
     double d;
-    double x1, x2;
+    double complex x1, x2;
 
-    printf("Enter a b c: ");
+    printf("Enter constants of quadratic equation a b c: ");
     scanf("%d %d %d", &a, &b, &c);
 
     // discriminant
     d = b * b - 4 * a * c;
-    if (d > 0) {
-        x1 = (-b + sqrt(d)) / (2 * a);
-        x2 = (-b - sqrt(d)) / (2 * a);
-    } else if (d == 0) {
-        x1 = -b / (2 * a);
+    
+    x1 = (-b + csqrt(d + 0.0 * I)) / (2.0 * a);
+    x2 = (-b - csqrt(d + 0.0 * I)) / (2.0 * a);
+
+    if (cimag(x1) == 0 && cimag(x2) == 0) {
+        if (creal(x1) == creal(x2)) {
+            printf("Roots are real and equal: %.2f", creal(x1));
+        } else {
+            printf("Roots are real and distinct: %.2f, and %.2f", creal(x1), creal(x2));
+        }
     } else {
-        double complex z1 = (-b + csqrt(d)) / (2 * a);
-        double complex z2 = (-b - csqrt(d)) / (2 * a);
-        printf("Roots are complex: %.2f%+.2fi and %.2f%+.2fi\n", creal(z1), cimag(z1), creal(z2), cimag(z2));
+        printf("Roots are complex: %.2f%+.2fi and %.2f%+.2fi\n", \
+            creal(x1), cimag(x1), creal(x2), cimag(x2));
     }
+    return 0;
 
 }
