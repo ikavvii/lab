@@ -1,25 +1,25 @@
 #include <stdio.h>
 #include <math.h>
 
-int is_palindrome(int number);
+int is_palindrome(unsigned long long int number);
 
 int main() {
-    int x;
+    unsigned long long int x;
     printf("Enter x: " );
-    scanf("%d", &x);
+    scanf("%llu", &x);
 
-    int temp = x;
+    unsigned long long int temp = x;
     temp++;
     while(!is_palindrome(temp)){
         temp++;
     }
-    printf("Next smallest palindrome of %d is %d", x, temp);
+    printf("Next smallest palindrome of %llu is %llu", x, temp);
 
 }
 
-int is_palindrome(int number) {
+int is_palindrome(unsigned long long int number) {
     //reverse the number
-    int temp = number, sum = 0;
+    unsigned long long int temp = number, sum = 0;
     while (temp > 0) {
         int remainder = temp % 10;
         sum = sum * 10 + remainder;

@@ -8,7 +8,7 @@ int main() {
     // right triangle 
     for (int i = 0; i < n; i++) {
         for (int j = 0; j <= i; j++) {
-            printf("* ");
+            printf("*");
         }
         printf("\n");
     }
@@ -23,9 +23,9 @@ int main() {
 
         for (int j = 0; j < spaces + stars; j++) {
             if (j < spaces) {
-                printf("  ");
+                printf(" ");
             } else {
-                printf("* ");
+                printf("*");
             }
         }
         printf("\n");
@@ -44,9 +44,9 @@ int main() {
         }
         for (int j = 0; j < spaces + stars; j++) {
             if (j < spaces) {
-                printf("  ");
+                printf(" ");
             } else {
-                printf("* ");
+                printf("*");
             }
         }
         printf("\n");
@@ -65,9 +65,9 @@ int main() {
         }
         for (int j = 0; j < range; j++) {
             if (j < spaces) {
-                printf("  ");
+                printf(" ");
             } else {
-                printf("* ");
+                printf("*");
             }
         }
         printf("\n");
