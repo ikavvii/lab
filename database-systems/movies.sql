@@ -37,7 +37,7 @@ select * from movies where year between 2000 and 2010;
 select * from movies where year not between 2000 and 2010;
 
 -- 9 find the first 5 pixar movies and their release year 
-select title, year from movies order by year;
+select title, year from movies order by year limit 5;
 
 --select * from movies limit 5;
 

@@ -87,4 +87,10 @@ select * from employee where empname like '%n';
 select * from employee where hiredate<'01-01-18';
 
 --20 Find employees who joined after their manager (use HireDate comparison).
-select * from employee where 
+--select * from employee where
+
+--21 Display employees with no commission.
+select * from employee where commission is NULL;
+
+--22 Show employees whose commission is at least 10% of their salary.
+select * from employee where commission<=salary/10;
