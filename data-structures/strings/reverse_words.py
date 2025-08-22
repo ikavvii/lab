@@ -1,0 +1,1 @@
+print(' '.join(filter(lambda s: s!='', reversed(input("Enter s: ").split(' ')))))
