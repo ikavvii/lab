@@ -4,37 +4,133 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inventor of HTML</title>
+    <title>The Inventor of HTML</title>
     <style>
-        .dp {
+        ::selection {
+            color: #99662b;
+            background-color: #f0f6fc;
+        }
+
+        .profile {
             border-radius: 50%;
-            border: 2px solid ;
+            border: 2px solid;
             height: 200px;
+        }
+
+        h1,
+        h2 {
+            color: rgb(252, 216, 163)
+        }
+
+        @media screen and (min-width: 768px) {
+            body {
+                width: 72%;
+                margin: 24px auto;
+            }
+        }
+
+        p {
+            padding: 8px 24px 8px;
+            font-size: 1.1em;
         }
     </style>
 </head>
 
-<body style="width: 100vh;">
+<body
+    style='background-color: #49340b;
+background-image: url("../assets/beige-paper.png"); color: white; font-family: Arial, Helvetica, sans-serif; line-height: 1.8rem; word-spacing: normal;'>
 
     <header>
-        <h1>Sir Timothy John Berners-Lee (a) <em>TimBL</em></h1>
-        <p>The Inventor of World Wide Web, HTML, the URL system, and HTTP. </p>
+        <h1 style="text-align: center;">Sir Timothy John Berners-Lee</h1>
+        <p style="text-align: center; font-size: large; margin: 16px 24px 8px; padding: 0">British Scientist</p>
     </header>
     <main>
         <section>
-            <figure>
-                <img class="dp" src="../assets/tim.jpg" alt="Berners-Lee in 2024">
-                <figcaption>Berners-Lee in 2024</figcaption>
+            <article style="float: left;">
+                <p>Sir <em>Timothy John Berners-Lee</em> (born 8 June 1955), also known as TimBL, is an English computer
+                    scientist best
+                    known as the <ins style="color: #f8dca3;">inventor</ins> of the <u>World Wide Web, HTML, the URL
+                        system, and HTTP</u>. He is a
+                    professorial
+                    research
+                    fellow at the University of Oxford and a professor emeritus at the Massachusetts Institute of
+                    Technology
+                    (MIT).</p>
+            </article>
+            <figure style="float: right;">
+                <img class="profile" src="../assets/tim.jpg" alt="Berners-Lee in 2024">
+                <figcaption style="text-align: center; padding-top: 1em;"><i>Berners-Lee in 2024</i></figcaption>
             </figure>
+        </section>
+        <section>
             <article>
-
+                <h2>Early Life & Education</h2>
+                <ul>
+                    <li><b>Born</b>: 8 June 1955, London, England, to mathematician parents involved with the first
+                        commercial
+                        computer, Ferranti Mark 1.</li>
+                    <li><b>Schooling</b>: Attended Sheen Mount Primary School, then Emanuel School (1969-1973).</li>
+                    <li><b>University</b>: Studied physics at The Queen's College, Oxford (1973-1976), graduating with a
+                        first-class BA. As a student, he built his own computer using discarded electronics.</li>
+                </ul>
+            </article>
+            <article>
+                <h2>Career Highlights</h2>
+                <ul>
+                    <li><b>Early Career</b>: Engineer at Plessey; helped create typesetting software at D. G. Nash.</li>
+                    <li><b>CERN</b>: Worked as a contractor and then a fellow, developing ENQUIRE—an early hypertext
+                        system to
+                        link related information.</li>
+                </ul>
             </article>
         </section>
-        <section></section>
-        <section></section>
+        <section>
+            <article>
+                <h2>Major Inventions and Contributions</h2>
+                <ol>
+                    <li><b>World Wide Web</b>: Invented the World Wide Web in 1989 at CERN, combining hypertext with the
+                        Internet. His first proposal was presented in March 1989, and the first successful <mark
+                            style="background-color: #34879c; color: #f0f6fc;">HTTP
+                            client-server communication</mark> occurred later that year. He implemented the first web
+                        browser/editor ("WorldWideWeb") and web server ("CERN HTTPd").</li>
+                    <li><b>HTML</b>: Created the HyperText Markup Language, the code in which webpages are written.</li>
+                    <li><b>HTTP</b>: Developed HyperText Transfer Protocol to move data on the web.</li>
+                    <li><b>URL</b>: Designed the Universal Resource Locator system, now simply known as URLs.</li>
+                    <li><b>Advancing the Web</b>: Established the World Wide Web Consortium (W3C) at MIT in 1994,
+                        ensuring open
+                        web standards.</li>
+                    <li><b>Solid & Inrupt</b>: Leads projects like Solid and Inrupt for online privacy and data
+                        ownership.</li>
+                    <li><b>Advocacy</b>: Vocal about net neutrality, open data, and affordable internet access.</li>
+
+                </ol>
+            </article>
+            <article>
+                <h2>Positions Held</h2>
+                <p><b>Academic</b>: Professorial research fellow at University of Oxford, professor emeritus at MIT,
+                    director/founder of W3C, co-founder of the Open Data Institute.</p>
+                <p><b>Other Roles</b>: Advisory positions at foundations and technology organizations.</p>
+            </article>
+
+        </section>
+        <section>
+            <article>
+                <details>
+                    <summary style="font-weight: bold; cursor: pointer;">
+                        <h2 style="display: inline;">Awards & Honours</h2>
+                    </summary>
+                    <p><b>Turing Award (2016)</b>: For inventing the World Wide Web and fundamental web protocols.</p>
+                    <p><b>Knighthood</b>: Knighted by Queen Elizabeth II in 2004 for contributions to the global
+                        Internet.</p>
+                    <p><b>Queen Elizabeth Prize for Engineering (2013)</b> and numerous honorary degrees.</p>
+                </details>
+            </article>
+        </section>
+
     </main>
-    <footer style="position: absolute; bottom: 0; right: 10px;"><a href="">Kavin Manoharan</a> &copy;
-        <script>document.write(new Date().getFullYear())</script>
+    <footer style="position: fixed; bottom: 10px; right: 10px;"><a style="color: bisque;"
+            href="https://www.linkedin.com/in/kavin2662" target="_blank"><small>Kavin Manoharan</a> &copy;
+        <script>document.write(new Date().getFullYear())</script></small>
     </footer>
 </body>
 
