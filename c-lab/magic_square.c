@@ -4,6 +4,7 @@
 int **magicSquareOdd(int n);
 int **initializeSquare(int n);
 void printSquare(int **square, int n);
+int **magicSquare4(int n);
 int **magicSquareSinglyEven(int n);
 int **magicSquareDoublyEven(int n);
 
@@ -23,8 +24,9 @@ int main()
 
     // divide and conquer
 
-    int **magicSquare = magicSquareOdd(n);
-    if (magicSquare == NULL) {
+    int **magicSquare = magicSquare4(4);
+    if (magicSquare == NULL)
+    {
         return EXIT_FAILURE;
     }
 
@@ -41,14 +43,46 @@ int main()
     return 0;
 }
 
-int **magicSquareSinglyEven(int n) {
+int **magicSquare4(int n)
+{
+    int topX = 0, topY = 0, bottomX = n - 1, bottomY = n - 1;
+    int topDownValue = 1, bottomUpValue = n * n;
+    int **square = initializeSquare(n);
 
-    
+
+    while (topX<bottomX) {
+        while (topY <n) {
+            square[topX][topY++] = topDownValue;
+            square[bottomX][bottomY--] = bottomUpValue;
+
+            topDownValue++; bottomUpValue--;
+
+            if (topY != n / 2) {
+                int temp = topDownValue;
+                topDownValue = bottomUpValue;
+                bottomUpValue = temp;
+            }
+
+
+
+        }
+
+        topX++;bottomX--;
+        topY = 0;
+        bottomY = n-1;
+    }
+
+    return square;
+}
+
+int **magicSquareSinglyEven(int n)
+{
+
 
 }
 
-int **magicSquareDoublyEven(int n) {
-
+int **magicSquareDoublyEven(int n)
+{
 }
 
 int **magicSquareOdd(int n)
@@ -62,7 +96,8 @@ int **magicSquareOdd(int n)
 
     // initialize empty array
     int **square = initializeSquare(n);
-    if (!square) return NULL;
+    if (!square)
+        return NULL;
 
     // initialize first item
 
