@@ -93,4 +93,5 @@ select * from employee where hiredate<'01-01-18';
 select * from employee where commission is NULL;
 
 --22 Show employees whose commission is at least 10% of their salary.
-select * from employee where commission<=salary/10;
+select * from employee where commission >= (salary/10);
+
