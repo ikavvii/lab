@@ -24,7 +24,7 @@ int main()
 
     // divide and conquer
 
-    int **magicSquare = magicSquare4(4);
+    int **magicSquare = magicSquareOdd(n);
     if (magicSquare == NULL)
     {
         return EXIT_FAILURE;
