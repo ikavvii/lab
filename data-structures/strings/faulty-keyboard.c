@@ -7,7 +7,7 @@ char* finalString(char* s) {
     int front=0, rear=len-1;
 
     // direction flag
-    int direction = 1; // initally set to forward
+    int direction = 1; // initially set to forward
 
     for (int i = 0; s[i]; i++) {
         if (s[i] == 'i') {
