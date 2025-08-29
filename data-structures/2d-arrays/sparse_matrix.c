@@ -32,11 +32,11 @@ int main()
 
   if (c >= (m * n) / 2)
   {
-    printf("It is a sparse matrix.\n");
+    printf("The given matrix is sparse matrix.\n");
   }
   else
   {
-    printf("It is not a sparse matrix.\n");
+    printf("The given matrix is not a sparse matrix.\n");
   }
 
   return 0;
