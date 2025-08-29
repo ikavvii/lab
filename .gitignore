@@ -1,3 +1,4 @@
 *.exe
 /lab-private/
 .vscode
+a.out
