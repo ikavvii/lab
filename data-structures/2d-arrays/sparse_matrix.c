@@ -9,7 +9,7 @@ int main()
   scanf("%dx%d", &m, &n);
 
   int mat[m][n];
-  int i, j, c;
+  int i, j, c = 0;
   printf("Enter matrix %dx%d: \n", m, n);
   for (i = 0; i < m; i++)
   {

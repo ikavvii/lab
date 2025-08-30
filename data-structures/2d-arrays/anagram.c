@@ -11,24 +11,33 @@ int main()
   scanf("%s", s);
   scanf("%s", t);
 
-  
-  if (strlen(s) != strlen(t) ) {
+  if (strlen(s) != strlen(t))
+  {
     printf("Not an anagram.\n");
     return 0;
-  } 
-  
+  }
+
   int i;
   int freq[26] = {0};
   for (i = 0; s[i] != '\0'; i++)
   {
-    freq[tolower(s[i]) - 'a']++;
-    freq[tolower(t[i])- 'a']--;
+
+    if (isalpha(s[i]))
+    {
+      freq[tolower(s[i]) - 'a']++;
+    }
+    if (isalpha(t[i]))
+    {
+      freq[tolower(t[i]) - 'a']--;
+    }
   }
 
-  for(i = 0; i < 26; i++) {
-    if (freq[i] != 0) {
+  for (i = 0; i < 26; i++)
+  {
+    if (freq[i] != 0)
+    {
       printf("Not an anagram.\n");
-      return  0;
+      return 0;
     }
   }
 
