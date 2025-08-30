@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <limits.h>
 
 int main()
 {
@@ -8,6 +9,12 @@ int main()
     printf("Enter the number of elements: ");
     scanf("%d", &size);
 
+    if (size < 2)
+    {
+        printf("At least two elements are required.\n");
+        return 1;
+    }
+
     int *arr = malloc(size * sizeof(int));
     if (arr == NULL)
     {
@@ -15,7 +22,7 @@ int main()
         return 1;
     }
 
-    int largest = 0, second_largest = 0;
+    int largest = INT_MIN, second_largest = INT_MIN;
     for (int i = 0; i < size; i++)
     {
         printf("Enter value %d: ", i + 1);
@@ -30,5 +37,15 @@ int main()
             second_largest = arr[i];
     }
 
-    printf("Second largest value in the array: %d", second_largest);
+    if (second_largest == INT_MIN)
+    {
+        printf("No second largest element is found.");
+    }
+    else
+    {
+        printf("Second largest value in the array: %d", second_largest);
+    }
+
+    free(arr);
+    return 0;
 }

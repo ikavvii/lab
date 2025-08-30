@@ -2,7 +2,7 @@
 #include <stdlib.h>
 
 void swap(int *a, int *b);
-void print_array(int *arr);
+void print_array(int *arr, int size);
 
 int main()
 {
@@ -58,7 +58,7 @@ int main()
 
     for (int i = 0; i < size - 1; i++)
     {
-        for (int j = 0; j < size - 1; j++)
+        for (int j = 0; j < size -i- 1; j++)
         {
             if (asc_arr[j] > asc_arr[j + 1])
             {
@@ -70,7 +70,7 @@ int main()
     for (int i = 0; i < size - 1; i++)
     {
 
-        for (int j = 0; j < size - 1; j++)
+        for (int j = 0; j < size -i- 1; j++)
         {
 
             if (desc_arr[j] < desc_arr[j + 1])
@@ -80,23 +80,27 @@ int main()
         }
     }
 
-    print_array(arr);
-    print_array(asc_arr);
-    print_array(desc_arr);
+    print_array(arr, size);
+    print_array(asc_arr, size);
+    print_array(desc_arr, size);
+
+    free(arr);
+    free(asc_arr);
+    free(desc_arr);
 
     return 0;
 }
 
 void swap(int *a, int *b)
 {
-    *a = *a + *b;
-    *b = *a - *b;
-    *a = *a - *b;
+    int temp  = *a;
+    *a = *b;
+    *b = temp;
 }
 
-void print_array(int *arr)
+void print_array(int *arr, int size)
 {
-    for (int i = 0; i < 5; i++)
+    for (int i = 0; i < size; i++)
     {
         printf("%d, ", arr[i]);
     }
