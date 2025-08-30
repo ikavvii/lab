@@ -16,35 +16,24 @@ int main()
     }
 
     int left = 0, right = n - 1;
-    while (left < right)
+    while (left <= right)
     {
-        int mid = left + (right - left) / 2;
+        int mid = (left + right) / 2;
 
-        if (mid == 0 && arr[0] >= arr[1])
+        if ((mid == 0 || arr[mid] >= arr[mid - 1]) &&
+            (mid == n - 1 || arr[mid] >= arr[mid + 1]))
         {
-            printf("%d", mid);
+            printf("Peak at %d", mid);
             return 0;
         }
 
-        if (mid == n - 1 && arr[n - 1] >= arr[n - 2])
+        if (arr[mid] < arr[mid + 1])
         {
-            printf("%d", mid);
-            return 0;
-        }
-
-        if (arr[mid] >= arr[mid - 1] && arr[mid] >= arr[mid + 1])
-        {
-            printf("%d", mid);
-            return 0;
-        }
-
-        if (arr[mid] < arr[mid - 1])
-        {
-            right = mid;
+            left = mid + 1;
         }
         else
         {
-            left = mid + 1;
+            right = mid - 1;
         }
     }
 
