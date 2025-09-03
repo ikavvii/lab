@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML Forms</title>
+
+    <style>
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            display: flex;
+            height: 100vh;
+            justify-content: center;
+            align-items: center;
+        }
+        .f1 {
+            background-color: aliceblue;
+        }
+
+        .f2 {
+            background-color: antiquewhite;
+        }
+
+        .f3 {
+            background-color: beige;
+        }
+
+        form {
+            width: fit-content;
+            margin: 0 auto;
+
+        }
+
+        legend {
+            background-color: rgb(44, 58, 52);
+            color: whitesmoke;
+        }
+
+        input {
+            margin: 4px auto;
+        }
+
+        label {
+            display: inline-block;
+            text-align: right;
+            width: 100px;
+        }
+        #gender-select>label {
+            width: auto;
+        } 
+    </style>
+</head>
+
+<body>
+
+
+    <form action="">
+        <h1>HTML Forms</h1>
+        <fieldset class="f1">
+            <div>
+                <label for=name>Name</label>
+                <input type=text id=name name="name" required>
+
+            </div>
+            <div>
+                <label for=roll>Roll Number</label>
+                <input type="text" id="roll" required>
+            </div>
+            <div>
+                <label for="password">Password</label>
+                <input type="password" id="password" required>
+            </div>
+        </fieldset>
+        <fieldset class="f2">
+            <legend>Select Gender</legend>
+            <div id="gender-select">
+                <input type="radio" name="gender" id="male">
+                <label for="male">Male</label>
+
+                <input type="radio" name="gender" id="female">
+                <label for="female">Female</label>
+            </div>
+        </fieldset>
+        <fieldset class="f3">
+            <legend>Other Details</legend>
+            <div>
+                <label for="program">Program</label>
+                <input type="text" id="program" required>
+            </div>
+            <div>
+                <label for="place">Native Place</label>
+                <input type="text" id="place">
+            </div>
+        </fieldset>
+
+        <div>
+            <input type="submit" value="Click Here!" onclick="window.alert('Form submitted.')">
+        </div>
+    </form>
+</body>
+
+</html>
