@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      h1.sticky {
+        position: -webkit-sticky;
+        position: sticky;
+        top: 10px;
+        padding: 5px;
+        background-color: #cae8ca;
+        border: 2px solid #4caf50;
+      }
+      /* To understand the bottom adjustment. 
+    Change the value of child div bottom  value and understand 
+    the concept.*/
+      body {
+        background-color: #5fa6ed;
+      }
+      #myDIV {
+        position: relative;
+        width: 75%;
+        height: 300px;
+        left: 20px;
+        right: 20px;
+        background-color: #ffffff;
+      }
+      #blueDIV {
+        position: absolute;
+        width: 100px;
+        padding: 10px;
+        background-color: lightblue;
+        bottom: 30px;
+        top: 30px;
+        right: 20px; /*change this value or apply left and check*/
+      }
+    </style>
+  </head>
+  <body>
+    <h1 class="sticky">I am the view area</h1>
+
+    <div id="myDIV">
+      I am white div inside view area
+      <div id="blueDIV">
+        See what different css bottom values does for this blueDIV element.
+      </div>
+    </div>
+    <!-- breaks to insert make the document flow beyond view port-->
+    <br /><br /><br /><br /><br /><br /><br /><br /><br />
+    <br /><br /><br /><br /><br /><br /><br /><br /><br />
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    <div style="position: fixed; bottom: 10px">copyright &#169; 24MXian</div>
+  </body>
+</html>

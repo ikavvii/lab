@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+    /*  reference web site: 
+    https://www.w3schools.com/css/tryit.asp?filename=trycss_image_text_top_left
+    */
+.container {
+  position: relative;
+}
+
+.topleft {
+  position: absolute;
+  top: 8px;
+  left: 16px;
+  font-size: 18px;
+}
+
+img { 
+  width: 50%;
+  height: auto;
+  opacity: 0.3;
+}
+</style>
+</head>
+<body>
+
+<h2>Image Text</h2>
+<p>Add some text to an image in the top left corner:</p>
+
+<div class="container">
+  <img src="100yrsLogo.png" alt="My Country" width="1000" height="300">
+  <div class="topleft"  style="color:red">Top Left</div>
+</div>
+
+</body>
+</html>
+
+
