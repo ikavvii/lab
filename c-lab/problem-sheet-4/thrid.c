@@ -22,7 +22,7 @@ int main()
         scanf("%d", &arr[i]);
     }
 
-    for (i = 0; i < n - 2; i++)
+    for (i = 0; i < n - 1; i++)
     {
         if (abs(arr[i] - arr[i + 1]) == 1)
         {
@@ -31,7 +31,7 @@ int main()
         }
     }
 
-    printf("Not found.");
+    printf("No adjacent elements with difference 1 is found.\n");
 
     return 0;
 }
