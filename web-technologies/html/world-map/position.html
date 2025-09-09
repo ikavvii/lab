@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="shortcut icon" href="globe.svg" type="image/x-icon" />
+    <style>
+      /*  reference web site: 
+    https://www.w3schools.com/css/tryit.asp?filename=trycss_image_text_top_left
+    */
+      .container {
+        position: relative;
+      }
+
+      .sub {
+        font-size: 1.1rem;
+        font-weight: bold;
+      }
+
+      .continent {
+        color: red;
+      }
+      .continent:first-letter {
+        color: green;
+      }
+
+      .continent:hover {
+        background-color: lightblue;
+      }
+
+      .north-america {
+        position: absolute;
+        top: 16%;
+        left: 8%;
+      }
+
+      .south-america {
+        position: absolute;
+        top: 56%;
+        left: 16%;
+      }
+
+      .europe {
+        position: absolute;
+        top: 16%;
+        left: 24%;
+      }
+
+      .africa {
+        position: absolute;
+        top: 32%;
+        left: 24%;
+      }
+
+      .asia {
+        position: absolute;
+        top: 16%;
+        left: 32%;
+      }
+
+      .india {
+        position: absolute;
+        top: 32%;
+        left: 32%;
+      }
+
+      .australia {
+        position: absolute;
+        top: 56%;
+        left: 40%;
+      }
+
+      .antarctica {
+        position: absolute;
+        top: 88%;
+        left: 24%;
+      }
+      img {
+        width: 50%;
+        height: auto;
+        opacity: 0.3;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>World Map</h2>
+    <p>Try hovering over the image to see the effect:</p>
+
+    <div class="container">
+      <img src="world-map.png" alt="World Map" width="1000" height="300" />
+      <div class="continent north-america">North America</div>
+      <div class="continent south-america">South America</div>
+      <div class="continent europe">Europe</div>
+      <div class="continent africa">Africa</div>
+      <div class="continent asia">Asia</div>
+      <div class="sub continent india">India</div>
+      <div class="continent australia">Australia</div>
+      <div class="continent antarctica">Antarctica</div>
+    </div>
+  </body>
+</html>
