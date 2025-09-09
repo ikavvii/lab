@@ -7,6 +7,8 @@ distance.
 
 */
 
+// work on it later
+
 #include <stdio.h>
 #include <stdbool.h>
 #include <stdlib.h>
@@ -26,17 +28,17 @@ int main()
     int n, i, k;
 
     printf("size: ");
-    scanf("%d", &n);
+    scanf("%d", &n); // 7
 
     printf("elements: ");
 
-    int arr[n];
-    for (i = 0; i < n; i++)
-    {
-        scanf("%d", &arr[i]);
-    }
+    int arr[] = {10, 5, 3, 4, 3, 5, 6}; 
+    // for (i = 0; i < n; i++)
+    // {
+    //     scanf("%d", &arr[i]);
+    // }
 
-    printf("distance k: ");
+    printf("distance k: "); // 3
     scanf("%d", &k);
 
     if (containsNearbyDuplicate(arr, n, k))
@@ -56,7 +58,27 @@ bool containsNearbyDuplicate(int *nums, int numsSize, int k)
 
     struct HashNode** hashMap = (struct HashNode**)calloc(numsSize, sizeof(struct HashNode*));
 
-    for (int i = 0; i < numsSize; i++ ) {
+    for (int i = 0; i < numsSize; i++ ) {   
+        int hashIndex = abs(nums[i]) % numsSize;
+        struct HashNode* currentNode = hashMap[hashIndex];
+        while (currentNode != NULL) {
+            if (currentNode->key == nums[i]) {
+                if (i - currentNode->value <= k) {
+                    return true;
+                } else {
+                    currentNode->value = i; // update the index
+                    break;
+                }
+            }
+            currentNode = currentNode->next;
+        }
+        if (currentNode == NULL) {
+            struct HashNode* newNode = (struct HashNode*)malloc(sizeof(struct HashNode));
+            newNode->key = nums[i];
+            newNode->value = i;
+            newNode->next = hashMap[hashIndex];
+            hashMap[hashIndex] = newNode;
+        }
         
     }
 }
