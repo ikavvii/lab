@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vehicle Parking Registration Form</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: sans-serif;
+      }
+
+      body {
+        background-image: url("./images/background.jpg");
+        object-fit: cover;
+      }
+
+      form {
+        width: fit-content;
+        margin: 1rem auto;
+      }
+
+      .main {
+        padding: 16px;
+      }
+
+      .main > fieldset {
+        border: none;
+        margin: auto 0 16px 0;
+      }
+      .main .title {
+        font-size: 1.5rem;
+        font-weight: bold;
+        text-align: center;
+      }
+      label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: bold;
+      }
+
+      .main fieldset legend {
+        font-weight: bold;
+        margin-bottom: 8px;
+      }
+
+      .main fieldset label {
+        display: inline;
+        font-weight: normal;
+        margin-right: 16px;
+      }
+
+      input {
+        width: 100%;
+        margin: auto 0 16px 0;
+        padding: 4px;
+        font-size: 1rem;
+      }
+
+      input[type="radio"],
+      input[type="checkbox"] {
+        width: unset;
+        margin: 0 8px 0 0;
+      }
+
+      textarea {
+        width: 100%;
+        margin: auto 0 16px 0;
+        padding: 4px;
+        resize: none;
+      }
+
+      button {
+        padding: 8px 16px;
+        margin-right: 16px;
+        border: none;
+        color: white;
+        font-weight: bold;
+        cursor: pointer;
+      }
+
+      button[type="submit"] {
+        background-color: #4caf50;
+      }
+
+      button[type="reset"] {
+        background-color: #f44336;
+      }
+
+
+    </style>
+  </head>
+  <body>
+    <form>
+      <fieldset class="main">
+        <legend class="main title">Vehicle Parking Registration Form</legend>
+        <label for="name">Name</label>
+        <input
+          type="text"
+          id="name"
+          name="name"
+          pattern="[A-Za-z\s]+"
+          required
+        />
+        <label for="phone-number">Phone Number</label>
+        <input
+          type="tel"
+          id="phone-number"
+          name="phone-number"
+          pattern="[1-9][0-9]{9}"
+          required
+        />
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" required />
+
+        <label for="vehicle-number">Vehicle Number</label>
+        <input
+          type="text"
+          id="vehicle-number"
+          name="vehicle-number"
+          pattern="[A-Z]{2}[0-9]{2}[A-Z]{2}[0-9]{4}"
+          required
+        />
+        <fieldset>
+          <legend>Vehicle Type</legend>
+          <input
+            type="radio"
+            id="two-wheeler"
+            name="vehicle-type"
+            value="two-wheeler"
+            required
+          />
+          <label for="two-wheeler">Two Wheeler</label>
+          <input
+            type="radio"
+            id="four-wheeler"
+            name="vehicle-type"
+            value="four-wheeler"
+            required
+          />
+          <label for="four-wheeler">Four Wheeler</label>
+        </fieldset>
+
+        <fieldset>
+          <legend>Parking Facilities</legend>
+          <input
+            type="checkbox"
+            id="covered"
+            name="parking-facilities"
+            value="covered"
+          />
+          <label for="covered">Covered</label>
+          <input
+            type="checkbox"
+            id="uncovered"
+            name="parking-facilities"
+            value="uncovered"
+          />
+          <label for="uncovered">Uncovered</label>
+          <input
+            type="checkbox"
+            name="parking-facilities"
+            id="ev-charging"
+            value="ev-charging"
+          />
+          <label for="ev-charging">EV Charging</label>
+          <input
+            type="checkbox"
+            name="parking-facilities"
+            id="valet"
+            value="valet"
+          />
+          <label for="valet">Valet</label>
+        </fieldset>
+
+        <label for="id-proof">Upload ID Proof</label>
+        <input
+          type="file"
+          id="id-proof"
+          name="id-proof"
+          accept=".pdf,.jpg,.png"
+        />
+
+        <label for="address">Address</label>
+        <textarea name="address" id="address" rows="3" required></textarea>
+
+        <div style="text-align: center">
+          <button type="submit" onclick="alert('Form submitted successfully!')">
+            Submit
+          </button>
+          <button type="reset">Cancel</button>
+        </div>
+      </fieldset>
+    </form>
+  </body>
+</html>
