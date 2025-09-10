@@ -373,7 +373,7 @@ select * from employee where MOD(salary, 5000) = 0;
 --7 rows selected. 
 --
 
--- 25 Show employees whose job title contains the word ‘Manager’.
+-- 25 Show employees whose job title contains the word ï¿½Managerï¿½.
 select * from employee where job like '%Manager%';
 
 
@@ -420,3 +420,78 @@ select * from (select * from employee order by salary desc) where rownum <= 3;
 
 -- 28 Show employees sorted by department and then by name.
 
+select * from employee order by deptid, empname;
+
+-- "EMPID"                       "EMPNAME"                     "JOB"                         "MANAGERID"                   "HIREDATE"                    "SALARY"                      "COMMISSION"                  "DEPTID"                      
+-- "1001"                        "John Smith"                  "Manager"                     ""                            "10/01/15"                    "80000"                       ""                            "10"                          
+-- "1002"                        "Alice Brown"                 "Analyst"                     "1001"                        "15/03/17"                    "60000"                       ""                            "20"                          
+-- "1006"                        "James Miller"                "Analyst"                     "1001"                        "30/11/16"                    "65000"                       ""                            "20"                          
+-- "1007"                        "Linda Johnson"               "Clerk"                       "1006"                        "05/01/21"                    "28000"                       ""                            "20"                          
+-- "1003"                        "Robert King"                 "Clerk"                       "1002"                        "01/07/19"                    "30000"                       ""                            "20"                          
+-- "1005"                        "David Lee"                   "Salesman"                    "1001"                        "11/06/20"                    "32000"                       "1500"                        "30"                          
+-- "1004"                        "Maria Garcia"                "Salesman"                    "1001"                        "21/05/18"                    "35000"                       "2000"                        "30"                          
+-- "1010"                        "Stanley Hudson"              "Salesman"                    "1008"                        "12/12/15"                    "40000"                       "2500"                        "30"                          
+-- "1008"                        "Michael Scott"               "Manager"                     ""                            "25/09/14"                    "90000"                       ""                            "40"                          
+-- "1009"                        "Pam Beesly"                  "Clerk"                       "1008"                        "10/04/22"                    "27000"                       ""                            "40"                          
+
+
+-- 29 Display employee name, annual salary (Salary*12).
+select empname, salary*12 from employee; 
+
+-- "EMPNAME"                     "SALARY*12"                   
+-- "John Smith"                  "960000"                      
+-- "Alice Brown"                 "720000"                      
+-- "Robert King"                 "360000"                      
+-- "Maria Garcia"                "420000"                      
+-- "David Lee"                   "384000"                      
+-- "James Miller"                "780000"                      
+-- "Linda Johnson"               "336000"                      
+-- "Michael Scott"               "1080000"                     
+-- "Pam Beesly"                  "324000"                      
+-- "Stanley Hudson"              "480000"                      
+
+
+-- 30 Display employee name, total earning (Salary + NVL(Commission,0)).
+select empname, salary + NVL(commission, 0) as total_earnings from EMPLOYEE;
+
+
+-- EMPNAME                                            TOTAL_EARNINGS
+-- -------------------------------------------------- --------------
+-- John Smith                                                  80000
+-- Alice Brown                                                 60000
+-- Robert King                                                 30000
+-- Maria Garcia                                                37000
+-- David Lee                                                   33500
+-- James Miller                                                65000
+-- Linda Johnson                                               28000
+-- Michael Scott                                               90000
+-- Pam Beesly                                                  27000
+-- Stanley Hudson                                              42500
+
+-- 10 rows selected. 
+
+
+-- 31 Show employees sorted by hire date in descending order.
+select empname, hiredate from EMPLOYEE order by HIREDATE desc;
+
+
+-- EMPNAME                                            HIREDATE
+-- -------------------------------------------------- --------
+-- Pam Beesly                                         10/04/22
+-- Linda Johnson                                      05/01/21
+-- David Lee                                          11/06/20
+-- Robert King                                        01/07/19
+-- Maria Garcia                                       21/05/18
+-- Alice Brown                                        15/03/17
+-- James Miller                                       30/11/16
+-- Stanley Hudson                                     12/12/15
+-- John Smith                                         10/01/15
+-- Michael Scott                                      25/09/14
+
+-- 10 rows selected. 
+
+-- 32. Display employees sorted first by Job, then by Salary (descending).
+
+
+
+commit;

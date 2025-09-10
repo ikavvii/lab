@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Registration Form</title>
+    <link rel="shortcut icon" href="../icons/favicon.svg" type="image/x-icon" />
+    <style>
+      * {
+        margin: 4px;
+        padding: 4px;
+        box-sizing: border-box;
+        font: 1rem "Fira Sans", sans-serif;
+      }
+
+      form {
+        width: fit-content;
+        margin: 0 auto;
+      }
+
+      label {
+        display: inline-block;
+        width: 160px;
+        text-align: right;
+      }
+      legend {
+        font-weight: bold;
+        margin-bottom: 8px;
+      }
+      input[type="submit"] {
+        display: block;
+        margin: 16px auto;
+        padding: 8px 16px;
+        cursor: pointer;
+      }
+      svg {
+        vertical-align: middle;
+        fill: #555;
+      }
+    </style>
+  </head>
+  <body>
+    <form action="./register.html" method="get" autocomplete="off">
+      <fieldset>
+        <legend>Name</legend>
+        <div>
+          <label for="firstname"
+            >First Name
+
+            <svg
+              width="30"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 448 512"
+            >
+              <!--!Font Awesome Free v7.0.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
+              <path
+                d="M224 248a120 120 0 1 0 0-240 120 120 0 1 0 0 240zm-29.7 56C95.8 304 16 383.8 16 482.3 16 498.7 29.3 512 45.7 512l356.6 0c16.4 0 29.7-13.3 29.7-29.7 0-98.5-79.8-178.3-178.3-178.3l-59.4 0z"
+              />
+            </svg>
+          </label>
+          <input
+            type="text"
+            id="firstname"
+            autocomplete="off"
+            required
+            autofocus
+          />
+        </div>
+        <div>
+          <label for="lastname"
+            >Last Name
+            <svg
+              width="30"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 448 512"
+            >
+              <!--!Font Awesome Free v7.0.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
+              <path
+                d="M224 248a120 120 0 1 0 0-240 120 120 0 1 0 0 240zm-29.7 56C95.8 304 16 383.8 16 482.3 16 498.7 29.3 512 45.7 512l356.6 0c16.4 0 29.7-13.3 29.7-29.7 0-98.5-79.8-178.3-178.3-178.3l-59.4 0z"
+              />
+            </svg>
+          </label>
+          <input type="text" id="lastname" required autocomplete="off" />
+        </div>
+        <div>
+          <label for="college"
+            >College Name
+            <svg
+              width="30"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 640 640"
+            >
+              <!--!Font Awesome Free v7.0.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
+              <path
+                d="M80 259.8L289.2 345.9C299 349.9 309.4 352 320 352C330.6 352 341 349.9 350.8 345.9L593.2 246.1C602.2 242.4 608 233.7 608 224C608 214.3 602.2 205.6 593.2 201.9L350.8 102.1C341 98.1 330.6 96 320 96C309.4 96 299 98.1 289.2 102.1L46.8 201.9C37.8 205.6 32 214.3 32 224L32 520C32 533.3 42.7 544 56 544C69.3 544 80 533.3 80 520L80 259.8zM128 331.5L128 448C128 501 214 544 320 544C426 544 512 501 512 448L512 331.4L369.1 390.3C353.5 396.7 336.9 400 320 400C303.1 400 286.5 396.7 270.9 390.3L128 331.4z"
+              />
+            </svg>
+          </label>
+          <input type="text" id="college" required autocomplete="off" />
+        </div>
+      </fieldset>
+      <fieldset>
+        <legend>Contact Details</legend>
+        <div>
+          <label for="phonenumber"
+            >Phone Number
+            <svg
+              width="30"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 640 640"
+            >
+              <!--!Font Awesome Free v7.0.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
+              <path
+                d="M224.2 89C216.3 70.1 195.7 60.1 176.1 65.4L170.6 66.9C106 84.5 50.8 147.1 66.9 223.3C104 398.3 241.7 536 416.7 573.1C493 589.3 555.5 534 573.1 469.4L574.6 463.9C580 444.2 569.9 423.6 551.1 415.8L453.8 375.3C437.3 368.4 418.2 373.2 406.8 387.1L368.2 434.3C297.9 399.4 241.3 341 208.8 269.3L253 233.3C266.9 222 271.6 202.9 264.8 186.3L224.2 89z"
+              />
+            </svg>
+          </label>
+          <input
+            type="text"
+            id="phonenumber"
+            required
+            pattern="\d{5}+[ ]+\d{5}"
+            title="Please enter a valid 10-digit phone number."
+            autocomplete="off"
+          />
+        </div>
+        <div>
+          <label for="email"
+            >Email
+            <svg
+              width="30"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 640 640"
+            >
+              <!--!Font Awesome Free v7.0.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
+              <path
+                d="M112 128C85.5 128 64 149.5 64 176C64 191.1 71.1 205.3 83.2 214.4L291.2 370.4C308.3 383.2 331.7 383.2 348.8 370.4L556.8 214.4C568.9 205.3 576 191.1 576 176C576 149.5 554.5 128 528 128L112 128zM64 260L64 448C64 483.3 92.7 512 128 512L512 512C547.3 512 576 483.3 576 448L576 260L377.6 408.8C343.5 434.4 296.5 434.4 262.4 408.8L64 260z"
+              />
+            </svg>
+          </label>
+          <input type="email" id="email" required autocomplete="off" />
+        </div>
+      </fieldset>
+      <fieldset>
+        <legend>Analysis</legend>
+        <div>
+          <label for="analysis">Your involvement in social media: </label>
+          <input
+            type="range"
+            id="analysis"
+            min="0"
+            max="100"
+            value="0"
+            step="10"
+            required
+          />
+          <output for="analysis" id="involvement"></output>
+        </div>
+      </fieldset>
+      <input
+        type="submit"
+        value="Submit"
+        onsubmit="window.alert('Your response taken.')"
+      />
+    </form>
+
+    <script>
+      const involvementInput = document.getElementById("analysis");
+      const involvementOutput = document.getElementById("involvement");
+
+      involvementOutput.value = involvementInput.value;
+
+      involvementInput.addEventListener("input", () => {
+        involvementOutput.value = involvementInput.value;
+      });
+    </script>
+  </body>
+</html>
