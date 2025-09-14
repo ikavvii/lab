@@ -48,9 +48,6 @@ int main()
     int returnSize;
     char ** answer = letterCombinations(digits, &returnSize);
 
-    // print the answer
-
-
 
     button *current, *tmp;
     HASH_ITER(hh, buttons, current, tmp)
@@ -65,42 +62,36 @@ int main()
 char **letterCombinations(char *digits, int *returnSize)
 {
 
-    // get total number of combinations possible
-    int combinations = 0;
-    for (int i = 0; i < strlen(digits); i++) {
-        combinations = combinations ? combinations : 1; 
-        int number = digits[i] - '0';
-        if ( number == 7 || number == 9) {
-            combinations *= 4;
-        } else {
-            combinations *= 3;
-        }
-    }
-
-    // allocate memory for array of strings (array of pointers)
-    char ** result = malloc(pow(4, strlen(digits)) * sizeof(char*));
+    char ** result = malloc(4 * strlen(digits) * sizeof(char*));
 
     if (result == NULL) {
         return NULL;
     }
 
-
-    // allocate memory for individual strings in created string array
-    for (int i = 0; i < combinations; i++) {
-        result[i] = malloc(sizeof(char) * (strlen(digits)+1));
+    for (int i = 0; i < strlen((char*)result); i++) {
+        result[i] = malloc(sizeof(char) * strlen(digits));
         if (result[i]==NULL) {
             return NULL;
         }
     }
 
-    // call recursively 
-    int i = 0;
-    int number = digits[i] - '0';
-    button *btn;
-    HASH_FIND_INT(buttons, &number, btn);
+    for (int i = 0; i < strlen(digits); i++)
+    {
 
-    for (int j = 0; j < strlen(btn->letters); j++) {
-        
+        int number = digits[i] - '0';
+
+        button *btn;
+
+        HASH_FIND_INT(buttons, &number, btn);
+
+        if (btn != NULL)
+        {
+            for (int i = 0; i < strlen(btn->letters); i++)
+            {
+                printf("%c", btn->letters[i]);
+            }
+            printf("\n");
+        }
     }
 
     return result;
