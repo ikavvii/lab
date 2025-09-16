@@ -491,7 +491,16 @@ select empname, hiredate from EMPLOYEE order by HIREDATE desc;
 -- 10 rows selected. 
 
 -- 32. Display employees sorted first by Job, then by Salary (descending).
+SELECT EMPNAME, JOB, SALARY FROM employee order BY JOB, SALARY desc;
 
+-- 33. Find the sum of salaries for department 30.
+SELECT EMPNAME, DEPTID, SALARY FROM EMPLOYEE WHERE DEPTID=30;
+SELECT SUM(SALARY) FROM EMPLOYEE WHERE DEPTID=30;
 
+-- 34. Display the highest commission paid to any employee.
+SELECT MAX(COMMISSION) FROM EMPLOYEE;
+
+-- 35. Find the department with the maximum number of employees (using GROUP BY + ORDER BY).
+SELECT DEPARTMENT, 
 
 commit;
