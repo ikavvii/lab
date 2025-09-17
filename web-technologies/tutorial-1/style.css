@@ -1,0 +1,131 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+  position: relative;
+}
+
+header {
+  position: sticky;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  position: fixed;
+  background-color: rgba(45, 197, 207, 0.582);
+  z-index: 100;
+}
+
+h1 {
+  padding: 8px;
+  color: #2c1f1f;
+}
+.content {
+  display: flex;
+}
+
+nav {
+  position: fixed;
+  left: 0;
+  background-color: rgb(184, 247, 247);
+  height: 100vh;
+  width: 160px;
+  padding: 8px;
+  padding-top: 32px;
+}
+
+nav > ul > li > a {
+  color: rgb(29, 16, 221);
+  text-decoration: none;
+}
+
+li {
+  list-style: none;
+  margin-bottom: 4px;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+img {
+  width: 100px;
+}
+
+.card img {
+  width: 200px;
+  margin-bottom: 4px;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  padding: 4px;
+  margin: 8px 4px 4px 160px;
+}
+
+.images {
+  margin-top: 64px;
+  display: flex;
+  min-width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  padding: 4px;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  border: 2px solid #a39d9d;
+  border-radius: 8px;
+  padding: 8px;
+  align-items: center;
+}
+
+.card:hover {
+  border: 2px solid #1360a8;
+}
+
+.cards {
+  display: flex;
+  gap: 16px;
+  margin: 16px;
+  justify-content: center;
+}
+
+button {
+  position: fixed;
+  bottom: 100px;
+  right: 20px;
+  width: fit-content;
+  padding: 4px 8px;
+  background-color: rgb(84, 204, 178);
+  font-style: italic;
+  color: #4428e2;
+}
+
+audio {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  z-index: 101;
+}
+footer {
+  width: 100%;
+  margin-bottom: 100px;
+  display: flex;
+  justify-content: center;
+}
+
+.text {
+  width: 80%;
+  margin: 8px auto;
+  padding: 8px;
+}
+
+small {
+  color: rgb(185, 117, 28);
+}
