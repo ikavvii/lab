@@ -2,14 +2,15 @@
 #include <stdlib.h>
 
 void clearInputBuffer();
-int *removeDuplicates(int *arr);
+int *convert2dTo1dRowMajor(int **arr2d, int arraySize, int *arrayLengths, int *returnLength);
 void mergeSort(int *arr, int left, int right);
 void merge(int *arr, int left, int mid, int right);
+int *removeDuplicatesInSortedArray(int *arr, int arrLength, int *returnLength);
 
 int main()
 {
     int numSections;
-    
+
     printf("Number of sections in warehouse: ");
     scanf("%d", &numSections);
     clearInputBuffer();
@@ -31,11 +32,12 @@ int main()
     {
         int *section = NULL;
         int numSectionItems = 0;
-        printf("Section %d: [", i + 1);
+        printf("Section %d: ", i + 1);
 
         int itemId;
-        char nextChar;
-        while (scanf("%d%c", &itemId, &nextChar) == 2)
+
+        // jagged array
+        while (scanf("%d", &itemId) == 1)
         {
             int *temp = (int *)realloc(section, (numSectionItems + 1) * sizeof(int));
             if (temp == NULL)
@@ -48,13 +50,16 @@ int main()
             section[numSectionItems++] = itemId;
             sectionLengths[i] = numSectionItems;
 
-            if (nextChar == '\n' ) {
+            char c = getchar();
+            if (c == '\n')
+            {
                 break;
             }
         }
         sections[i] = section;
     }
 
+    printf("\nInput: \n");
     for (int i = 0; i < numSections; i++)
     {
         for (int j = 0; j < sectionLengths[i]; j++)
@@ -66,12 +71,41 @@ int main()
 
     printf("\n");
 
-    // merge sections
-    int mergedSectionLength = 0;
+    // merge sections or flatten 2d array
+    int mergedSectionsLength;
+    int *mergedSections = convert2dTo1dRowMajor(sections, numSections, sectionLengths, &mergedSectionsLength);
+
+    printf("Length of Item IDs after merging sections: %d\n\n", mergedSectionsLength);
+
+    printf("Merged array: \n");
+    for (int i = 0; i < mergedSectionsLength; i++)
+    {
+        printf("%d ", mergedSections[i]);
+    }
+    printf("\n\n");
 
     // sort sections
+    mergeSort(mergedSections, 0, mergedSectionsLength - 1);
+
+    // print after sorting
+    printf("After sorting Item IDs in ascending order: \n");
+    for (int i = 0; i < mergedSectionsLength; i++)
+    {
+        printf("%d ", mergedSections[i]);
+    }
+    printf("\n\n");
 
     // remove duplicates
+    int sortedUniqueMergedSectionLength;
+    int *sortedUniqueMergedSection = removeDuplicatesInSortedArray(mergedSections, mergedSectionsLength, &sortedUniqueMergedSectionLength);
+
+    // printing after removing duplicates
+    printf("Without duplicate Item IDs: \n");
+    for (int i = 0; i < sortedUniqueMergedSectionLength; i++)
+    {
+        printf("%d ", sortedUniqueMergedSection[i]);
+    }
+    printf("\n\n");
 
     return 0;
 }
@@ -84,26 +118,52 @@ void clearInputBuffer()
     return;
 }
 
-int *removeDuplicates(int *arr)
+int *convert2dTo1dRowMajor(int **arr2d, int arraySize, int *arrayLengths, int *returnLength)
 {
-    int count = 0;
-    int *uniqueArr;
+    *returnLength = 0;
+    for (int i = 0; i < arraySize; i++)
+    {
+        *returnLength += arrayLengths[i];
+    }
+
+    int *arr1d = malloc((*returnLength) * sizeof(int));
+    for (int i = 0; i < arraySize; i++)
+    {
+        for (int j = 0; j < arrayLengths[i]; j++)
+        {
+            int index = 0;
+
+            for (int k = 0; k < i; k++)
+            {
+                index += arrayLengths[k];
+            }
+            index += j;
+            arr1d[index] = arr2d[i][j];
+        }
+    }
+
+    return arr1d;
+}
+
+int *removeDuplicatesInSortedArray(int *arr, int arrLength, int *returnLength)
+{
+    *returnLength = 0;
+    int *uniqueArr = NULL;
     int previousElement = INT_MIN, currentElement;
-    size_t arrLength = sizeof(arr) / sizeof(arr[0]);
 
     for (int i = 0; i < arrLength; i++)
     {
         currentElement = arr[i];
         if (previousElement != currentElement)
         {
-            int *temp = realloc(uniqueArr, (count + 1) * sizeof(int));
+            int *temp = realloc(uniqueArr, ((*returnLength) + 1) * sizeof(int));
             if (temp == NULL)
             {
                 free(uniqueArr);
                 return NULL;
             }
             uniqueArr = temp;
-            uniqueArr[count++] = currentElement;
+            uniqueArr[(*returnLength)++] = currentElement;
             previousElement = currentElement;
         }
     }
