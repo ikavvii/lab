@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Stack</title>
+  </head>
+  <body>
+    <h1>Manipulate JS Array as Stack</h1>
+
+    <script>
+      const STACK_SIZE = 10;
+      let myStack = [].fill(undefined);
+      let top = -1;
+      
+      function push(S, element) {
+        if (top === STACK_SIZE - 1) {
+          alert("Stack is Full.");
+          return;
+        }
+        if (typeof element !== "number") {
+          alert("Only numbers can be pushed.");
+          return;
+        }
+        S[++top] = element;
+        return S;
+      }
+
+      /**
+       * @params {S}
+       * @returns {item} Returns the popped element
+       */
+      function pop(S) {
+        if (top == -1) {
+          alert("Stack is Empty.");
+          return null;
+        }
+        return S[top--];
+      }
+
+      function find(S, searchElement) {
+        
+      }
+
+      function length(S) {
+        return S.filter((element) => element != undefined).length;
+      }
+
+      function isFloat(number) {
+        return Number.isFinite(number) && !Number.isInteger(number);
+      }
+
+      function isInteger(number) {
+        return number % 1 === 0;
+      }
+
+      function countNumbers(S) {
+        let numIntegers = 0,
+          numFloats = 0;
+        S.foreach((element) => {
+          if (isInteger(element)) numIntegers++;
+          if (isFloat(element)) numFloats++;
+        });
+        return [numIntegers, numFloats]
+      }
+
+      function print(S) {
+        for(let i = 0; i < length(S); i++) {
+
+        }
+      }
+    </script>
+  </body>
+</html>
