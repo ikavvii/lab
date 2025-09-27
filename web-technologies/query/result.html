@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Result of Sum Calculation</title>
+  </head>
+  <body>
+    <h2>Result</h2>
+    <p id="result"></p>
+
+    <script>
+      // Get query parameters
+      const urlParams = new URLSearchParams(window.location.search);
+      const num1 = parseInt(urlParams.get("num1")) || 0;
+      const num2 = parseInt(urlParams.get("num2")) || 0;
+
+      // Calculate sum
+      const sum = num1 + num2;
+
+      // Display result
+      document.getElementById(
+        "result"
+      ).textContent = `The sum of ${num1} and ${num2} is ${sum}.`;
+    </script>
+  </body>
+</html>
