@@ -1,0 +1,2 @@
+prompt = require("prompt-sync")()
+
