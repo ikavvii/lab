@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <string.h>
+#include <limits.h>
 
 #define STACK_MAX_SIZE 100
 
@@ -9,100 +10,166 @@ typedef struct Stack
 {
     int data[STACK_MAX_SIZE];
     int min[STACK_MAX_SIZE];
-    int TOP;
+    int top;
 } Stack;
-
-Stack STACK = {.TOP = -1}; // designated initializers
 
 bool isFull(Stack *s)
 {
-    return s->TOP == STACK_MAX_SIZE - 1;
+    return s->top == STACK_MAX_SIZE - 1;
 }
 
 bool isEmpty(Stack *s)
 {
-    return s->TOP == -1;
+    return s->top == -1;
 }
 
-void push(Stack *s, int item)
+int push(Stack *s, int item)
 {
     if (isFull(s))
-        return;
-    s->data[++(s->TOP)] = item;
-    if (s->TOP == 0)
+        return -1;
+    s->data[++(s->top)] = item;
+    if (s->top == 0)
     {
-        s->min[s->TOP] = item;
+        s->min[s->top] = item;
     }
     else
     {
-        s->min[s->TOP] = item < s->min[s->TOP - 1] ? item : s->min[s->TOP - 1];
+        s->min[s->top] = item < s->min[s->top - 1] ? item : s->min[s->top - 1];
     }
-    return;
+    return 0;
 }
 
-void pop(Stack *s)
+int pop(Stack *s, int *item)
 {
     if (isEmpty(s))
+        return -1;
+    *item = s->data[s->top--];
+    return 0;
+}
+
+int top(Stack *s, int *item)
+{
+    if (isEmpty(s))
+        return -1;
+    *item = s->data[s->top];
+    return 0;
+}
+
+int getMin(Stack *s, int *item)
+{
+    if (isEmpty(s))
+        return -1;
+    *item = s->min[s->top];
+    return 0;
+}
+
+void printStack(Stack *s)
+{
+    if (isEmpty(s))
+    {
+        printf("Stack is empty\n");
         return;
-    (s->TOP)--;
-}
-
-int top(Stack *s)
-{
-    return isEmpty(s) ?  : s->data[s->TOP];
-}
-
-int getMin(Stack *s)
-{
-    return isEmpty(s) ? (int)NULL : s->min[s->TOP];
+    }
+    printf("\nStack elements: \n");
+    for (int i = 0; i <= s->top; i++)
+    {
+        printf("| %d ", s->data[i]);
+    }
+    printf("<-- top\n");
+    printf("\nMin elements: \n");
+    for (int i = 0; i <= s->top; i++)
+    {
+        printf("| %d ", s->min[i]);
+    }
+    printf("<-- top\n");
+    printf("\n");
 }
 
 int main()
 {
-    char operations[][10] = {"push", "push", "push", "getMin", "pop", "top", "getMin"};
+    Stack STACK = {.top = -1}; // designated initializers
 
-    int arguments[][1] = {{-2}, {0}, {-3}, {}, {}, {}, {}};
-
-    int output[7];
-
-    for (int i = 0; i < 7; i++)
+    int status, item;
+    enum
     {
-        if (strcmp(operations[i], "push") == 0)
-        {
-            push(&STACK, arguments[i][0]);
-            output[i] = NULL;
-        }
-        else if (strcmp(operations[i], "pop") == 0)
-        {
-            pop(&STACK);
-            output[i] = NULL;
-        }
-        else if (strcmp(operations[i], "top") == 0)
-        {
-            output[i] = top(&STACK);
-        }
-        else if (strcmp(operations[i], "getMin") == 0)
-        {
-            output[i] = min(&STACK);
-        }
-        else
-        {
-            continue;
-        }
-    }
+        PUSH = 1,
+        POP,
+        TOP,
+        GETMIN,
+        EXIT
+    } choice;
 
-    int expectedOutput[] = {NULL, NULL, NULL, -3, NULL, 0, -2};
+    printf("Min Stack Implementation\n");
 
-    for (int i = 0; i < 7; i++)
+    do
     {
-        if (output[i] != expectedOutput[i])
+        printf("1. push | 2. pop | 3. top | 4. getMin | 5. exit\n");
+        printStack(&STACK);
+        printf("Enter your choice: ");
+        if (scanf("%d", &choice) != 1)
         {
-            printf("Test case %d failed: expected %d, got %d\n", i + 1, expectedOutput[i], output[i]);
-            return 1;
+            printf("Invalid input. Exiting.\n");
+            break;
         }
-    }
+        switch (choice)
+        {
+        case PUSH:
+            printf("Enter value to push: ");
+            if (scanf("%d", &item) != 1)
+            {
+                printf("Invalid input. Exiting.\n");
 
-    printf("All test cases passed!\n");
+                int ch;
+                while ((ch = getchar()) != '\n' && ch != EOF)
+                    ;
+                return 1;
+            }
+            status = push(&STACK, item);
+            if (status == -1)
+            {
+                printf("Stack overflow\n");
+            }
+            break;
+        case POP:
+            status = pop(&STACK, &item);
+            if (status == 0)
+            {
+                printf("Popped element: %d\n", item);
+            }
+            else if (status == -1)
+            {
+                printf("Stack underflow\n");
+            }
+            break;
+        case TOP:
+            status = top(&STACK, &item);
+            if (status != -1)
+            {
+                printf("Top element: %d\n", item);
+            }
+            else
+            {
+                printf("Stack is empty\n");
+            }
+            break;
+        case GETMIN:
+            status = getMin(&STACK, &item);
+            if (status != -1)
+            {
+                printf("Minimum element: %d\n", item);
+            }
+            else
+            {
+                printf("Stack is empty\n");
+            }
+            break;
+        case EXIT:
+            printf("Exiting program.\n");
+            break;
+        default:
+            printf("Invalid choice\n");
+        }
+    } while (choice != EXIT);
 
     return 0;
 }
