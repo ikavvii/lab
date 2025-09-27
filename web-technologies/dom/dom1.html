@@ -35,6 +35,12 @@
       input[type="number"] {
         -moz-appearance: textfield;
         appearance: textfield;
+        padding: 5px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        width: 200px;
+        margin: 5px 0;
       }
 
       input::-webkit-outer-spin-button,
@@ -69,19 +75,70 @@
         // Calculate sum
         const sum = a + b;
 
-
         // Display in readonly text box
         document.getElementById("result-label").textContent = "Sum:";
         document.getElementById("result").value = sum;
+        document.getElementById("result").hidden = false;
+      }
 
-        return sum;
+      function calculateDifference() {
+        // Get input values
+        const a = parseInt(document.getElementById("num1").value) || 0;
+        const b = parseInt(document.getElementById("num2").value) || 0;
+
+        // Calculate difference
+        const difference = a - b;
+
+        // Display in readonly text box
+        document.getElementById("result-label").textContent = "Difference:";
+        document.getElementById("result").value = difference;
+        document.getElementById("result").hidden = false;
+      }
+
+      function calculateProduct() {
+        // Get input values
+        const a = parseInt(document.getElementById("num1").value) || 0;
+        const b = parseInt(document.getElementById("num2").value) || 0;
+
+        // Calculate product
+        const product = a * b;
+
+        // Display in readonly text box
+        document.getElementById("result-label").textContent = "Product:";
+        document.getElementById("result").value = product;
+        document.getElementById("result").hidden = false;
+      }
+
+      function calculateQuotient() {
+        // Get input values
+        const a = parseInt(document.getElementById("num1").value) || 0;
+        const b = parseInt(document.getElementById("num2").value) || 0;
+
+        // Calculate quotient
+        if (b === 0) {
+          alert("Division by zero is not allowed.");
+          return null;
+        }
+        const quotient = a / b;
+
+        // Display in readonly text box
+        document.getElementById("result-label").textContent = "Quotient:";
+
+        document.getElementById("result").value = quotient;
+        document.getElementById("result").hidden = false;
+      }
+
+      function resetForm() {
+        document.getElementById("result").hidden = true;
+        document.getElementById("result").value = "";
+        document.getElementById("result-label").textContent = "";
       }
     </script>
   </head>
   <body>
     <form action="">
-      <h2>Enter Two Numbers</h2>
-
+      <h2 style="text-align: center">Enter Two Numbers</h2>
+      <br />
       <label for="num1">First Number:</label>
       <input
         type="number"
@@ -104,33 +161,35 @@
         onclick="return validate() && calculateSum()"
       >
         Calculate Sum</button
-      >
+      ><br /><br />
       <button
         type="button"
         class="calculate-button"
         onclick="return validate() && calculateDifference()"
       >
         Calculate Difference</button
-      >
+      ><br /><br />
       <button
         type="button"
         class="calculate-button"
         onclick="return validate() && calculateProduct()"
       >
         Calculate Product</button
-      >
+      ><br /><br />
       <button
         type="button"
         class="calculate-button"
         onclick="return validate() && calculateQuotient()"
       >
         Calculate Quotient</button
-      >
-      <button type="reset" class="reset-button">Reset</button>
+      ><br /><br />
+      <button type="reset" class="reset-button" onclick="resetForm()">
+        Reset
+      </button>
       <br /><br />
 
       <label for="result" id="result-label"></label>
-      <input type="text" id="result" readonly />
+      <input type="number" id="result" readonly hidden />
     </form>
   </body>
 </html>
