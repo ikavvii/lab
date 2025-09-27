@@ -7,43 +7,73 @@
   </head>
   <body>
     <h1>Manipulate JS Array as Stack</h1>
-
+    <div id="stack-info"></div>
+    <hr />
+    <button onclick="pushElement()">Push</button>
+    <button onclick="popElement()">Pop</button>
+    <button onclick="findElement()">Find</button>
+    <button onclick="printElements()">Print</button>
     <script>
       const STACK_SIZE = 10;
-      let myStack = [].fill(undefined);
-      let top = -1;
-      
-      function push(S, element) {
-        if (top === STACK_SIZE - 1) {
+      const myStack = new Array(STACK_SIZE).fill(null);
+      var stackTopIndex = -1;
+
+      let stackInfoElement = document.getElementById("stack-info");
+
+      function updateStackInfo() {
+        stackInfoElement.innerHTML = `
+         <p>Stack Size: ${STACK_SIZE}</p>
+         <p>Current Size: ${length(myStack)}</p>
+         <p>Stack Elements: [${myStack
+           .map((element) => `<span>${element ?? "null"}</span>`)
+           .join(" | ")}]</p>`;
+      }
+
+      function pushElement() {
+        let element = parseFloat(prompt("Enter a number to push:"));
+        push(element);
+        updateStackInfo();
+      }
+
+      function push(element) {
+        if (stackTopIndex === STACK_SIZE - 1) {
           alert("Stack is Full.");
           return;
         }
-        if (typeof element !== "number") {
+        if (typeof element != "number") {
           alert("Only numbers can be pushed.");
           return;
         }
-        S[++top] = element;
-        return S;
+        myStack[++stackTopIndex] = element;
       }
 
       /**
-       * @params {S}
-       * @returns {item} Returns the popped element
+       * @param {Array} myStack The stack array
+       * @returns {number | null} Returns the popped element
        */
-      function pop(S) {
-        if (top == -1) {
+      function pop() {
+        if (stackTopIndex == -1) {
           alert("Stack is Empty.");
           return null;
         }
-        return S[top--];
+        return myStack[stackTopIndex--];
       }
 
-      function find(S, searchElement) {
-        
+      function find(searchElement) {
+        for (let i = 0; i <= stackTopIndex; i++) {
+          if (myStack[i] === searchElement)
+            return { index: i, element: myStack[i] };
+        }
       }
 
-      function length(S) {
-        return S.filter((element) => element != undefined).length;
+      function length() {
+        return myStack.filter((element) => element != undefined).length;
+      }
+
+      function print() {
+        for (let i = 0; i <= stackTopIndex; i++) {
+          console.log(myStack[i]);
+        }
       }
 
       function isFloat(number) {
@@ -54,21 +84,25 @@
         return number % 1 === 0;
       }
 
-      function countNumbers(S) {
+      function countNumbers() {
         let numIntegers = 0,
           numFloats = 0;
-        S.foreach((element) => {
+        myStack.forEach((element) => {
           if (isInteger(element)) numIntegers++;
           if (isFloat(element)) numFloats++;
         });
-        return [numIntegers, numFloats]
+        return [numIntegers, numFloats];
       }
 
-      function print(S) {
-        for(let i = 0; i < length(S); i++) {
-
-        }
+      function toFixed(digits) {
+        return myStack.map((element) => element.toFixed(digits));
       }
+
+      function sum() {
+        return myStack.reduce((acc, curr) => acc + curr, 0);
+      }
+
+      updateStackInfo();
     </script>
   </body>
 </html>
