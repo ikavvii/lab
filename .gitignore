@@ -2,3 +2,4 @@
 /lab-private/
 .vscode
 a.out
+/node_modules
