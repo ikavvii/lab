@@ -13,7 +13,6 @@
     <button onclick="pushElement()">Push</button>
     <button onclick="popElement()">Pop</button>
     <button onclick="findElement()">Find</button>
-    <button onclick="printElements()">Print</button>
     <button onclick="countElements()">Count Numbers</button>
     <button onclick="toFixedElements()">To Fixed</button>
     <button onclick="sumElements()">Sum</button>
@@ -21,7 +20,7 @@
     <hr />
     <script>
       const STACK_SIZE = 10;
-      const myStack = new Array(STACK_SIZE).fill(null);
+      const myStack = new Array(STACK_SIZE);
       var stackTopIndex = -1;
 
       let stackInfoElement = document.getElementById("stack-info");
@@ -46,7 +45,7 @@
           alert("Stack is Full.");
           return;
         }
-        if (typeof element != "number") {
+        if (typeof element != "number" || isNaN(element)) {
           alert("Only numbers can be pushed.");
           return;
         }
@@ -96,12 +95,6 @@
         return stackTopIndex + 1;
       }
 
-      function print() {
-        for (let i = 0; i <= stackTopIndex; i++) {
-          console.log(myStack[i]);
-        }
-      }
-
       function isFloat(number) {
         return Number.isFinite(number) && !Number.isInteger(number);
       }
@@ -110,22 +103,56 @@
         return number % 1 === 0;
       }
 
-      function countNumbers() {
+      function countElements() {
+        let [numIntegers, numFloats] = count();
+        document.getElementById(
+          "stack-message"
+        ).innerText = `Count -> Integers: ${numIntegers}, Floats: ${numFloats}`;
+      }
+
+      function count() {
         let numIntegers = 0,
           numFloats = 0;
-        myStack.forEach((element) => {
-          if (isInteger(element)) numIntegers++;
-          if (isFloat(element)) numFloats++;
-        });
+        for (let i = 0; i <= stackTopIndex; i++) {
+          if (isInteger(myStack[i])) numIntegers++;
+          else if (isFloat(myStack[i])) numFloats++;
+        }
         return [numIntegers, numFloats];
       }
 
-      function toFixed(digits) {
-        return myStack.map((element) => element.toFixed(digits));
+      function toFixedElements() {
+        var digits = parseInt(prompt("Enter number of digits for toFixed:"));
+        if (isNaN(digits) || digits < 0) {
+          alert("Please enter a valid non-negative integer.");
+          return;
+        }
+        toFixedStack(digits);
+        updateStackInfo();
+      }
+
+      function toFixedStack(digits) {
+        for (let i = 0; i <= stackTopIndex; i++) {
+          if (isFloat(myStack[i])) {
+            myStack[i] = Number(myStack[i].toFixed(digits));
+          }
+        }
+      }
+
+      function sumElements() {
+        let total = sum();
+        document.getElementById(
+          "stack-message"
+        ).innerText = `Sum of Elements: ${total}`;
       }
 
       function sum() {
-        return myStack.reduce((acc, curr) => acc + curr, 0);
+        let total = 0;
+        for (let i = 0; i <= stackTopIndex; i++) {
+          if (typeof myStack[i] === "number" && !isNaN(myStack[i])) {
+            total += myStack[i];
+          }
+        }
+        return total;
       }
 
       updateStackInfo();
