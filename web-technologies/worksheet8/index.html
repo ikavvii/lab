@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>DOM Selection Lab</title>
+  </head>
+  <body>
+    <h2 id="heading">Welcome to DOM Lab</h2>
+    <p id="para1">This is the first paragraph.</p>
+    <p class="intro">This is the second paragraph with class intro.</p>
+    <p class="intro">This is the third paragraph with class intro.</p>
+    <p name="note">This paragraph uses a name attribute.</p>
+
+    <ul>
+      <li class="item">Apple</li>
+      <li class="item">Banana</li>
+      <li class="item">Cherry</li>
+    </ul>
+
+    <button onclick="runCode()">Run</button>
+    <div id="output"></div>
+
+    <!-- 21. Add a button that, when clicked, uses querySelectorAll("p") to increase the font size of all paragraphs by 2px. -->
+    <button
+      type="button"
+      onclick="Array.from(document.querySelectorAll('p')).forEach(p => p.style.fontSize = `${(parseInt(getComputedStyle(p).fontSize) + 2)}px`)"
+    >
+      Increase Font Size
+    </button>
+    <button type="button" id="highlight-list-items">Highlight</button>
+
+    <!-- 24. Add an input box where a user can type a tag name (e.g., p or li). On pressing a button, display how many such elements are in the document. (Hint: getElementsByTagName).
+ -->
+    <form action="">
+      <input type="text" id="tag-name" placeholder="Enter tag name" />
+      <input
+        type="submit"
+        value="Count Tags"
+        onclick="
+          event.preventDefault();
+          const tagName = document.getElementById('tag-name').value;
+          const count = document.getElementsByTagName(tagName).length;
+          alert(`There are ${count} <${tagName}> elements.`);"
+      />
+    </form>
+    <script>
+      function runCode() {
+        // Students write their JavaScript code here
+
+        // Part A: Traditional DOM Methods
+
+        // 1. Use getElementById to change the text of the <h2> heading to "DOM Lab in Progress".
+        document.getElementById("heading").textContent = "DOM Lab in Progress";
+
+        // 2. Use getElementsByClassName to change the text color of all paragraphs with class intro to blue.
+
+        var introElements = document.getElementsByClassName("intro");
+        for (var i = 0; i < introElements.length; i++) {
+          introElements[i].style.color = "blue";
+        }
+
+        // 3. Use getElementsByTagName to count all <p> elements and display the total in #output.
+
+        var paragraphs = document.getElementsByTagName("p");
+        document.getElementById("output").textContent = paragraphs.length;
+
+        // 4. Use getElementsByName to change the background color of the <p> with name="note".
+
+        document.getElementsByName("note")[0].style.backgroundColor = "yellow";
+
+        // Part B: Using querySelector and querySelectorAll
+
+        // 5. Use querySelector to select the first <li> in the list and make its text bold.
+
+        document.querySelector("li").style.fontWeight = "bold";
+
+        // 6. Use querySelector to select the paragraph with id para1 and append the text "(Modified)" to it.
+
+        var para1 = document.querySelector("#para1");
+        para1.textContent += "(Modified)";
+
+        // 7. Use querySelectorAll to select all list items and change their text color to green.
+
+        var listItems = document.querySelectorAll(".item");
+        for (var i = 0; i < listItems.length; i++) {
+          listItems[i].style.color = "green";
+        }
+
+        // 8. Use querySelectorAll to loop through all paragraphs with class intro and log their text content to the console.
+        var introParas = document.querySelectorAll(".intro");
+        introParas.forEach((Element) => {
+          console.log(Element.textContent);
+        });
+
+        // Part C: Compare Methods
+
+        /** 9.
+         * Try to select the same element (the <p id="para1">) using:
+         * getElementById
+         * querySelector("#para1")
+         * Compare the results in the console. Are they the same object?
+         */
+        var para1ById = document.getElementById("para1");
+        console.log(para1ById === para1); // true
+        console.log(para1);
+        console.log(para1ById);
+
+        /* 10.
+         * Try to select all .intro paragraphs using:
+         * getElementsByClassName("intro")
+         * querySelectorAll(".intro")
+         * Notice the difference in return type (HTMLCollection vs NodeList).
+         */
+        console.log(introElements);
+        console.log(introParas);
+        console.log(introElements === introParas); // false
+
+        // Part D: Practical Styling and Manipulation
+
+        // 11. Use querySelector("ul li:last-child") to select the last list item and change its text to "Orange".
+
+        document.querySelector("ul li:last-child").textContent = "Orange";
+
+        // 12. Use querySelectorAll(".item") to add numbers before each fruit name (1. Apple, 2. Banana, etc.).
+        listItems.forEach((Element, index) => {
+          Element.textContent = `${index + 1}. ${Element.textContent}`;
+        });
+
+        // 13. Use getElementsByTagName("p") to hide the second paragraph (hint: style.display = "none")
+
+        // paragraphs[1].style.display = 'none';
+
+        // 14. Use querySelector("p.intro") to underline only the first paragraph with class intro.
+        document.querySelector("p.intro").style.textDecoration = "underline";
+
+        // 15. Use getElementsByClassName("item") to change the background color of all list items to lightyellow.
+        Array.from(document.getElementsByClassName("item")).forEach(
+          (Element) => {
+            Element.style.backgroundColor = "lightyellow";
+          }
+        );
+
+        // Part E: Attribute Access
+
+        // 16. Use querySelector("#heading") and print its tag name in the console.
+
+        console.log(document.querySelector("#heading").tagName);
+
+        // 17. Use document.querySelector("[name='note']") to select the paragraph with name "note" and set its text color to red.
+        document.querySelector("[name='note']").style.color = "red";
+
+        // 18.Use querySelectorAll("p") and log the innerHTML of each paragraph.
+        document.querySelectorAll("p").forEach((Element) => {
+          console.log(Element.innerHTML);
+        });
+
+        // 19. Use getElementById("para1") and change its id to "firstPara".
+        para1ById.id = "firstPara";
+
+        // 20. Use querySelector("ul") to add a new list item <li>Grapes</li> at the end of the list.
+        document.querySelector("ul").innerHTML += "<li>Grapes</li>";
+
+        // Part F: Interactive Tasks
+      }
+
+      // 22. Add a button that highlights all list items when clicked (backgroundColor = "lightgreen").
+      document.getElementById("highlight-list-items").onclick = function () {
+        document.querySelectorAll("li").forEach((Element) => {
+          Element.style.backgroundColor = "lightgreen";
+        });
+      };
+
+      // 25. Use querySelector("h2") to toggle the heading’s color between red and black every time it’s clicked.
+
+
+      document.querySelector("h2").addEventListener("click", function () {
+        this.style.color = this.style.color === "red" ? "black" : "red";
+      });
+    </script>
+  </body>
+</html>
