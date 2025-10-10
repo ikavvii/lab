@@ -1,0 +1,83 @@
+<!-- Example to create array of buttons during runtime  using JavaScript:   -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Color Buttons</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        padding: 20px;
+      }
+      .color-btn {
+        padding: 10px 20px;
+        margin: 5px;
+        border: none;
+        color: white;
+        font-weight: bold;
+        cursor: pointer;
+        border-radius: 5px;
+      }
+      #colorMessage {
+        display: none;
+        margin-top: 20px;
+        padding: 10px 15px;
+        border-radius: 5px;
+        font-size: 18px;
+        font-weight: bold;
+        display: inline-block; /* make div fit content */
+      }
+    </style>
+  </head>
+  <body>
+    <h2>Click a Color Button</h2>
+    <div id="buttonsContainer"></div>
+    <div id="colorMessage"></div>
+    <script>
+      const colors = [
+        "red",
+        "green",
+        "blue",
+        "orange",
+        "purple",
+        "pink",
+        "yellow",
+        "brown",
+        "cyan",
+        "magenta",
+      ];
+      const buttonsContainer = document.getElementById("buttonsContainer");
+      const colorMessage = document.getElementById("colorMessage");
+
+      colors.forEach((color) => {
+        const btn = document.createElement("button");
+        btn.textContent = color.charAt(0).toUpperCase() + color.slice(1);
+        btn.classList.add("color-btn");
+        btn.style.backgroundColor = color;
+        btn.addEventListener("click", function (event) {
+          // event.stopPropagation();
+          colorMessage.style.display = "inline-block";
+          colorMessage.style.backgroundColor = color;
+          colorMessage.textContent = `${
+            color.charAt(0).toUpperCase() + color.slice(1)
+          } is ON`;
+        });
+        buttonsContainer.appendChild(btn);
+      });
+
+      // document.addEventListener("click", function () {
+      //   colorMessage.style.display = "none";
+      // });
+    </script>
+  </body>
+</html>
+
+<!-- Execute to see how an array of elements of the same tag is created using createElement Method. 
+
+
+Remove the stopPropagation method call to check what happens.
+
+
+Understand what happens with stopPropagation method call.
+
+ -->

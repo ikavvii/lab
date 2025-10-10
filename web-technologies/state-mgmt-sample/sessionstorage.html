@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Web Storage Hit Counter</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f8ff;
+      text-align: center;
+      margin-top: 80px;
+    }
+    .counter-box {
+      background: #ffffff;
+      padding: 20px;
+      margin: auto;
+      width: 300px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px #ccc;
+    }
+    h1 { color: #0078D7; }
+  </style>
+</head>
+<body>
+
+  <div class="counter-box">
+    <h1>Website Hit Counter</h1>
+    <p><strong>Total Visits (Local Storage):</strong> <span id="localCount">0</span></p>
+    <p><strong>Session Visits (Session Storage):</strong> <span id="sessionCount">0</span></p>
+  </div>
+
+  <script>
+    // ---- LOCAL STORAGE COUNTER ----
+    if (localStorage.getItem("totalHits")) {
+      localStorage.setItem("totalHits", Number(localStorage.getItem("totalHits")) + 1);
+    } else {
+      localStorage.setItem("totalHits", 1);
+    }
+
+    // ---- SESSION STORAGE COUNTER ----
+    if (sessionStorage.getItem("sessionHits")) {
+      sessionStorage.setItem("sessionHits", Number(sessionStorage.getItem("sessionHits")) + 1);
+    } else {
+      sessionStorage.setItem("sessionHits", 1);
+    }
+
+    // ---- DISPLAY COUNTS ----
+    document.getElementById("localCount").textContent = localStorage.getItem("totalHits");
+    document.getElementById("sessionCount").textContent = sessionStorage.getItem("sessionHits");
+  </script>
+
+</body>
+</html>

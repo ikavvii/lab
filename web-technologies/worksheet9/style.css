@@ -1,0 +1,118 @@
+body {
+  background: #f8f8fa;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.container {
+  background: #fff;
+  padding: 2rem 2.5rem 2.5rem 2.5rem;
+  border-radius: 16px;
+  box-shadow: 0 4px 32px 0 rgba(60,60,85,0.07);
+  display: inline-block;
+  min-width: 320px;
+}
+
+h2 {
+  text-align: center;
+  color: #555;
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  letter-spacing: 1px;
+}
+
+#text-box {
+  width: 100%;
+  font-size: 1.5rem;
+  padding: 0.7rem;
+  margin-bottom: 1.2rem;
+  border: 1px solid #d4d4e2;
+  border-radius: 8px;
+  text-align: right;
+  outline: none;
+  background: #f9f9fd;
+  color: #222;
+  box-sizing: border-box;
+}
+
+#operation-buttons,
+#number-buttons {
+ display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+  margin-bottom: 0.2rem;
+  max-width: 230px; /* Optional: Controls overall keypad width */
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#operation-buttons button,
+#number-buttons button {
+  font-size: 1.1rem;
+  padding: 0.7rem 1.2rem;
+  border: none;
+  border-radius: 8px;
+  background: #edf0f4;
+  color: #333;
+  cursor: pointer;
+  transition: background 0.18s, box-shadow 0.18s;
+  box-shadow: 0 1px 2px 0 rgba(180, 180, 220, 0.08);
+}
+
+#operation-buttons button {
+  background: #e7e7fc;
+  color: #633bff;
+  font-weight: 600;
+}
+
+#operation-buttons button:last-child { /* Clear button */
+  background: #ffe4e4;
+  color: #d43a3a;
+  font-weight: bold;
+}
+
+#operation-buttons button:active,
+#number-buttons button:active {
+  background: #d6e4fa;
+}
+
+#operation-buttons button:focus,
+#number-buttons button:focus {
+  outline: 2px solid #a49fff;
+}
+
+#number-buttons {
+  gap: 0.5rem;
+  margin-bottom: 0.2rem;
+}
+
+#number-buttons button {
+  min-width: 2.5rem;
+  min-height: 2.5rem;
+  font-size: 1.2rem;
+  border-radius: 8px;
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 1.2rem;
+    min-width: 90vw;
+  }
+  #text-box {
+    font-size: 1.1rem;
+    padding: 0.5rem;
+  }
+  #operation-buttons button,
+  #number-buttons button {
+    font-size: 1rem;
+    padding: 0.5rem 0.7rem;
+  }
+}

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html >
+<head>
+  <title>BMI Summary</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="bmi-container">
+    <h1>Your BMI Summary</h1>
+    <div id="summary"></div>
+    <button onclick="window.location.href='index.html'">Back to Calculator</button>
+  </div>
+  <script>
+    // Retrieve data from localStorage
+    const weight = localStorage.getItem("weight");
+    const height = localStorage.getItem("height");
+    const bmi = localStorage.getItem("bmi");
+    const category = localStorage.getItem("category");
+    const note = localStorage.getItem("note");
+
+    const summaryDiv = document.getElementById("summary");
+
+    if (weight && height && bmi) {
+      summaryDiv.innerHTML = `
+        <p><strong>Weight:</strong> ${weight} kg</p>
+        <p><strong>Height:</strong> ${height} m</p>
+        <p><strong>Your BMI:</strong> ${bmi}</p>
+        <p><strong>Category:</strong> ${category}</p>
+        <p>${note}</p>
+      `;
+    } else {
+      summaryDiv.innerHTML = "<p>No BMI data found. Please calculate again.</p>";
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>      <title>Login</title>   </head>
+<body>
+    <h2>Login Page</h2>
+    <form id="loginForm">
+        <label for="username">Username: </label>
+        <input type="text" id="username" required>
+        <button type="submit" onclick="login()">Login</button>
+    </form>
+    <script>
+        // Login form submit event
+        function login() {
+            event.preventDefault(); // Prevent page reload
+            const username = document.getElementById('username').value;
+            if (username) {
+                // Store the username in sessionStorage
+                sessionStorage.setItem('loggedInUser', username);
+                alert('Login successful');
+          // Redirect to another page after login
+                window.location.href = 'welcome.html';
+            }
+        };
+    </script>
+</body>
+</html>

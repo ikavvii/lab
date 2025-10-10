@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>      <title>Welcome</title>
+</head>  
+<body>
+    <h2>Welcome Page</h2>
+    <p id="welcomeMessage">Welcome, Guest!</p>
+    <script>
+        // Retrieve the logged-in username from sessionStorage
+        const loggedInUser = sessionStorage.getItem('loggedInUser');
+        if (loggedInUser) {
+            // Update the welcome message with the username
+            document.getElementById('welcomeMessage').textContent = 'Welcome, ' + loggedInUser + '!';
+        }
+    </script>
+     <button type="submit" onclick="window.location.href='page1.html'">NEXT</button>
+</body>   </html>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Invoice Program</title>
+  <meta charset="UTF-8">
+  <style>
+    body { font-family: Arial; margin: 20px; }
+    input { margin: 5px; }
+    table, th, td { border: 1px solid black; border-collapse: collapse; padding: 8px; }
+    th { background-color: #f0f0f0; }
+  </style>
+</head>
+<body>
+  <h2>Invoice Generator</h2>
+
+  <label>Item Name:</label>
+  <input type="text" id="itemName">
+  <label>Quantity:</label>
+  <input type="number" id="itemQty">
+  <label>Price:</label>
+  <input type="number" id="itemPrice">
+  <button onclick="addItem()">Add Item</button>
+
+  <h3>Invoice Details</h3>
+  <table id="invoiceTable">
+    <thead>
+      <tr>
+        <th>Item</th>
+        <th>Quantity</th>
+        <th>Price</th>
+        <th>Total</th>
+      </tr>
+    </thead>
+    <tbody id="invoiceBody"></tbody>
+  </table>
+
+  <h3 id="grandTotal">Grand Total: ₹0</h3>
+
+  <script>
+    // Step 1️⃣: Create an empty array to hold items
+    let invoiceItems = [];
+
+    function addItem() {
+      // Step 2️⃣: Get input values
+      let name = document.getElementById("itemName").value;
+      let qty = parseInt(document.getElementById("itemQty").value);
+      let price = parseFloat(document.getElementById("itemPrice").value);
+
+      if (name === "" || isNaN(qty) || isNaN(price)) {
+        alert("Please enter valid item details!");
+        return;
+      }
+
+      // Step 3️⃣: Create an object for this item
+      let item = {
+        name: name,
+        quantity: qty,
+        price: price,
+        total: qty * price
+      };
+
+      // Step 4️⃣: Add to array
+      invoiceItems.push(item);
+
+      // Step 5️⃣: Display updated invoice
+      displayInvoice();
+
+      // Step 6️⃣: Clear input fields
+      document.getElementById("itemName").value = "";
+      document.getElementById("itemQty").value = "";
+      document.getElementById("itemPrice").value = "";
+    }
+
+    function displayInvoice() {
+      let tbody = document.getElementById("invoiceBody");
+      tbody.innerHTML = ""; // clear table before reloading
+
+      let grandTotal = 0;
+
+      // Step 7️⃣: Loop through items and create table rows
+      invoiceItems.forEach(item => {
+        let row = `<tr>
+                    <td>${item.name}</td>
+                    <td>${item.quantity}</td>
+                    <td>₹${item.price.toFixed(2)}</td>
+                    <td>₹${item.total.toFixed(2)}</td>
+                  </tr>`;
+        tbody.innerHTML += row;
+        grandTotal += item.total;
+      });
+
+      // Step 8️⃣: Display grand total
+      document.getElementById("grandTotal").innerText = "Grand Total: ₹" + grandTotal.toFixed(2);
+    }
+  </script>
+</body>
+</html>

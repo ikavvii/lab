@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Stringify with Web Storage</title>
+</head>
+<body>
+  <h2>Using JSON.stringify() with localStorage</h2>
+  <p id="output"></p>
+
+  <script>
+    // Create a JS object
+    let user = {
+      name: "Anita",
+      age: 25,
+      course: "Web Development"
+    };
+
+    // Convert object to string before storing
+    localStorage.setItem("userData", JSON.stringify(user));
+
+    // Retrieve data from storage
+    let storedData = localStorage.getItem("userData");
+
+    // Convert string back to object
+    let userObject = JSON.parse(storedData);
+
+    // Display
+    document.getElementById("output").innerHTML =
+      "Name: " + userObject.name + "<br>" +
+      "Age: " + userObject.age + "<br>" +
+      "Course: " + userObject.course;
+  </script>
+</body>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Display Data</title>
+  <meta charset="UTF-8">
+</head>
+<body>
+  <h2>Welcome!</h2>
+  <p id="output"></p>
+
+  <script>
+    // Retrieve the string from localStorage
+    const dataString = localStorage.getItem("userData");
+
+    if (dataString) {
+      // Convert string back to object using parse()
+      const user = JSON.parse(dataString);
+
+      // Display the data
+      document.getElementById("output").innerText =
+        `Your name is: ${user.firstName} ${user.lastName}`;
+    } else {
+      document.getElementById("output").innerText =
+        "No data found. Please go back and enter your details.";
+    }
+  </script>
+</body>
+</html>

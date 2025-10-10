@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>   <title>Another Page</title>
+</head> 
+<body>
+        <p id="usernameDisplay"></p>
+    <script>
+        // Retrieve the logged-in username from sessionStorage
+        const loggedInUser = sessionStorage.getItem('loggedInUser');
+        if (loggedInUser) {
+            // Display the username
+            document.getElementById('usernameDisplay').innerHTML = `<h1 style="text-align:right"> ${loggedInUser} </h1>`;
+        }
+    </script>
+</body>   </html>
