@@ -1,11 +1,89 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>University Form</title>
-</head>
-<body>
-  
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>University Form</title>
+  </head>
+  <body>
+    <form action="./success.html" method="get">
+      <div>
+        <label for="name">Name:</label>
+        <input
+          type="text"
+          id="name"
+          name="name"
+          pattern="[A-Za-z ]{2,100}"
+          title="Please enter a valid name (2-100 letters)."
+          placeholder="Enter your name"
+          required
+          aria-describedby="nameHelp"
+        />
+        <span id="nameHelp"></span>
+      </div>
+      <div>
+        <label for="email">Email:</label>
+        <input type="email"
+          id="email"
+          name="email"
+          placeholder="Enter your email"
+          pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.(com|in|edu)$"
+          title="Please enter a valid email address"
+          required
+        />
+      </div>
+      <div>
+        <label for="password">Password:</label>
+        <input type="password"
+          id="password"
+          name="password"
+          placeholder="Enter your password"
+          pattern=".(?=.*[0-9]).{6,}"
+          title="Please enter a valid password (at least 6 characters, including a number)."
+          required
+        />
+      </div>
+      <div>
+        <label for="phone">Phone:</label>
+        <input type="tel"
+          id="phone"
+          name="phone"
+          placeholder="Enter your phone number"
+          pattern="[1-9]{1}[0-9]{9}"
+          title="Please enter a valid phone number (10 digits)."
+        />
+      </div>
+      <div>
+        <label for="dob">Date of Birth:</label>
+        <input type="date"
+          id="dob"
+          name="dob"
+          required
+        />
+      </div>
+      <div>
+        <label for="rating">Rating:</label>
+        <input type="radio" name="rating" value="1" required /> 1
+        <input type="radio" name="rating" value="2" /> 2
+        <input type="radio" name="rating" value="3" /> 3
+        <input type="radio" name="rating" value="4" /> 4
+        <input type="radio" name="rating" value="5" /> 5
+
+      </div>
+
+      <div>
+        <label for="interests">Interests:</label>
+        <input type="checkbox" name="interests" value="sports" /> Sports
+        <input type="checkbox" name="interests" value="music" /> Music
+        <input type="checkbox" name="interests" value="coding" /> Coding
+        <input type="checkbox" name="interests" value="travel" /> Travel
+        <input type="checkbox" name="interests" value="reading" /> Reading
+      </div>
+
+      <div>
+        <input type="reset" value="Reset" />
+        <input type="submit" value="Submit" />
+      </div>
+    </form>
+  </body>
 </html>

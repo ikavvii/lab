@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Signup Form</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f3f7f9;
+    }
+    .signup-container {
+      width: 340px;
+      margin: 60px auto;
+      padding: 24px 30px 18px 30px;
+      background: #fff;
+      border: 2px solid #333;
+      box-shadow: 0 0 8px #bbb;
+      border-radius: 6px;
+    }
+    h2 {
+      text-align: center;
+      margin: 0 0 18px 0;
+    }
+    .row {
+      margin-bottom: 14px;
+    }
+    label {
+      display: block;
+      margin-bottom: 4px;
+      font-weight: bold;
+    }
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
+      width: 97%;
+      padding: 6px;
+      font-size: 1em;
+      border: 1px solid #aaa;
+      border-radius: 2px;
+    }
+    .btn-row {
+      text-align: center;
+      margin-top: 16px;
+    }
+    button {
+      width: 90px;
+      padding: 7px 0;
+      font-size: 1em;
+      margin: 0 8px;
+      cursor: pointer;
+      background: #f7f7f7;
+      border: 1.5px solid #333;
+      border-radius: 3px;
+      color: #111;
+      font-weight: bold;
+    }
+    .message {
+      text-align: center;
+      margin-top: 50px;
+      font-size: 1.15em;
+    }
+  </style>
+</head>
+<body>
+  <div class="signup-container" id="signupFormDiv">
+    <h2>Signup Form</h2>
+    <form id="signupForm" autocomplete="off">
+      <div class="row">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required>
+      </div>
+      <div class="row">
+        <label for="email">Email ID:</label>
+        <input type="email" id="email" name="email" required>
+      </div>
+      <div class="row">
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+      </div>
+      <div class="btn-row">
+        <button type="submit" id="submitBtn">Submit</button>
+        <button type="button" id="cancelBtn">Cancel</button>
+      </div>
+    </form>
+  </div>
+  <div class="message" id="welcomeMessage" style="display:none"></div>
+
+  <script>
+    // Submit button action
+    document.getElementById("signupForm").onsubmit = function(event) {
+      event.preventDefault();
+      const username = document.getElementById("username").value;
+      const email = document.getElementById("email").value;
+      // Hide form, show welcome message
+      document.getElementById("signupFormDiv").style.display = "none";
+      const msg = `Welcome &lt;${username}&gt; and you will be tracked with this &lt;${email}&gt;`;
+      document.getElementById("welcomeMessage").innerHTML = msg;
+      document.getElementById("welcomeMessage").style.display = "block";
+    };
+
+    // Cancel button action
+    document.getElementById("cancelBtn").onclick = function() {
+      document.getElementById("signupForm").reset();
+      window.close(); // Will close the tab/window if allowed
+    };
+  </script>
+</body>
+</html>
