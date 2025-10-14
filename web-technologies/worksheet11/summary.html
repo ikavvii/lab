@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Expense Tracker</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav id="navbar"></nav>
+
+    <pre><code id="summary"></code></pre>
+    <script src="./script.js"></script>
+    <script>
+        const expenses = JSON.parse(localStorage.getItem("expenses")) || [];
+        const summaryDiv = document.getElementById("summary");
+
+        if (expenses.length === 0) {
+            summaryDiv.innerHTML = "<p>No expenses recorded.</p>";
+        } else {
+            const totalExpenses = expenses.reduce((sum, expense) => sum + parseFloat(expense.amount), 0);
+            summaryDiv.innerHTML = `<p>Total Expenses: $${totalExpenses.toFixed(2)}</p>`;
+            summaryDiv.innerHTML += JSON.stringify(expenses, null, 2);
+        }
+    </script>
+</body>
+</html>

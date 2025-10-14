@@ -1,38 +1,87 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Personal Expense Tracker</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <iframe src="./navbar.html" frameborder="0"></iframe>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <nav id="navbar"></nav>
     <form action="">
-        <div>
-            <label for="amount">Amount: </label>
-            <input type="number" id="amount" min="1">
-        </div>
-        <div>
-            <label for="category">Category: </label>
-            <select name="category" id="category">
-                <option value="" selected disabled>Select</option>
-                <option value="food">Food</option>
-                <option value="stationary">stationary</option>
-                <option value="travel">Travel</option>
-                <option value="entertainment">Entertainment</option>
-            </select>
-        </div>
+      <div>
+        <label for="amount">Amount: </label>
+        <input type="number" id="amount" min="1" />
+      </div>
+      <div>
+        <label for="category">Category: </label>
+        <select name="category" id="category">
+          <option value="" selected disabled>Select</option>
+          <option value="food">Food</option>
+          <option value="stationary">stationary</option>
+          <option value="travel">Travel</option>
+          <option value="entertainment">Entertainment</option>
+        </select>
+      </div>
 
-        <div>
-            <label for="date">Date: </label>
-            <input type="date" id="date">
-        </div>
+      <div>
+        <label for="date">Date: </label>
+        <input type="date" id="date" />
+      </div>
 
-        <div>
-            <button>Add Expense</button>
-            <input type="submit" value="Save">
-        </div>
+      <div>
+        <button>Add Expense</button>
+        <input type="submit" value="Save" />
+      </div>
     </form>
-</body>
+    <script src="./script.js"></script>
+    <script>
+      const currentDate = new Date().toISOString().split("T")[0];
+      const oneMonthAgo = new Date();
+      oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1);
+      const oneMonthAgoStr = oneMonthAgo.toISOString().split("T")[0];
+      document.getElementById("date").setAttribute("max", currentDate);
+      document.getElementById("date").setAttribute("min", oneMonthAgoStr);
+
+
+      function validateInputs() {
+        const amount = document.getElementById("amount").value;
+        const category = document.getElementById("category").value;
+        const date = document.getElementById("date").value;
+
+        if (!amount || amount <= 0) {
+          alert("Please enter a valid amount.");
+          return false;
+        }
+
+        if (!category) {
+          alert("Please select a category.");
+          return false;
+        }
+
+        if (!date || date > currentDate || date < oneMonthAgoStr) {
+          alert("Please select a valid date within the last month.");
+          return false;
+        }
+
+        return true;
+      }
+
+      document
+        .querySelector("form")
+        .addEventListener("submit", function (event) {
+          event.preventDefault();
+          if (validateInputs()) {
+            alert("Expense added successfully!");
+            let expenses = JSON.parse(localStorage.getItem("expenses")) || [];
+            expenses.push({
+              amount: document.getElementById("amount").value,
+              category: document.getElementById("category").value,
+              date: document.getElementById("date").value,
+            });
+            localStorage.setItem("expenses", JSON.stringify(expenses));
+          }
+        });
+    </script>
+  </body>
 </html>

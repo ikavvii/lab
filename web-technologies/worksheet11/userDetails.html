@@ -7,10 +7,11 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <nav id="navbar"></nav>
     <form action="./user.html">
         <div>
             <label for="username">Username: </label>
-            <input type="text" id="username">
+            <input type="text" id="username" pattern="">
         </div>
         <div>
             <label for="email">Email: </label>
@@ -20,6 +21,7 @@
         <div>
             <label for="userRole">User Role: </label>
             <select name="userRole" id="userRole">
+                <option value="" disabled selected>Select</option>
                 <option value="student">Student</option>
                 <option value="staff">Staff</option>
                 <option value="worker">Worker</option>
@@ -30,5 +32,6 @@
             <input type="submit" value="Submit">
         </div>
     </form>
+    <script src="./script.js"></script>
 </body>
 </html>

@@ -7,13 +7,15 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <iframe src="./navbar.html" frameborder="0"></iframe>
-    <iframe src="" frameborder="0" id="view"></iframe>
+    
+    <nav id="navbar"></nav>
+
+    <script src="./script.js"></script>
     <script>
 
         let user = localStorage.getItem('user')
         if (user === null) {
-            document.getElementById("view").setAttribute("src", './userDetails.html')
+            location.href = './userDetails.html'
         }
     </script>
 </body>
