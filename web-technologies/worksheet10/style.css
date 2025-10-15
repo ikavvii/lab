@@ -1,0 +1,17 @@
+#nameHelp , #emailHelp , #passwordHelp , #phoneHelp , #dobHelp , #interestsHelp, #ratingHelp {
+   color: red;
+   font-size: 0.9em;
+ }
+
+main {
+    max-width: 600px;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+}
+
+.valid {
+    color: green;
+}

@@ -1,22 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Personal Expense Tracker</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
     <nav id="navbar"></nav>
-
+    <main>
+      <pre><code id="user-details"></code></pre>
+      <button id="edit-user-button">Edit User</button>
+    </main>
     <script src="./script.js"></script>
     <script>
+      let user = localStorage.getItem("user");
+      if (user === null) {
+        location.href = "./userDetails.html";
+      }
 
-        let user = localStorage.getItem('user')
-        if (user === null) {
-            location.href = './userDetails.html'
-        }
+      document.getElementById("user-details").textContent = JSON.stringify(
+        JSON.parse(user),
+        null,
+        2
+      );
+
+      document.getElementById("edit-user-button").onclick = function () {
+        location.href = "./userDetails.html?edit=true";
+      };
     </script>
-</body>
+  </body>
 </html>

@@ -1,113 +1,120 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>University Form</title>
-  </head>
-  <body>
-    <form
-      action="./success.html"
-      method="get"
-      name="university-survey"
-      id="university-survey"
-      onsubmit="return validateForm()"
-    >
-      <div>
-        <label for="name">Name:</label>
-        <input
-          type="text"
-          id="name"
-          name="name"
-          placeholder="Enter your name"
-          required
-          aria-describedby="nameHelp"
-          aria-invalid="true"
-        />
-        <span id="nameHelp" role="alert" aria-live="assertive"></span>
-      </div>
-      <div>
-        <label for="email">Email:</label>
-        <input
-          type="email"
-          id="email"
-          name="email"
-          placeholder="Enter your email"
-          required
-          aria-describedby="emailHelp"
-          aria-invalid="true"
-        />
-        <span id="emailHelp" role="alert" aria-live="assertive"></span>
-      </div>
-      <div>
-        <label for="password">Password:</label>
-        <input
-          type="password"
-          id="password"
-          name="password"
-          placeholder="Enter your password"
-          pattern=".(?=.*[0-9]).{6,}"
-          title="Please enter a valid password (at least 6 characters, including a number)."
-          required
-          aria-describedby="passwordHelp"
-          aria-invalid="true"
-        />
-        <span id="passwordHelp" role="alert" aria-live="assertive">
+  <!DOCTYPE html>
+  <html lang="en">
+    <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>University Form</title>
+      <link rel="stylesheet" href="./style.css" />
+    </head>
+    <body>
+      <main>
+        <form
+          action="./success.html"
+          method="get"
+          name="university-survey"
+          id="university-survey"
+          onsubmit="return validateForm()"
+        >
+          <div>
+            <label for="name">Name:</label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              placeholder="Enter your name"
+              required
+              aria-describedby="nameHelp"
+              aria-invalid="true"
+            />
+            <span id="nameHelp" role="alert" aria-live="assertive"></span>
+          </div>
+          <div>
+            <label for="email">Email:</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="Enter your email"
+              required
+              aria-describedby="emailHelp"
+              aria-invalid="true"
+            />
+            <span id="emailHelp" role="alert" aria-live="assertive"></span>
+          </div>
+          <div>
+            <label for="password">Password:</label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              placeholder="Enter your password"
+              pattern=".(?=.*[0-9]).{6,}"
+              title="Please enter a valid password (at least 6 characters, including a number)."
+              required
+              aria-describedby="passwordHelp"
+              aria-invalid="true"
+            />
+            <span id="passwordHelp" role="alert" aria-live="assertive">
+              <ul></ul>
+            </span>
+          </div>
+          <div>
+            <label for="phone">Phone:</label>
+            <input
+              type="tel"
+              id="phone"
+              name="phone"
+              placeholder="Enter your phone number"
+              pattern="[1-9]{1}[0-9]{9}"
+              title="Please enter a valid phone number (10 digits)."
+              aria-describedby="phoneHelp"
+              aria-invalid="true"
+            />
+            <span id="phoneHelp" role="alert" aria-live="assertive"></span>
+          </div>
+          <div>
+            <label for="dob">Date of Birth:</label>
+            <input
+              type="date"
+              id="dob"
+              name="dob"
+              required
+              aria-describedby="dobHelp"
+              aria-invalid="true"
+            />
+            <span id="dobHelp" role="alert" aria-live="assertive"></span>
+          </div>
+          <div aria-describedby="ratingHelp" aria-invalid="true">
+            <label>Rating:</label>
+            <input type="radio" name="rating" value="1" required /> 1
+            <input type="radio" name="rating" value="2" /> 2
+            <input type="radio" name="rating" value="3" /> 3
+            <input type="radio" name="rating" value="4" /> 4
+            <input type="radio" name="rating" value="5" /> 5
+            <span id="ratingHelp" role="alert" aria-live="assertive"></span>
+          </div>
 
-          <ul></ul>
-        </span>
-      </div>
-      <div>
-        <label for="phone">Phone:</label>
-        <input
-          type="tel"
-          id="phone"
-          name="phone"
-          placeholder="Enter your phone number"
-          pattern="[1-9]{1}[0-9]{9}"
-          title="Please enter a valid phone number (10 digits)."
-          aria-describedby="phoneHelp"
-          aria-invalid="true"
-        />
-        <span id="phoneHelp" role="alert" aria-live="assertive"></span>
-      </div>
-      <div>
-        <label for="dob">Date of Birth:</label>
-        <input
-          type="date"
-          id="dob"
-          name="dob"
-          required
-          aria-describedby="dobHelp"
-          aria-invalid="true"
-        />
-        <span id="dobHelp" role="alert" aria-live="assertive"></span>
-      </div>
-      <div aria-describedby="ratingHelp" aria-invalid="true">
-        <label for="rating">Rating:</label>
-        <input type="radio" name="rating" value="1" required /> 1
-        <input type="radio" name="rating" value="2" /> 2
-        <input type="radio" name="rating" value="3" /> 3
-        <input type="radio" name="rating" value="4" /> 4
-        <input type="radio" name="rating" value="5" /> 5
-        <span id="ratingHelp" role="alert" aria-live="assertive"></span>
-      </div>
+          <div aria-describedby="interestsHelp" aria-invalid="true">
+            <label>Interests:</label>
+            <input type="checkbox" name="interests" value="sports" />
+            Sports
+            <input type="checkbox" name="interests" value="music" />
+            Music
+            <input type="checkbox" name="interests" value="coding" />
+            Coding
+            <input type="checkbox" name="interests" value="travel" />
+            Travel
+            <input type="checkbox" name="interests" value="reading" />
+            Reading
+            <span id="interestsHelp" role="alert" aria-live="assertive"></span>
+          </div>
 
-      <div aria-describedby="interestsHelp" aria-invalid="true">
-        <label for="interests">Interests:</label>
-        <input type="checkbox" name="interests" value="sports" /> Sports
-        <input type="checkbox" name="interests" value="music" /> Music
-        <input type="checkbox" name="interests" value="coding" /> Coding
-        <input type="checkbox" name="interests" value="travel" /> Travel
-        <input type="checkbox" name="interests" value="reading" /> Reading
-        <span id="interestsHelp" role="alert" aria-live="assertive"></span>
-      </div>
-
-      <div>
-        <input type="reset" value="Reset" />
-        <input type="submit" value="Submit" />
-      </div>
-    </form>
-    <script src="./script.js"></script>
-  </body>
-</html>
+          <div>
+            <input type="reset" value="Reset" />
+            <input type="submit" value="Submit" />
+          </div>
+        </form>
+      </main>
+      <script src="./script.js"></script>
+    </body>
+  </html>

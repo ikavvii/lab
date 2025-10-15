@@ -8,63 +8,134 @@
   </head>
   <body>
     <nav id="navbar"></nav>
-    <form action="">
-      <div>
-        <label for="amount">Amount: </label>
-        <input type="number" id="amount" min="1" />
-      </div>
-      <div>
-        <label for="category">Category: </label>
-        <select name="category" id="category">
-          <option value="" selected disabled>Select</option>
-          <option value="food">Food</option>
-          <option value="stationary">stationary</option>
-          <option value="travel">Travel</option>
-          <option value="entertainment">Entertainment</option>
-        </select>
-      </div>
+    <main>
+      <form action="">
+        <div id="expenses-container">
+          <div id="expense-row">
+            <div>
+              <label for="amount-0">Amount: </label>
+              <input type="number" id="amount-0" min="1" />
+              <span class="amount-help-0"></span>
+            </div>
+            <div>
+              <label for="category-0">Category: </label>
+              <select name="category" id="category-0">
+                <option value="" selected disabled>Select</option>
+                <option value="food">Food</option>
+                <option value="stationary">stationary</option>
+                <option value="travel">Travel</option>
+                <option value="entertainment">Entertainment</option>
+              </select>
+              <span class="category-help-0"></span>
+            </div>
 
-      <div>
-        <label for="date">Date: </label>
-        <input type="date" id="date" />
-      </div>
-
-      <div>
-        <button>Add Expense</button>
-        <input type="submit" value="Save" />
-      </div>
-    </form>
+            <div>
+              <label for="date-0">Date: </label>
+              <input type="date" id="date-0" />
+              <span class="date-help-0"></span>
+            </div>
+          </div>
+        </div>
+        <div>
+          <button id="add-expense-button">Add Expense</button>
+          <input type="submit" value="Save" />
+        </div>
+      </form>
+    </main>
     <script src="./script.js"></script>
     <script>
       const currentDate = new Date().toISOString().split("T")[0];
       const oneMonthAgo = new Date();
       oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1);
       const oneMonthAgoStr = oneMonthAgo.toISOString().split("T")[0];
-      document.getElementById("date").setAttribute("max", currentDate);
-      document.getElementById("date").setAttribute("min", oneMonthAgoStr);
+      document.getElementById("date-0").setAttribute("max", currentDate);
+      document.getElementById("date-0").setAttribute("min", oneMonthAgoStr);
 
+      let expenseCount = 1;
+      document
+        .getElementById("add-expense-button")
+        .addEventListener("click", function (event) {
+          event.preventDefault();
+          const expensesContainer =
+            document.getElementById("expenses-container");
+          const newExpenseRow = document.createElement("div");
+          newExpenseRow.class = "expense-row";
+          newExpenseRow.innerHTML = `
+            <div>
+              <label for="amount-${expenseCount}">Amount: </label>
+              <input type="number" id="amount-${expenseCount}" min="1" />
+              <span class="amount-help-${expenseCount}"></span>
+            </div>
+            <div>
+              <label for="category-${expenseCount}">Category: </label>
+              <select name="category" id="category-${expenseCount}">
+                <option value="" selected disabled>Select</option>
+                <option value="food">Food</option>
+                <option value="stationary">stationary</option>
+                <option value="travel">Travel</option>
+                <option value="entertainment">Entertainment</option>
+              </select>
+              <span class="category-help-${expenseCount}"></span>
 
-      function validateInputs() {
-        const amount = document.getElementById("amount").value;
-        const category = document.getElementById("category").value;
-        const date = document.getElementById("date").value;
+            </div>
 
-        if (!amount || amount <= 0) {
-          alert("Please enter a valid amount.");
-          return false;
-        }
+            <div>
+              <label for="date-${expenseCount}">Date: </label>
+              <input type="date" id="date-${expenseCount}" max="${currentDate}" min="${oneMonthAgoStr}" />
+              <span class="date-help-${expenseCount}"></span>
+            </div>
+          `;
+          expensesContainer.appendChild(newExpenseRow);
+          expenseCount++;
+        });
 
-        if (!category) {
-          alert("Please select a category.");
-          return false;
-        }
+      function validateAmount(row) {
+        const amount = document.getElementById(`amount-${row}`).value;
+        let isValid = !(!amount || amount <= 0);
+        document.querySelector(`.amount-help-${row}`).textContent = isValid
+          ? "✅"
+          : "Please enter a valid amount greater than 0.";
+        return isValid;
+      }
 
-        if (!date || date > currentDate || date < oneMonthAgoStr) {
-          alert("Please select a valid date within the last month.");
-          return false;
+      function validateCategory(row) {
+        const category = document.getElementById(`category-${row}`).value;
+        let isValid = category !== "";
+        document.querySelector(`.category-help-${row}`).textContent = isValid
+          ? "✅"
+          : "Please select a category.";
+        return isValid;
+      }
+
+      function validateDate(row) {
+        const date = document.getElementById(`date-${row}`).value;
+        let isValid = !(!date || date > currentDate || date < oneMonthAgoStr);
+        document.querySelector(`.date-help-${row}`).textContent = isValid
+          ? "✅"
+          : `Please select a valid date within the last month (${oneMonthAgoStr} to ${currentDate}).`;
+        return isValid;
+      }
+
+      function validateInputs(row) {
+        for (let i = 0; i < expenseCount; i++) {
+          if (!validateAmount(i) || !validateCategory(i) || !validateDate(i)) {
+            return false;
+          }
         }
 
         return true;
+      }
+
+      for (let i = 0; i < expenseCount; i++) {
+        document
+          .getElementById(`amount-${i}`)
+          .addEventListener("input", () => validateAmount(i));
+        document
+          .getElementById(`category-${i}`)
+          .addEventListener("change", () => validateCategory(i));
+        document
+          .getElementById(`date-${i}`)
+          .addEventListener("change", () => validateDate(i));
       }
 
       document
@@ -74,12 +145,18 @@
           if (validateInputs()) {
             alert("Expense added successfully!");
             let expenses = JSON.parse(localStorage.getItem("expenses")) || [];
-            expenses.push({
-              amount: document.getElementById("amount").value,
-              category: document.getElementById("category").value,
-              date: document.getElementById("date").value,
-            });
+            for (let i = 0; i < expenseCount; i++) {
+              const expense = {
+                amount: parseFloat(
+                  document.getElementById(`amount-${i}`).value
+                ),
+                category: document.getElementById(`category-${i}`).value,
+                date: document.getElementById(`date-${i}`).value,
+              };
+              expenses.push(expense);
+            }
             localStorage.setItem("expenses", JSON.stringify(expenses));
+            window.location.href = "./summary.html";
           }
         });
     </script>

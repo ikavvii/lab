@@ -10,5 +10,15 @@
   <p>Your form has been submitted successfully.</p>
 
   <button>Display Data</button>
+  <script>
+    document.querySelector('button').addEventListener('click', () => {
+      const params = new URLSearchParams(window.location.search);
+      let output = 'Submitted Data:\n';
+      for (const [key, value] of params.entries()) {
+        output += `${key}: ${value}\n`;
+      }
+      alert(output);
+    });
+  </script>
 </body>
 </html>

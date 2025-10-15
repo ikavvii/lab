@@ -1,3 +1,4 @@
+
 function validateName () {
   const name = document.getElementById('name').value
   const nameRegex = /^[A-Za-z\s]{2,100}$/
@@ -40,6 +41,7 @@ function validatePassword () {
     errorItem1.textContent = 'Password must be at least 6 characters long.'
   } else {
     errorItem1.textContent = '✅ Password length is sufficient.'
+    errorItem1.classList.add('valid')
   }
   errorList.appendChild(errorItem1)
 
@@ -48,6 +50,7 @@ function validatePassword () {
     errorItem2.textContent = 'Password must contain at least one number.'
   } else {
     errorItem2.textContent = '✅ Password contains a number.'
+    errorItem2.classList.add('valid')
   }
   errorList.appendChild(errorItem2)
 
@@ -88,7 +91,7 @@ function validateDob () {
 document.getElementById('dob').addEventListener('blur', validateDob)
 
 function validateRating () {
-  const rating = document.form
+  const rating = document.forms['university-survey']['rating'].value
   const isValid = rating >= 1 && rating <= 5
 
     document.getElementById('ratingHelp').textContent = isValid
@@ -97,7 +100,24 @@ function validateRating () {
   return isValid
 }
 
-document.getElementById('rating').addEventListener('blur', validateRating)
+document.getElementsByName('rating').forEach(radio => {
+  radio.addEventListener('change', validateRating)
+})
+
+function validateInterests () {
+  const interests = document.querySelectorAll('input[name="interests"]:checked')
+  
+  const isValid = !(interests.length === 0)
+
+  document.getElementById('interestsHelp').textContent = isValid
+    ? '✅'
+    : 'Please select at least one interest.'
+  return isValid
+}
+
+document.querySelectorAll('input[name="interests"]').forEach(checkbox => {
+  checkbox.addEventListener('change', validateInterests)
+})
 
 function validateForm () {
   let isValid = true

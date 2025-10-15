@@ -1,37 +1,99 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Personal Expense Tracker</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
     <nav id="navbar"></nav>
-    <form action="./user.html">
+    <main>
+      <form action="./user.html">
         <div>
-            <label for="username">Username: </label>
-            <input type="text" id="username" pattern="">
+          <label for="username">Username: </label>
+          <input
+            type="text"
+            id="username"
+            pattern="[A-Za-z]+( [A-Za-z]+){0,2}"
+            title="Username should only contain letters and can have up to two spaces."
+          />
         </div>
         <div>
-            <label for="email">Email: </label>
-            <input type="email" id="email">
-
+          <label for="email">Email: </label>
+          <input
+            type="email"
+            id="email"
+            pattern="[A-Za-z0-9.]+\.?[A-Za-z0-9]+@[A-Za-z0-9]+\.co.in"
+            title="Email should be in the format: user@domain.co.in"
+          />
         </div>
         <div>
-            <label for="userRole">User Role: </label>
-            <select name="userRole" id="userRole">
-                <option value="" disabled selected>Select</option>
-                <option value="student">Student</option>
-                <option value="staff">Staff</option>
-                <option value="worker">Worker</option>
-                <option value="employer">Employer</option>
-            </select>
+          <label for="userRole">User Role: </label>
+          <select name="userRole" id="userRole">
+            <option value="" disabled selected>Select</option>
+            <option value="student">Student</option>
+            <option value="staff">Staff</option>
+            <option value="worker">Worker</option>
+            <option value="employer">Employer</option>
+          </select>
         </div>
         <div>
-            <input type="submit" value="Submit">
+          <input type="submit" value="Submit" id="submit-button" disabled />
         </div>
-    </form>
+      </form>
+    </main>
     <script src="./script.js"></script>
-</body>
+    <script>
+      const usernameInput = document.getElementById("username");
+      const emailInput = document.getElementById("email");
+      const userRoleSelect = document.getElementById("userRole");
+
+      function populateForm() {
+        const params = new URLSearchParams(window.location.search);
+        if (params.get("edit") === "true") {
+          const user = JSON.parse(localStorage.getItem("user"));
+          if (user) {
+            usernameInput.value = user.username;
+            emailInput.value = user.email;
+            userRoleSelect.value = user.userRole;
+          }
+        } else {
+          const user = localStorage.getItem("user");
+          if (user) {
+            window.location.href = "./user.html";
+          }
+        }
+      }
+
+      populateForm();
+
+      function validateForm() {
+        const isFormValid =
+          usernameInput.checkValidity() &&
+          emailInput.checkValidity() &&
+          userRoleSelect.value !== "";
+        document.getElementById("submit-button").disabled = !isFormValid;
+      }
+
+      usernameInput.addEventListener("input", validateForm);
+      emailInput.addEventListener("input", validateForm);
+      userRoleSelect.addEventListener("change", validateForm);
+
+      document
+        .querySelector("form")
+        .addEventListener("submit", function (event) {
+          event.preventDefault();
+          const user = {
+            username: usernameInput.value,
+            email: emailInput.value,
+            userRole: userRoleSelect.value,
+          };
+
+          localStorage.setItem("user", JSON.stringify(user));
+
+          window.location.href = "./user.html";
+        });
+    </script>
+  </body>
 </html>
