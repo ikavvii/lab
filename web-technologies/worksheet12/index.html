@@ -16,13 +16,18 @@
     </div>
     <script src="main.js"></script>
     <script>
-      let container = document.getElementById("buttons-container");
-      let output = document.getElementById("output");
+      const container = document.getElementById("buttons-container");
+      const output = document.getElementById("output");
+      const questionContainer = document.getElementById("question-container");
 
       for (let i = 1; i <= 13; i++) {
         let button = document.createElement("button");
         button.innerText = `Question ${i}`;
         button.onclick = () => {
+          questionContainer.innerHTML = `<h2>Question ${i}</h2>`;
+          const question = questions.find((q) => q.id === i);
+          questionContainer.innerHTML += `<h3>${question.title}</h3> <p>${question.description}</p>`;
+
           eval(`question${i}()`);
         };
         container.appendChild(button);
