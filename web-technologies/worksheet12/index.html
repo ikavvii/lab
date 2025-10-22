@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>25MX114 Array Of Objects</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="left">
+        <div id="buttons-container"></div>
+        <div id="question-container"></div>
+      </div>
+      <pre class="right"><code id="output"></code></pre>
+    </div>
+    <script src="main.js"></script>
+    <script>
+      let container = document.getElementById("buttons-container");
+      let output = document.getElementById("output");
+
+      for (let i = 1; i <= 13; i++) {
+        let button = document.createElement("button");
+        button.innerText = `Question ${i}`;
+        button.onclick = () => {
+          eval(`question${i}()`);
+        };
+        container.appendChild(button);
+      }
+    </script>
+  </body>
+</html>
