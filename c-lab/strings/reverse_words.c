@@ -2,17 +2,35 @@
 #include <string.h>
 #include <stdlib.h>
 
+#ifdef _WIN32
+typedef long long ssize_t;
+#else
+#include <sys/types.h>
+#endif
+
 ssize_t getline(char **lineptr, size_t *n, FILE *stream);
 
 char *reverseWords(char *s)
 {
     size_t len =  strlen(s);
+
     char *token, *saveptr;
     token = strtok_r(s, " ", &saveptr);
+    size_t token_len = strlen(token);
+    char *reversed = malloc(token_len + 2);
+    if (!reversed)
+        return NULL;
+    strcpy(reversed, token);
     while (token != NULL) {
-        
+        token_len = strlen(token);
+        reversed = realloc(reversed, strlen(reversed) + token_len + 2);
+        if (!reversed)
+            return NULL;
+
+        token = strtok_r(NULL, " ", &saveptr);
     }
 
+    return reversed;
 }
 
 
@@ -33,7 +51,16 @@ int main(void)
         return 1;
     }
 
-    
+    char *reversed = reverseWords(s);
+    if (reversed)
+    {
+        printf("Reversed string:\n%s\n", reversed);
+        free(reversed);
+    }
+    else
+    {
+        fprintf(stderr, "Error reversing string\n");
+    }
 
     free(s);
     return 0;
