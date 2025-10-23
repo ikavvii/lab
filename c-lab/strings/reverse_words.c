@@ -1,38 +1,68 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <ctype.h>
+#include "getline.h"
 
-#ifdef _WIN32
-typedef long long ssize_t;
-#else
-#include <sys/types.h>
-#endif
-
-ssize_t getline(char **lineptr, size_t *n, FILE *stream);
+void reverse(char *s, int left, int right);
+void trimString(char *s);
 
 char *reverseWords(char *s)
 {
-    size_t len =  strlen(s);
+    size_t n = strlen(s);
+    reverse(s, 0, n - 1);
 
-    char *token, *saveptr;
-    token = strtok_r(s, " ", &saveptr);
-    size_t token_len = strlen(token);
-    char *reversed = malloc(token_len + 2);
-    if (!reversed)
-        return NULL;
-    strcpy(reversed, token);
-    while (token != NULL) {
-        token_len = strlen(token);
-        reversed = realloc(reversed, strlen(reversed) + token_len + 2);
-        if (!reversed)
-            return NULL;
+    int start = 0, end = 0;
+    while (start < n)
+    {
+        while (start < n && isspace(s[start]))
+            start++;
+        end = start;
 
-        token = strtok_r(NULL, " ", &saveptr);
+        while (end < n && !isspace(s[end]))
+            end++;
+
+        reverse(s, start, end - 1);
+        start = end;
     }
 
-    return reversed;
+    trimString(s);
+    return s;
 }
 
+void trimString(char *s)
+{
+    if (s == NULL || *s == '\0')
+    {
+        return;
+    }
+
+    int i = 0, j = 0;
+
+    while (s[i] != '\0' && isspace(s[i]))
+        i++;
+
+    int spaceFlag = 0;
+    while (s[i] != '\0')
+    {
+        if (isspace(s[i]))
+        {
+            spaceFlag = 1;
+            i++;
+        }
+        else
+        {
+            if (spaceFlag && j > 0)
+            {
+                s[j++] = ' ';
+            }
+            s[j++] = s[i++];
+            spaceFlag = 0;
+        }
+    }
+    s[j] = '\0';
+    return;
+}
 
 int main(void)
 {
@@ -51,55 +81,21 @@ int main(void)
         return 1;
     }
 
-    char *reversed = reverseWords(s);
-    if (reversed)
-    {
-        printf("Reversed string:\n%s\n", reversed);
-        free(reversed);
-    }
-    else
-    {
-        fprintf(stderr, "Error reversing string\n");
-    }
-
+    reverseWords(s);
+    printf("Reversed string:\n%s\n", s);
     free(s);
     return 0;
 }
 
-ssize_t getline(char **lineptr, size_t *n, FILE *stream)
+void reverse(char *s, int left, int right)
 {
-    size_t size = 128;
-    size_t len = 0;
-    char *buf = malloc(size);
-    if (!buf)
-        return -1;
-
-    int c;
-    while ((c = fgetc(stream)) != EOF && c != '\n')
+    while (left < right)
     {
-        if (len + 1 >= size)
-        {
-            size *= 2;
-            char *newbuf = realloc(buf, size);
-            if (!newbuf)
-            {
-                free(buf);
-                return -1;
-            }
-            buf = newbuf;
-        }
-        buf[len++] = (char)c;
+        char c = s[left];
+        s[left++] = s[right];
+        s[right--] = c;
     }
-    if (c == '\n')
-        buf[len++] = '\0';
-    else if (len > 0)
-        buf[len] = '\0';
-
-    *lineptr = buf;
-    *n = size;
-    return (ssize_t)len;
 }
-
 
 /**
  * Working of strtok
