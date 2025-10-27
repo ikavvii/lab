@@ -1,3 +1,117 @@
+drop table takencourses;
+drop table students;
+drop table courses;
+
+create table students (
+   pnbr      char(11),
+   firstname varchar(20) not null,
+   lastname  varchar(20) not null,
+   primary key ( pnbr )
+);
+
+create table courses (
+   coursecode  char(6),
+   coursename  varchar(70) not null,
+   courselevel char(2),
+   credits     integer not null check ( credits > 0 ),
+   primary key ( coursecode )
+);
+
+create table takencourses (
+   pnbr       char(11),
+   coursecode char(6),
+   grade      integer not null check ( grade >= 3
+      and grade <= 5 ),
+   primary key ( pnbr,
+                 coursecode ),
+   foreign key ( pnbr )
+      references students ( pnbr ),
+   foreign key ( coursecode )
+      references courses ( coursecode )
+);
+
+insert into students (
+   pnbr,
+   firstname,
+   lastname
+) values ( '861103-2438',
+           'Bo',
+           'Ek' );
+insert into students (
+   pnbr,
+   firstname,
+   lastname
+) values ( '911212-1746',
+           'Eva',
+           'Alm' );
+insert into students (
+   pnbr,
+   firstname,
+   lastname
+) values ( '950829-1848',
+           'Anna',
+           'Nyström' );
+insert into students (
+   pnbr,
+   firstname,
+   lastname
+) values ( '950830-1848',
+           'Anna',
+           'Nyström' );
+
+
+insert into courses (
+   coursecode,
+   coursename,
+   courselevel,
+   credits
+) values ( 'EDA016',
+           'Programmeringsteknik',
+           'G1',
+           7.5 );
+insert into courses (
+   coursecode,
+   coursename,
+   courselevel,
+   credits
+) values ( 'EDAA01',
+           'Programmeringsteknik - fördjupningskurs',
+           'G1',
+           7.5 );
+insert into courses (
+   coursecode,
+   coursename,
+   courselevel,
+   credits
+) values ( 'EDA230',
+           'Optimerande kompilatorer',
+           'A',
+           7.5 );
+
+
+insert into takencourses (
+   pnbr,
+   coursecode,
+   grade
+) values ( '861103-2438',
+           'EDA016',
+           4 );
+insert into takencourses (
+   pnbr,
+   coursecode,
+   grade
+) values ( '861103-2438',
+           'EDAA01',
+           3 );
+insert into takencourses (
+   pnbr,
+   coursecode,
+   grade
+) values ( '911212-1746',
+           'EDA016',
+           3 );
+
+
 -- 1. Which students were born in 1985?
 select *
   from students
@@ -32,7 +146,7 @@ select *
    coursecode,
    0,
    3
-) = 'FMA';
+) = 'EDA';
 
 -- 5. Which courses give more than 7.5 credits?
 select *
@@ -44,6 +158,7 @@ select count(*),
        courselevel
   from courses
  group by courselevel;
+
 -- 7. Which courses (course codes only) have been taken by the student with person number
 -- 910101-1234?
 select coursecode
@@ -72,6 +187,8 @@ select *
 
 -- 11. Which students have the highest grade average? Advice: define and use a view that gives the
 -- person number and grade average for each student.
+
+drop view overall_grade;
 
 create view overall_grade as
    select avg(grade) as grade_avg,
@@ -107,4 +224,23 @@ on students.pnbr = studentcredits.pnbr;
 -- 13. Is there more than one student with the same name? If so, who are these students and what are
 -- their person numbers?
 
-select students.name, count(*) from students group by students.name;
+select s.pnbr,
+       s.firstname,
+       s.lastname
+  from students s
+  join (
+   select concat(
+      firstname,
+      lastname
+   ) as fullname
+     from students
+    group by concat(
+      firstname,
+      lastname
+   )
+   having count(*) > 1
+) dup
+on concat(
+   s.firstname,
+   s.lastname
+) = dup.fullname;

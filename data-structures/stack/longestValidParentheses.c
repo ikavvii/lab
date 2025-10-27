@@ -1,59 +1,46 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
-typedef struct Stack
-{
+struct node {
     char data;
-    struct Stack *next;
-} Stack;
+    struct node* next;
+} node;
 
-Stack *top = NULL;
+struct node* stack = NULL;
 
-void push(char data)
-{
-    Stack *node = (Stack *)malloc(sizeof(Stack));
-    if (!node)
-        return;
-    node->data = data;
-    node->next = top;
-    top = node;
-}
+int longestValidParentheses(char* s) {
+    int result = 0;
+    size_t n = strlen(s);
+    int tempResult = 0, accumulator = 0;
+    for (int i = 0; i < n; i++) {
+        if (s[i] == '(') {
+            struct node* newNode = malloc(sizeof(struct node));
+            newNode->data = '(';
+            newNode->next = stack;
+            stack = newNode;
+            result = result > accumulator ? result : accumulator;
 
-int pop()
-{
-    if (!top)
-        return 0;
-    Stack *temp = top;
-    top = top->next;
-    free(temp);
-    return 1;
-}
+        } else {
+            if (stack == NULL) {
+                result = result > accumulator ? result : accumulator;
+                accumulator = 0;
+            } else {
+                struct node* tempNode = stack;
+                stack = stack->next;
+                free(tempNode);
 
-int longestValidParentheses(char *s)
-{
-    int result = 0, curr = 0;
-    for (int i = 0; i < strlen(s); i++)
-    {
-        if (s[i] == '(')
-        {
-            push(s[i]);
-        }
-        else
-        {
-            int isPopped = pop();
-            if (isPopped)
-            {
-                curr += 2;
-            }
-            else
-            {
-                result = result > curr ? result : curr;
-                curr = 0;
+                accumulator += 2;
+                if (stack == NULL) {
+                    result = result > accumulator ? result : accumulator;
+                } else {
+                    
+
+                }
             }
         }
-        result = curr;
     }
+   
+    result = result > accumulator ? result : accumulator;
     return result;
 }
 

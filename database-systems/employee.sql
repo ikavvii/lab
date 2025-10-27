@@ -501,6 +501,13 @@ SELECT SUM(SALARY) FROM EMPLOYEE WHERE DEPTID=30;
 SELECT MAX(COMMISSION) FROM EMPLOYEE;
 
 -- 35. Find the department with the maximum number of employees (using GROUP BY + ORDER BY).
-SELECT DEPARTMENT, 
+ 
+
+-- 84 Find employees whose salary is greater than their manager’s salary.
+
+-- updates a employee to have salary greater than his manager
+UPDATE EMPLOYEE SET SALARY = 90000 WHERE EMPID=1002;
+SELECT * FROM EMPLOYEE E WHERE SALARY > (SELECT SALARY FROM EMPLOYEE WHERE EMPID = E.MANAGERID);
+
 
 commit;
