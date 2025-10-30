@@ -13,12 +13,15 @@ int main() {
         free(s);
         return 1;
     }
+
     char *ptr = s;
     int length = 0;
     while (*ptr != '\0') {
         length++;
-        *(ptr++);
+        ptr++;
     }
     printf("%s\n", s);
     printf("%d", length);
+
+    free(s);
 }

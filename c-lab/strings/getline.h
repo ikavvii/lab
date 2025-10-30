@@ -1,3 +1,6 @@
+#ifndef GETLINE_H
+#define GETLINE_H
+
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -8,3 +11,5 @@ typedef long long ssize_t;
 #endif
 
 ssize_t getline(char **lineptr, size_t *n, FILE *stream);
+
+#endif
