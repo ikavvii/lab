@@ -45,6 +45,8 @@ menu:
     switch (choice)
     {
     case 1:
+    {
+
         printf("Enter number: ");
         scanf("%d", &variable);
 
@@ -57,9 +59,9 @@ menu:
 
         printf("Success: insert %d", variable);
         break;
+    }
     case 2:
     {
-
         int position = 0;
         printf("Enter position (0-indexed): ");
         scanf("%d", &position);
@@ -70,8 +72,8 @@ menu:
         Node *node = malloc(sizeof(Node));
         if (!node)
             return EXIT_FAILURE;
-        node->value = variable; 
-        
+        node->value = variable;
+
         if (!head || position == 0)
         {
             node->next = head;
@@ -92,10 +94,121 @@ menu:
             node->next = curr->next;
             curr->next = node;
         }
+        break;
+    }
+    case 3:
+    {
+        printf("Enter number: ");
+        scanf("%d", &variable);
+
+        Node *node = malloc(sizeof(Node));
+        if (!node)
+            return EXIT_FAILURE;
+        node->value = variable;
+        node->next = NULL;
+
+        if (!head)
+        {
+            head = node;
+        }
+        else
+        {
+            curr = head;
+            while (curr->next != NULL)
+            {
+                curr = curr->next;
+            }
+            curr->next = node;
+        }
+
+        break;
+    }
+    case 4:
+    {
+        if (head)
+        {
+            Node *temp = head;
+            head = head->next;
+            free(temp);
+        }
+    }
+    case 5:
+    {
+        int position = 0;
+        printf("Enter position (0-indexed): ");
+        scanf("%d", &position);
+
+        if (!head)
+        {
+            printf("List is empty.\n");
+        }
+        else if (position == 0)
+        {
+            Node *temp = head;
+            head = head->next;
+            free(temp);
+        }
+        else if (position < 0)
+        {
+            printf("Invalid position.\n");
+        }
+        else
+        {
+            int count = 0;
+            curr = head;
+            while (curr != NULL && curr->next != NULL && position - count > 1)
+            {
+                curr = curr->next;
+                count++;
+            }
+
+            if (curr->next == NULL)
+            {
+                printf("Position out of bounds.\n");
+            }
+            else
+            {
+                Node *temp = curr->next;
+                curr->next = temp->next;
+                free(temp);
+            }
+        }
+        break;
+    }
+    case 6:
+    {
+        if (!head)
+        {
+            printf("List is empty.\n");
+        }
+        else if (head->next == NULL)
+        {
+            Node *temp = head;
+            head = NULL;
+            free(temp);
+        }
+        else
+        {
+            curr = head;
+            while (curr->next->next != NULL)
+            {
+                curr = curr->next;
+            }
+            Node *temp = curr->next;
+            curr->next = NULL;
+            free(temp);
+        }
+        break;
     }
     case 7:
         print_reverse(head);
         break;
+
+    case 8:
+    {
+        // TODO: Count nodes in a list
+        
+    }
     default:
         return EXIT_SUCCESS;
     }
