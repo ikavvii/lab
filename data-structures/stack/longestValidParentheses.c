@@ -1,46 +1,61 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-struct node {
-    char data;
-    struct node* next;
+
+struct node
+{
+    int data;
+    struct node *next;
 } node;
 
-struct node* stack = NULL;
+struct node *stack = NULL;
 
-int longestValidParentheses(char* s) {
+int longestValidParentheses(char *s)
+{
     int result = 0;
     size_t n = strlen(s);
-    int tempResult = 0, accumulator = 0;
-    for (int i = 0; i < n; i++) {
-        if (s[i] == '(') {
-            struct node* newNode = malloc(sizeof(struct node));
-            newNode->data = '(';
+    int accumulator = 0, flag = 0;
+
+    for (int i = 0; i < n; i++)
+    {
+        if (s[i] == '(')
+        {
+            struct node *newNode = malloc(sizeof(struct node));
+            newNode->data = 2;
             newNode->next = stack;
             stack = newNode;
-            result = result > accumulator ? result : accumulator;
+        }
+        else
+        {
 
-        } else {
-            if (stack == NULL) {
-                result = result > accumulator ? result : accumulator;
-                accumulator = 0;
-            } else {
-                struct node* tempNode = stack;
-                stack = stack->next;
-                free(tempNode);
+            if (stack == NULL && accumulator > 0)
+            {
+                flag = 1;
+            }
 
-                accumulator += 2;
-                if (stack == NULL) {
+            if (stack != NULL)
+            {
+                if (flag)
+                {
                     result = result > accumulator ? result : accumulator;
-                } else {
-                    
 
+                    accumulator = 0;
                 }
+                struct node *temp = stack;
+                accumulator += temp->data;
+                stack = stack->next;
+
+                free(temp);
             }
         }
+        printf("%d->", accumulator);
     }
-   
-    result = result > accumulator ? result : accumulator;
+
+    if (stack != NULL)
+    {
+        accumulator -= 2;
+    }
+
     return result;
 }
 
@@ -52,6 +67,6 @@ int main()
     if (scanf("%1023s", str) != 1)
         return 1;
 
-    printf("%d\n", longestValidParentheses(str));
+    printf("\nResult: %d\n", longestValidParentheses(str));
     return 0;
 }
