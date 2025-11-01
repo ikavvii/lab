@@ -10,6 +10,7 @@ struct SinglyLinkedListElement
 typedef struct SinglyLinkedListElement Node;
 
 void print_reverse(Node *);
+void print(Node *);
 
 int main()
 {
@@ -237,7 +238,135 @@ menu:
     }
     case 9:
     {
-        
+        Node *L1 = NULL, *L2 = NULL;
+        printf("Merge two lists:\n");
+        printf("Enter L1: ");
+        while (scanf("%d", &variable) == 1)
+        {
+            Node *node = malloc(sizeof(Node));
+            if (!node)
+                return EXIT_FAILURE;
+            node->value = variable;
+            node->next = NULL;
+
+            if (!L1)
+            {
+                L1 = node;
+            }
+            else
+            {
+                curr = L1;
+                while (curr->next != NULL)
+                {
+                    curr = curr->next;
+                }
+                curr->next = node;
+            }
+            int c;
+            if ((c = getchar()) == '\n')
+            {
+                break;
+            }
+        }
+        print(L1);
+
+        printf("\nEnter L2: ");
+        while (scanf("%d", &variable) == 1)
+        {
+            Node *node = malloc(sizeof(Node));
+            if (!node)
+                return EXIT_FAILURE;
+            node->value = variable;
+            node->next = NULL;
+
+            if (!L2)
+            {
+                L2 = node;
+            }
+            else
+            {
+                curr = L2;
+                while (curr->next != NULL)
+                {
+                    curr = curr->next;
+                }
+                curr->next = node;
+            }
+            int c;
+            if ((c = getchar()) == '\n')
+            {
+                break;
+            }
+        }
+        print(L2);
+
+        printf("\nMerging L1 with L2.. \n");
+
+        // traverse L1 till last node and link with head node of L2
+        if (!L1)
+        {
+            L1 = L2;
+        }
+        else
+        {
+            curr = L1;
+            while (curr->next != NULL)
+            {
+                curr = curr->next;
+            }
+            curr->next = L2;
+        }
+        print(L1); // print merged list
+        break;
+    }
+    case 10:
+    {
+        // TODO: sort a linked list
+        Node *L = NULL;
+        printf("Sort a linked list: \n");
+        printf("Enter list elements: ");
+
+        while (scanf("%d", &variable) == 1)
+        {
+            Node *node = malloc(sizeof(Node));
+            if (!node)
+                return EXIT_FAILURE;
+            node->value = variable;
+            node->next = NULL;
+
+            if (!L)
+            {
+                L = node;
+            }
+            else
+            {
+                curr = L;
+
+                while (curr->next != NULL)
+                {
+                    curr = curr->next;
+                }
+
+                curr->next = node;
+            }
+
+            // check for end of list elements input
+            int c;
+            if ((c = getchar()) == '\n')
+            {
+                break;
+            }
+        }
+        printf("\nBefore: ");
+        print(L);
+
+        // TODO: iterative bottom-up merge sort 
+        // O(nlogn) time and O(1) space
+
+        printf("\nAfter: ");
+        print(L);
+
+        break;
     }
     default:
         return EXIT_SUCCESS;
@@ -254,4 +383,12 @@ void print_reverse(Node *head)
         return;
     print_reverse(head->next);
     printf("%d <-- ", head->value);
+}
+
+void print(Node *head)
+{
+    if (!head)
+        return;
+    printf(" --> %d", head->value);
+    print(head->next);
 }
