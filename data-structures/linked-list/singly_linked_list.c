@@ -131,6 +131,7 @@ menu:
             head = head->next;
             free(temp);
         }
+        break;
     }
     case 5:
     {
@@ -201,12 +202,41 @@ menu:
         break;
     }
     case 7:
-        print_reverse(head);
-        break;
+    {
 
+        if (head == NULL)
+        {
+            printf("List is empty.\n");
+        }
+        else
+        {
+            print_reverse(head);
+        }
+        break;
+    }
     case 8:
     {
-        // TODO: Count nodes in a list
+        variable = 0;
+
+        curr = head;
+        if (!head)
+        {
+            printf("No. of nodes: %d\n", variable);
+        }
+        else
+        {
+            while (curr != NULL)
+            {
+                curr = curr->next;
+                variable++;
+            }
+
+            printf("No. of nodes: %d\n", variable);
+        }
+        break;
+    }
+    case 9:
+    {
         
     }
     default:
