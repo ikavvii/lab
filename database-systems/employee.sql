@@ -511,3 +511,21 @@ SELECT * FROM EMPLOYEE E WHERE SALARY > (SELECT SALARY FROM EMPLOYEE WHERE EMPID
 
 
 commit;
+
+desc EMPLOYEE;
+
+-- selects the max salaried employee
+-- single value sub query
+select EMPNAME, SALARY from EMPLOYEE where salary = (select MAX(salary) from EMPLOYEE);
+
+-- multi value sub query 
+
+
+-- multi column sub query
+select EMPID, EMPNAME, DEPTID, SALARY from EMPLOYEE where (deptid, salary) in (select deptid,  MAX(SALARY) from EMPLOYEE group by DEPTID);
+
+-- not working 
+select EMPID, EMPNAME, DEPTID, SALARY FROM EMPLOYEE e JOIN (SELECT DEPTID, MAX(SALARY) FROM EMPLOYEE GROUP BY DEPTID) f on f.deptid = e.deptid;
+
+-- corelated sub query 
+select empid, empname, deptid, salary from employee e where e.salary = (select max(salary) from employee where DEPTID = e.DEPTID);
