@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <p id="root"></p>
+    <button onclick="clearInterval(timer)">Stop the color change</button>
+    <script>
+        let colors = ['red', 'green', 'blue', 'indigo', 'violet']
+        let root = document.getElementById('root')
+
+        let timer = setInterval(() => {
+            let indexRandom = Math.floor(Math.random() * colors.length)
+            root.style.backgroundColor = colors[indexRandom]
+            let computedColor = window.getComputedStyle(root).backgroundColor
+            root.textContent = computedColor
+        }, 1000)
+    </script>
+</body>
+
+</html>

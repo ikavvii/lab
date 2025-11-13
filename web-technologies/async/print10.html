@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <p id="root"></p>
+    <script>
+        let counter = 1
+        let root = document.getElementById('root')
+        let timer = setInterval(() => {
+            root.textContent = counter
+            if (counter === 10) {
+                clearInterval(timer)
+            }
+            counter++
+        }, 1000)
+    </script>
+</body>
+
+</html>
