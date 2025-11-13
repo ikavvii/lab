@@ -1,5 +1,12 @@
+/**
+ * Author   : Kavin Manoharan
+ * Date     : 13-11-2025
+ */
+
 #include <stdio.h>
 #include <stdbool.h>
+#include <stdlib.h>
+#include <stdint.h>
 
 #define MAX_STUDENTS 20
 /**
@@ -20,23 +27,23 @@
  * Total Score          = 100
  */
 
-typedef struct
+typedef struct Student
 {
-    char id;
+    uint8_t id;
     char name[20];
     bool sex;
-    char quizScores[2];
-    char midTermScore;
-    char finalScore;
-    char totalScore;
+    uint8_t quizScores[2];
+    uint8_t midTermScore;
+    uint8_t finalScore;
+    uint8_t totalScore;
 } Student;
 
-void add(Student *);
-void view(Student *);
+void add(Student *, int *);
 
 int main()
 {
-    Student students[MAX_STUDENTS];
+    Student *students = malloc(MAX_STUDENTS * sizeof(Student));
+    int studentCount = 0;
 
     int choice;
 
@@ -53,15 +60,12 @@ int main()
             10. Exit\n \
         ");
 
-        scanf("%d", choice);
+    printf("Enter choice: ");
+    scanf("%d", &choice);
     switch (choice)
     {
     case 1:
         add(students);
-        break;
-
-    case 4:
-        view(students);
         break;
 
     default:
@@ -71,21 +75,57 @@ int main()
     return 0;
 }
 
-void add(Student *p) {
+void add(Student *p, int *count)
+{
 
-
-    for (int i = 0; i < MAX_STUDENTS; i++) {
-        // printf("Student: %d", i + 1);
-        (p+i)->id = i + 1;
+    if (*count == MAX_STUDENTS)
+    {
+        printf("Cannot add more students");
+        return;
     }
+    Student *s = p + *count;
+    s->id = *count + 1;
+
+
+    printf("\nName: ");
+    scanf("%s", s->name);
+
+    printf("Sex (1 for Male, 0 for Female): ");
+    scanf("%s", &s->sex);
+
+    printf("Quiz 1 score: ");
+    scanf("%s", &s->quizScores[0]);
+
+    printf("Quiz 2 score: ");
+    scanf("%s", &s->quizScores[1]);
+
+    printf("Mid-term score: ");
+    scanf("%d", &s->midTermScore);
+
+    printf("Final score (out of 100)");
+    scanf("%d", &s->finalScore);
+
+    int internal = ((s->quizScores[0] + s->quizScores[1]) + s->midTermScore) / 2;
+    int external = s->finalScore / 2;
+    s->totalScore = internal + external;
+
+    (*count)++;
+    printf("Student added successfully!\n");
+
+    return;
 }
 
-void view(Student *p) {
-    for (int i = 0; i < MAX_STUDENTS; i++) {
-        // printf("Student: %d", i + 1);
-        (p+i)->id = i + 1;
+void view(Student *p, int count) {
+    if (count == 0) {
+        printf("No student records.\n");
+        return;
     }
-    for (int i = 0; i < MAX_STUDENTS; i++) {
-        printf("Student: %d", (p+i)->id);
+
+    printf("\n%-5s %-15s %-5s %-10s\n", "ID", "Name", "Sex", "Total");
+    for (int i = 0; i < count; i++) {
+        printf("%-5d %-15s %-5s %-10d\n",
+               p[i].id, p[i].name,
+               p[i].sex ? "M" : "F",
+               p[i].totalScore);
     }
 }

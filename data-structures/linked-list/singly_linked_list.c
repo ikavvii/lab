@@ -11,6 +11,7 @@ typedef struct SinglyLinkedListElement Node;
 
 void print_reverse(Node *);
 void print(Node *);
+Node *swapNodes(Node *, int, int);
 
 int main()
 {
@@ -321,7 +322,6 @@ menu:
     }
     case 10:
     {
-        // TODO: sort a linked list
         Node *L = NULL;
         printf("Sort a linked list: \n");
         printf("Enter list elements: ");
@@ -357,14 +357,70 @@ menu:
                 break;
             }
         }
-        printf("\nBefore: ");
+        printf("\nBefore sorting: ");
         print(L);
 
-        // TODO: iterative bottom-up merge sort 
+        // TODO: iterative bottom-up merge sort (non-recursive)
         // O(nlogn) time and O(1) space
 
-        printf("\nAfter: ");
+        printf("\nAfter sorting: ");
         print(L);
+
+        break;
+    }
+    case 11:
+    {
+        Node *L = NULL;
+        printf("Swap nodes in a linked list without swapping data:\n");
+        printf("Enter list elements: ");
+
+        while (scanf("%d", &variable) == 1)
+        {
+            Node *node = malloc(sizeof(Node));
+            if (!node)
+                return EXIT_FAILURE;
+            node->value = variable;
+            node->next = NULL;
+
+            if (!L)
+                L = node;
+            else
+            {
+                curr = L;
+                while (curr->next != NULL)
+                {
+                    curr = curr->next;
+                }
+                curr->next = node;
+            }
+
+            int c;
+            if ((c = getchar()) == '\n')
+                break;
+        }
+
+        int value1, value2;
+        printf("Enter values to swap:\n");
+        printf("Value 1: ");
+        scanf("%d", &value1);
+
+        printf("Value 2: ");
+        scanf("%d", &value2);
+
+        printf("\nBefore swapping: ");
+        print(L);
+
+        // TODO:
+        Node *result = swapNodes(L, value1, value2);
+
+        printf("\nAfter swapping: ");
+        print(L);
+
+        break;
+    }
+    case 12:
+    {
+        printf("Intersection of two linked lists:\n");
 
         break;
     }
@@ -375,6 +431,53 @@ menu:
     goto menu;
 
     return EXIT_SUCCESS;
+}
+
+Node *swapNodes(Node *head, int x, int y)
+{
+
+    if (x == y)
+        return head;
+
+    Node *prevX = NULL, *currX = NULL;
+    Node *prevY = NULL, *currY = NULL;
+    Node *prev = NULL, *curr = head;
+
+    while (curr != NULL)
+    {
+        if (curr->value == x)
+        {
+            prevX = prev;
+            currX = curr;
+        }
+        else if (curr->value == y)
+        {
+            prevY = prev;
+            currY = curr;
+        }
+        prev = curr;
+        curr = curr->next;
+    }
+
+    if (currX == NULL || currY == NULL)
+        return head;
+
+    if (prevX != NULL)
+        prevX->next = currY;
+    else
+        head = currY;
+
+    if (prevY != NULL)
+        prevY->next = currX;
+    else
+        head = currX;
+
+
+    Node *temp = currY->next;
+    currY->next = currX->next;
+    currX->next = temp;
+
+    return head;
 }
 
 void print_reverse(Node *head)
