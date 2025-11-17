@@ -38,16 +38,20 @@ typedef struct Student
     uint8_t totalScore;
 } Student;
 
-void add(Student *, int *);
+int add(Student *, int *);
+void view(Student *, int);
 
 int main()
 {
     Student *students = malloc(MAX_STUDENTS * sizeof(Student));
     int studentCount = 0;
 
+    char userActive = 'y';
     int choice;
 
-    printf("\n\t\t\t MENU\n\n \
+    while (userActive == 'y' || userActive == 'Y')
+    {
+        printf("\n\t\t\t MENU\n\n \
             1.  Add student records\n \
             2.  Delete student records\n \
             3.  Update student records\n \
@@ -60,72 +64,108 @@ int main()
             10. Exit\n \
         ");
 
-    printf("Enter choice: ");
-    scanf("%d", &choice);
-    switch (choice)
-    {
-    case 1:
-        add(students);
-        break;
+        printf("Enter choice: ");
+        scanf("%d", &choice);
 
-    default:
-        printf("\nInvalid Choice\n");
+        int status;
+
+        switch (choice)
+        {
+        case 1:
+            status = add(students, &studentCount);
+            if (status == 1)
+            {
+                printf("\nInvalid input. Try again. \n");
+            }
+            break;
+        case 4:
+            view(students, studentCount);
+            break;
+        case 10:
+            printf("\n\tThank you!\n");
+            userActive = '\0';
+            break;
+        default:
+            printf("\nInvalid Choice\n");
+        }
     }
-
+    free(students);
     return 0;
 }
 
-void add(Student *p, int *count)
+int add(Student *p, int *count)
 {
 
     if (*count == MAX_STUDENTS)
     {
         printf("Cannot add more students");
-        return;
+        return 2;
     }
     Student *s = p + *count;
     s->id = *count + 1;
 
-
+    char buf[32];
     printf("\nName: ");
-    scanf("%s", s->name);
+    scanf("%19s", s->name);
+    getchar();
+    int input;
 
     printf("Sex (1 for Male, 0 for Female): ");
-    scanf("%s", &s->sex);
+    fgets(buf, sizeof(buf), stdin);
+    if (sscanf(buf, "%d", &input) != 1 || (input != 0 && input != 1))
+        return 1;
+    s->sex = input;
 
-    printf("Quiz 1 score: ");
-    scanf("%s", &s->quizScores[0]);
+    printf("Quiz 1 score (out of 25): ");
+    fgets(buf, sizeof(buf), stdin);
+    if (sscanf(buf, "%d", &input) != 1 || input < 0 || input > 25)
+        return 1;
+    s->quizScores[0] = input;
 
-    printf("Quiz 2 score: ");
-    scanf("%s", &s->quizScores[1]);
+    printf("Quiz 2 score (out of 25): ");
+    fgets(buf, sizeof(buf), stdin);
+    if (sscanf(buf, "%d", &input) != 1 || input < 0 || input > 25)
+        return 1;
+    s->quizScores[1] = input;
 
-    printf("Mid-term score: ");
-    scanf("%d", &s->midTermScore);
+    printf("Mid-term score (out of 50): ");
+    fgets(buf, sizeof(buf), stdin);
+    if (sscanf(buf, "%d", &input) != 1 || input < 0 || input > 50)
+        return 1;
+    s->midTermScore = input;
 
-    printf("Final score (out of 100)");
-    scanf("%d", &s->finalScore);
+    printf("Final score (out of 100): ");
+    fgets(buf, sizeof(buf), stdin);
+    if (sscanf(buf, "%d", &input) != 1 || input < 0 || input > 100)
+        return 1;
+    s->finalScore = input;
 
-    int internal = ((s->quizScores[0] + s->quizScores[1]) + s->midTermScore) / 2;
+    int internal = (s->quizScores[0] + s->quizScores[1] + s->midTermScore) / 2;
     int external = s->finalScore / 2;
     s->totalScore = internal + external;
 
     (*count)++;
-    printf("Student added successfully!\n");
+    printf("\n\tStudent added successfully!\n");
 
-    return;
+    return 0;
 }
 
-void view(Student *p, int count) {
-    if (count == 0) {
+void view(Student *p, int count)
+{
+    if (count == 0)
+    {
         printf("No student records.\n");
         return;
     }
 
     printf("\n%-5s %-15s %-5s %-10s\n", "ID", "Name", "Sex", "Total");
-    for (int i = 0; i < count; i++) {
+    for (int i = 0; i < count; i++)
+    {
         printf("%-5d %-15s %-5s %-10d\n",
                p[i].id, p[i].name,
                p[i].sex ? "M" : "F",
                p[i].totalScore);
     }
+
+    return;
 }
