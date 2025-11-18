@@ -269,7 +269,81 @@ void delete_from_end()
 
     printf("\n* Node with data %d was deleted \n", data);
 
-    return 0;
+    return;
 }
 
+void delete_from_position(int pos)
+{
+    if (head == NULL)
+    {
+        empty_list_message();
+        return;
+    }
 
+    int size = size_of_list();
+
+    struct node *temp = head;
+
+    int data = 0;
+
+    if (pos < 1 || pos > size)
+    {
+        invalid_position_message();
+        return;
+    }
+    else if (pos == 1)
+    {
+        head = head->next;
+        data = temp->data;
+        free(temp);
+        printf("\n* Node with data %d was deleted \n", data);
+    }
+    else
+    {
+        int count = 0;
+
+        while (++count < pos)
+        {
+            temp = temp->next;
+        }
+
+        temp->prev->next = temp->next;
+
+        if (pos != size)
+        {
+            temp->next->prev = temp->prev;
+        }
+
+        data = temp->data;
+
+        free(temp);
+
+        printf("\n* Node with data %d was deleted \n", data);
+    }
+}
+
+void print_from_beginning()
+{
+    struct node *temp = head;
+
+    while (temp != NULL)
+    {
+        printf("%d ", temp->data);
+        temp = temp->next;
+    }
+    printf("NULL\n");
+}
+
+void print_from_end(struct node *head)
+{
+    if (head == NULL)
+        return NULL;
+
+    print_from_end(head->next);
+
+    printf("%d ", head->data);
+}
+
+void search_data(int data) {
+    
+}
