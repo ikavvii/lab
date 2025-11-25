@@ -1,10 +1,3 @@
-/**
- * Definition for singly-linked list.
- * struct ListNode {
- *     int val;
- *     struct ListNode *next;
- * };
- */
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -14,21 +7,38 @@ struct ListNode
     struct ListNode *next;
 };
 
-struct ListNode *reverseList(struct ListNode *head)
+struct ListNode *reverseList1(struct ListNode *head)
 {
     struct ListNode *p = head,
-                    *q = head->next,
-                    *r = ;
+                    *q = NULL,
+                    *r = NULL;
 
     while (p != NULL)
     {
-        r = q->next;
-        q->next = p;
+        r = q;
+        q = p;
         p = p->next;
-        q = r;
+        q->next = r;
     }
 
-    return p;
+    return q;
+}
+
+struct ListNode *reverseList(struct ListNode *head)
+{
+    struct ListNode *prev = NULL,
+                    *curr = head,
+                    *next = NULL;
+
+    while (curr != NULL)
+    {
+        next = curr->next; // remember next node
+        curr->next = prev; // reverse pointer
+        prev = curr;       // move prev pointer
+        curr = next;       // move curr pointer
+    }
+
+    return prev;
 }
 
 void print(struct ListNode *head)
@@ -73,7 +83,7 @@ int main()
     print(head);
     printf("\n");
 
-    head = reverseList(head);
+    head = reverseList1(head);
 
     print(head);
 }
