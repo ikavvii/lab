@@ -25,12 +25,13 @@ int main()
 
     n = 1;
 
+    printf("%-5s %5s %-20s %8s %4s\n\n", "S.no.", "ID", "Name", "Quantity", "Cost");
     while (1)
     {
         if (fscanf(fp, "%d %s %d %d",
                    &id, name, &quantity, &cost) == EOF)
             break;
-        printf("%2d. %5d-%-20s %5d %5d\n", n, id, name, quantity, cost);
+        printf("%-5d %5d %-20s %8d %4d\n", n, id, name, quantity, cost);
         ++n;
     }
 
