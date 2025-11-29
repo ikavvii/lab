@@ -19,7 +19,6 @@ vector<vector<int>> createGraph(int V, vector<vector<int>> edges)
         int v = it[1];
 
         mat[u][v] = 1;
-        mat[v][u] = 1;
     }
 
     return mat;
@@ -29,10 +28,10 @@ int main()
 {
 
     int V = 3;
-    vector<vector<int>> edges = {{0, 1}, {0, 2}, {1, 2}}; // (u, v)
+    vector<vector<int>> edges = {{1, 0}, {2, 0}, {1, 2}}; // (u, v)
     vector<vector<int>> mat = createGraph(V, edges);
 
-    cout << "Adjacency Matrix Representation of Undirected Graph: " << endl;
+    cout << "Adjacency Matrix Representation of Directed Graph: " << endl;
 
     for (int i = 0; i < V; i++)
     {
