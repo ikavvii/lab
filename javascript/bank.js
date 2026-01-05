@@ -9,10 +9,15 @@ class Bank {
         this.#accounts = [];
     }
 
-    createAccount(accNo, accHolder, initBal) {
-        let account = new Account(accNo, accHolder, initBal);
+    createAccount(type, accNo, accHolder, initBal, extraValue) {
+        let account;
+        if (type.toLowerCase() === 'savings') {
+            account = new SavingsAccount(accNo, accHolder, initBal, extraValue); // extraValue = interestRate
+        } else {
+            account = new CurrentAccount(accNo, accHolder, initBal, extraValue); // extraValue = overdraftLimit
+        }
+        
         this.#accounts.push(account);
-        console.log(`Account created successfully for ${accHolder}.`);
         return account;
     }
 
@@ -40,32 +45,54 @@ class Account {
         return this.#bal;
     }
 
-    set withdraw(amount) {
-        if (amount > this.#bal) {
-            console.error("Error: Insufficient funds.");
-        } else if (amount <= 0) {
-            console.error("Error: Withdrawal amount must be positive.");
-        } else {
-            this.#bal -= amount;
-            console.log(`Withdrawn: ₹${amount}. New Balance: ₹${this.#bal}`);
-        }
+    _updateBalance(amount) {
+        this.#bal += amount;
     }
 
-    set deposit(amount) {
-        if (amount <= 0) {
-            console.error("Error: Deposit amount must be positive.");
+    set withdraw(amount) {
+        if (amount > this.#bal) {
+            console.log("Insufficient funds.");
+            return false;
+        }
+        this.#bal -= amount;
+        console.log(`Withdrawn: ₹${amount}. New Balance: ₹${this.#bal}`);
+        return true;
+    }
+}
+
+class SavingsAccount extends Account {
+    constructor(accNo, accHolder, initBal, interestRate) {
+        super(accNo, accHolder, initBal);
+        this.interestRate = interestRate;
+    }
+
+    applyInterest() {
+        const interest = this.balance * (this.interestRate / 100);
+        this._updateBalance(interest);
+        console.log(`Interest of ₹${interest} applied to Account ${this.accNo}.`);
+    }
+}
+
+class CurrentAccount extends Account {
+    constructor (accNo, accHolder, initBal, overdraftLimit) {
+        super (accNo, accHolder, initBal);
+        this.overdraftLimit = overdraftLimit;
+    }
+
+    set withdraw(amount) {
+        if (amount > (this.balance + this.overdraftLimit)) {
+            console.log("Overdraft limit exceeded!");
         } else {
-            this.#bal += amount;
-            console.log(`Deposited: ₹${amount}. New Balance: ₹${this.#bal}`);
+            this._updateBalance(-amount);
+            console.log(`Withdrawn ₹${amount}. New Balance: ₹${this.balance}`);
         }
     }
 }
 
-
 let myBank = new Bank("Bank of India", "Tiruchirapalli", "BKID0008300", "620013001");
 
-myBank.createAccount(101, "Kavin", 5000);
-myBank.createAccount(102, "Vishal", 2000);
+myBank.createAccount("savings", 101, "Kavin", 5000, 5);
+myBank.createAccount("current", 102, "Vishal", 2000, 10000);
 
 let userAccount = myBank.getAccount(101);
 
@@ -73,9 +100,26 @@ if (userAccount) {
     console.log(`Holder: ${userAccount.accHolder}`);
     console.log(`Initial Balance: ₹${userAccount.balance}`);
 
-    userAccount.deposit = 1500;   // Depositing
     userAccount.withdraw = 2000;  // Withdrawing
     userAccount.withdraw = 10000; // Triggering "Insufficient funds"
+
+    userAccount.applyInterest();
+    console.log("Balance: ", userAccount.balance);
+    
 }
+
+userAccount = myBank.getAccount(102); 
+
+if (userAccount) {
+    console.log(`Holder: ${userAccount.accHolder}`);
+    console.log(`Initial Balance: ₹${userAccount.balance}`);
+
+    userAccount.withdraw = 3000;  // Withdrawing with OD
+    console.log("Balance: ", userAccount.balance);
+
+    userAccount.withdraw = 10000; 
+    console.log("Balance: ", userAccount.balance);
+}
+
 
 myBank.displayBankDetails();
