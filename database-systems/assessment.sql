@@ -1,10 +1,10 @@
 -- (UniversityDB)
 
 -- Departments Table
-drop table faculty;
 drop table courses;
-drop table students;
+drop table faculty;
 drop table enrollments;
+drop table students;
 drop table departments;
 
 create table departments (
