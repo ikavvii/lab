@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">FCCalc</string>
+    <string name="temperature_in_fahrenheit">Temperature in Fahrenheit</string>
+    <string name="temperature_in_celsius">Temperature in Celsius</string>
+    <string name="enter_input">Enter input</string>
+    <string name="result_here">Result here</string>
+    <string name="fccalc">FCCalc</string>
+    <string name="convert">Convert</string>
+</resources>
