@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Key-Value Store</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🔑 Key-Value Store</h1>
+            <p class="subtitle">Simple and elegant data management</p>
+        </header>
+
+        <div class="main-content">
+            <!-- Add/Update Key-Value Pair Section -->
+            <section class="card">
+                <h2>Add / Update Entry</h2>
+                <form id="addForm">
+                    <div class="form-group">
+                        <label for="key">Key</label>
+                        <input type="text" id="key" placeholder="Enter key" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="value">Value</label>
+                        <input type="text" id="value" placeholder="Enter value" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">
+                        <span class="btn-icon">➕</span> Add Entry
+                    </button>
+                </form>
+            </section>
+
+            <!-- Search Section -->
+            <section class="card">
+                <h2>Search by Key</h2>
+                <div class="search-box">
+                    <input type="text" id="searchKey" placeholder="Enter key to search">
+                    <button id="searchBtn" class="btn btn-secondary">
+                        <span class="btn-icon">🔍</span> Search
+                    </button>
+                </div>
+                <div id="searchResult" class="result-box"></div>
+            </section>
+
+            <!-- All Entries Section -->
+            <section class="card">
+                <div class="card-header">
+                    <h2>All Entries</h2>
+                    <button id="refreshBtn" class="btn btn-icon-only" title="Refresh">
+                        <span class="btn-icon">🔄</span>
+                    </button>
+                </div>
+                <div id="allEntries" class="entries-container">
+                    <p class="loading">Loading entries...</p>
+                </div>
+            </section>
+        </div>
+
+        <!-- Toast Notification -->
+        <div id="toast" class="toast"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

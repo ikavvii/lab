@@ -1,0 +1,227 @@
+pipeline {
+    agent any
+    
+    environment {
+        DOCKER_REGISTRY = 'docker.io'
+        DOCKER_CREDENTIALS_ID = 'docker-hub-credentials'
+        BACKEND_IMAGE = 'flask-kvstore-backend'
+        FRONTEND_IMAGE = 'flask-kvstore-frontend'
+        IMAGE_TAG = "${BUILD_NUMBER}"
+        COMPOSE_PROJECT_NAME = 'flask-kvstore'
+    }
+    
+    stages {
+        stage('Checkout') {
+            steps {
+                echo 'Checking out code...'
+                checkout scm
+            }
+        }
+        
+        stage('Validate') {
+            steps {
+                echo 'Validating project structure...'
+                sh '''
+                    if [ ! -f backend/Dockerfile ]; then
+                        echo "Backend Dockerfile not found!"
+                        exit 1
+                    fi
+                    if [ ! -f frontend/Dockerfile ]; then
+                        echo "Frontend Dockerfile not found!"
+                        exit 1
+                    fi
+                    if [ ! -f docker-compose.yml ]; then
+                        echo "docker-compose.yml not found!"
+                        exit 1
+                    fi
+                    echo "All required files present"
+                '''
+            }
+        }
+        
+        stage('Build Backend') {
+            steps {
+                echo 'Building Backend Docker Image...'
+                dir('backend') {
+                    sh """
+                        docker build -t ${BACKEND_IMAGE}:${IMAGE_TAG} .
+                        docker tag ${BACKEND_IMAGE}:${IMAGE_TAG} ${BACKEND_IMAGE}:latest
+                    """
+                }
+            }
+        }
+        
+        stage('Build Frontend') {
+            steps {
+                echo 'Building Frontend Docker Image...'
+                dir('frontend') {
+                    sh """
+                        docker build -t ${FRONTEND_IMAGE}:${IMAGE_TAG} .
+                        docker tag ${FRONTEND_IMAGE}:${IMAGE_TAG} ${FRONTEND_IMAGE}:latest
+                    """
+                }
+            }
+        }
+        
+        stage('Test Backend') {
+            steps {
+                echo 'Running Backend Tests...'
+                sh '''
+                    echo "Starting backend container for testing..."
+                    docker run -d --name test-backend-${BUILD_NUMBER} -p 5001:5000 ${BACKEND_IMAGE}:${IMAGE_TAG}
+                    
+                    echo "Waiting for backend to be ready..."
+                    sleep 5
+                    
+                    echo "Testing backend health..."
+                    curl -f http://localhost:5001/ || exit 1
+                    
+                    echo "Testing POST endpoint..."
+                    curl -X POST http://localhost:5001/set \
+                        -H "Content-Type: application/json" \
+                        -d '{"test_key": "test_value"}' || exit 1
+                    
+                    echo "Testing GET endpoint..."
+                    curl -f http://localhost:5001/get/test_key || exit 1
+                    
+                    echo "Testing GET ALL endpoint..."
+                    curl -f http://localhost:5001/all || exit 1
+                    
+                    echo "Backend tests passed!"
+                '''
+            }
+            post {
+                always {
+                    sh '''
+                        docker stop test-backend-${BUILD_NUMBER} || true
+                        docker rm test-backend-${BUILD_NUMBER} || true
+                    '''
+                }
+            }
+        }
+        
+        stage('Test Frontend') {
+            steps {
+                echo 'Running Frontend Tests...'
+                sh '''
+                    echo "Starting frontend container for testing..."
+                    docker run -d --name test-frontend-${BUILD_NUMBER} -p 8081:80 ${FRONTEND_IMAGE}:${IMAGE_TAG}
+                    
+                    echo "Waiting for frontend to be ready..."
+                    sleep 3
+                    
+                    echo "Testing frontend accessibility..."
+                    curl -f http://localhost:8081/ || exit 1
+                    
+                    echo "Frontend tests passed!"
+                '''
+            }
+            post {
+                always {
+                    sh '''
+                        docker stop test-frontend-${BUILD_NUMBER} || true
+                        docker rm test-frontend-${BUILD_NUMBER} || true
+                    '''
+                }
+            }
+        }
+        
+        stage('Push to Registry') {
+            when {
+                branch 'main'
+            }
+            steps {
+                echo 'Pushing images to Docker Registry...'
+                script {
+                    docker.withRegistry("https://${DOCKER_REGISTRY}", "${DOCKER_CREDENTIALS_ID}") {
+                        sh """
+                            docker tag ${BACKEND_IMAGE}:${IMAGE_TAG} ${DOCKER_REGISTRY}/\${DOCKER_USERNAME}/${BACKEND_IMAGE}:${IMAGE_TAG}
+                            docker tag ${BACKEND_IMAGE}:latest ${DOCKER_REGISTRY}/\${DOCKER_USERNAME}/${BACKEND_IMAGE}:latest
+                            docker push ${DOCKER_REGISTRY}/\${DOCKER_USERNAME}/${BACKEND_IMAGE}:${IMAGE_TAG}
+                            docker push ${DOCKER_REGISTRY}/\${DOCKER_USERNAME}/${BACKEND_IMAGE}:latest
+                            
+                            docker tag ${FRONTEND_IMAGE}:${IMAGE_TAG} ${DOCKER_REGISTRY}/\${DOCKER_USERNAME}/${FRONTEND_IMAGE}:${IMAGE_TAG}
+                            docker tag ${FRONTEND_IMAGE}:latest ${DOCKER_REGISTRY}/\${DOCKER_USERNAME}/${FRONTEND_IMAGE}:latest
+                            docker push ${DOCKER_REGISTRY}/\${DOCKER_USERNAME}/${FRONTEND_IMAGE}:${IMAGE_TAG}
+                            docker push ${DOCKER_REGISTRY}/\${DOCKER_USERNAME}/${FRONTEND_IMAGE}:latest
+                        """
+                    }
+                }
+            }
+        }
+        
+        stage('Deploy to Staging') {
+            when {
+                branch 'develop'
+            }
+            steps {
+                echo 'Deploying to Staging Environment...'
+                sh '''
+                    echo "Stopping existing staging containers..."
+                    docker-compose -f docker-compose.yml down || true
+                    
+                    echo "Starting new staging deployment..."
+                    docker-compose -f docker-compose.yml up -d
+                    
+                    echo "Waiting for services to be healthy..."
+                    sleep 10
+                    
+                    echo "Verifying deployment..."
+                    curl -f http://localhost:5000/ || exit 1
+                    curl -f http://localhost:8080/ || exit 1
+                    
+                    echo "Staging deployment successful!"
+                '''
+            }
+        }
+        
+        stage('Deploy to Production') {
+            when {
+                branch 'main'
+            }
+            steps {
+                input message: 'Deploy to Production?', ok: 'Deploy'
+                echo 'Deploying to Production Environment...'
+                sh '''
+                    echo "Stopping existing production containers..."
+                    docker-compose -f docker-compose.yml down || true
+                    
+                    echo "Starting new production deployment..."
+                    docker-compose -f docker-compose.yml up -d
+                    
+                    echo "Waiting for services to be healthy..."
+                    sleep 10
+                    
+                    echo "Verifying production deployment..."
+                    curl -f http://localhost:5000/ || exit 1
+                    curl -f http://localhost:8080/ || exit 1
+                    
+                    echo "Production deployment successful!"
+                '''
+            }
+        }
+    }
+    
+    post {
+        success {
+            echo 'Pipeline completed successfully!'
+            cleanWs()
+        }
+        failure {
+            echo 'Pipeline failed!'
+            sh '''
+                docker-compose down || true
+                docker stop test-backend-${BUILD_NUMBER} || true
+                docker rm test-backend-${BUILD_NUMBER} || true
+                docker stop test-frontend-${BUILD_NUMBER} || true
+                docker rm test-frontend-${BUILD_NUMBER} || true
+            '''
+        }
+        always {
+            echo 'Cleaning up Docker resources...'
+            sh '''
+                docker system prune -f || true
+            '''
+        }
+    }
+}
