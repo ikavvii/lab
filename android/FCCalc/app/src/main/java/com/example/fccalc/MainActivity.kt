@@ -23,11 +23,8 @@ class MainActivity : AppCompatActivity() {
 
         val convertButton = findViewById<Button>(R.id.button)
         convertButton.setOnClickListener {
-
-
             val tF: Double = (inputFahrenheit.text.toString().toDoubleOrNull() ?: 0) as Double
             val tC: Double = (tF - 32)* 5 / 9
-
             displayCelsius.setText("$tC")
         }
 
