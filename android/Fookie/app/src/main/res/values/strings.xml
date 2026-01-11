@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Fookie</string>
+    <string name="hungry">Hungry</string>
+    <string name="i_m_so_hungry">I\'m so hungry</string>
+    <string name="eat_cookie">EAT COOKIE</string>
+    <string name="i_m_so_full">I\'m so full</string>
+    <string name="done">DONE</string>
+</resources>
