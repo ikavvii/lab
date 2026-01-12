@@ -8,99 +8,84 @@
     tools:context=".MainActivity">
 
 
-    <EditText
-        android:id="@+id/editTextText2"
-        android:layout_width="309dp"
-        android:layout_height="46dp"
-        android:layout_marginStart="51dp"
-        android:layout_marginEnd="51dp"
-        android:layout_marginBottom="25dp"
-        android:autofillHints="Result"
-        android:ems="10"
-        android:inputType=""
-        app:layout_constraintBottom_toTopOf="@+id/button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <EditText
-        android:id="@+id/editTextText"
-        android:layout_width="309dp"
-        android:layout_height="46dp"
-        android:layout_marginStart="51dp"
-        android:layout_marginEnd="51dp"
-        android:layout_marginBottom="24dp"
-        android:autofillHints="Input"
-        android:ems="10"
-        android:inputType="numberDecimal"
-        app:layout_constraintBottom_toTopOf="@+id/textView2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="309dp"
-        android:layout_height="44dp"
-        android:layout_marginStart="51dp"
-        android:layout_marginEnd="51dp"
-        android:layout_marginBottom="20dp"
-        android:labelFor="@+id/editTextText2"
-        android:text="@string/temperature_in_celsius"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/editTextText2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="309dp"
-        android:layout_height="44dp"
-        android:layout_marginStart="51dp"
-        android:layout_marginEnd="51dp"
-        android:layout_marginBottom="22dp"
-        android:labelFor="@+id/editTextText"
-        android:text="@string/temperature_in_fahrenheit"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/editTextText"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/button"
-        android:layout_width="120dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="145dp"
-        android:layout_marginEnd="146dp"
-        android:layout_marginBottom="26dp"
-        android:text="@string/convert"
-        app:layout_constraintBottom_toTopOf="@+id/button2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="120dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="145dp"
-        android:layout_marginEnd="146dp"
-        android:layout_marginBottom="124dp"
-        android:text="@string/clear"
+    <LinearLayout
+        android:layout_width="372dp"
+        android:layout_height="489dp"
+        android:layout_marginStart="23dp"
+        android:layout_marginTop="80dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="162dp"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <TextView
-        android:id="@+id/title"
-        android:layout_width="377dp"
-        android:layout_height="46dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="71dp"
-        android:layout_marginEnd="18dp"
-        android:text="@string/fccalc"
-        android:textAlignment="center"
-        android:textColor="@color/design_default_color_on_secondary"
-        android:textSize="36sp"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="46dp"
+            android:layout_marginBottom="24dp"
+            android:text="@string/fccalc"
+            android:textAlignment="center"
+            android:textSize="36sp" />
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:labelFor="@+id/editTextText"
+            android:text="@string/temperature_in_fahrenheit"
+            android:textSize="24sp" />
+
+        <EditText
+            android:id="@+id/editTextText"
+            android:layout_width="match_parent"
+            android:layout_height="46dp"
+            android:autofillHints="Input"
+            android:ems="10"
+            android:inputType="numberDecimal|numberSigned" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:labelFor="@+id/editTextText2"
+            android:text="@string/temperature_in_celsius"
+            android:textSize="24sp" />
+
+        <EditText
+            android:id="@+id/editTextText2"
+            android:layout_width="match_parent"
+            android:layout_height="46dp"
+            android:autofillHints="Result"
+            android:ems="10"
+            android:inputType="numberDecimal|numberSigned" />
+
+        <LinearLayout
+            style="?android:attr/buttonBarStyle"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="16dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/button"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="164dp"
+                android:layout_height="48dp"
+                android:text="@string/convert" />
+
+            <Button
+                android:id="@+id/button2"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="186dp"
+                android:layout_height="48dp"
+                android:text="@string/clear" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
