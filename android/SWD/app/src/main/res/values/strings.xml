@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">SWD</string>
+    <string name="android_desc">An open-source, highly customizable mobile app with wide device support, deep Google integration, and flexible feature development.</string>
+    <string name="ios_desc">A premium, secure mobile app optimized for Apple devices with smooth performance, strong privacy controls, and seamless ecosystem integration.</string>
+    <string name="register">Register</string>
+    <string name="image">image</string>
+    <string name="android">Android</string>
+    <string name="ios_apps">iOS Apps</string>
+</resources>

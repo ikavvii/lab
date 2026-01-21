@@ -1,0 +1,276 @@
+Index: ../../Java/src/Datatypes.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/../../Java/src/Datatypes.java b/../../Java/src/Datatypes.java
+deleted file mode 100644
+--- a/../../Java/src/Datatypes.java	(revision aa88b5680be6f40cc938ad500ae9303f82cf2bc6)
++++ /dev/null	(revision aa88b5680be6f40cc938ad500ae9303f82cf2bc6)
+@@ -1,58 +0,0 @@
+-void main() {  // java compact source file - implicitly declared class
+-    int myInteger = Integer.MAX_VALUE;
+-    System.out.println(myInteger);
+-    System.out.println(myInteger+1); // wraps around
+-
+-    myInteger = Integer.MIN_VALUE;
+-    System.out.println(myInteger);
+-    System.out.println(myInteger-1);
+-
+-    byte myByte = Byte.MAX_VALUE;
+-    System.out.println(myByte);
+-    System.out.println(myByte+2);
+-
+-    myByte = (byte) (myByte + 2); // overflow
+-    System.out.println(myByte);
+-
+-    myByte = Byte.MIN_VALUE;
+-    System.out.println(myByte);
+-
+-    short myShort = Short.MAX_VALUE;
+-    System.out.println(myShort);
+-    System.out.println(myShort + 1); // numeric promotion - no overflow
+-    System.out.println(Short.MIN_VALUE);
+-
+-    long myLong = Long.MAX_VALUE;
+-    System.out.println(myLong);
+-    System.out.println(myLong + 1);  // overflow
+-
+-    myLong = Long.MIN_VALUE;
+-    System.out.println(myLong);
+-    System.out.println(myLong - 1); // underflow
+-
+-    // float overflow and underflow
+-    float myFloat = Float.MAX_VALUE;
+-    System.out.println(myFloat);
+-    System.out.println(myFloat + 1);
+-    System.out.println(myFloat + 1.0);
+-
+-    myFloat = Float.MIN_VALUE;
+-    System.out.println(myFloat);
+-    System.out.println(myFloat - 1.0);
+-    System.out.println(myFloat - 1);
+-
+-    double myDouble = Double.MAX_VALUE;
+-    System.out.println(myDouble);
+-
+-    // overflow using multiplication table
+-    // TODO
+-
+-    char myChar = Character.MAX_VALUE;
+-    System.out.println(myChar);
+-    System.out.println((int ) myChar);
+-    System.out.println(myChar + 1); // no overflow
+-    myChar = (char) (myChar + 1); // putting back the char into variable after overflow
+-    System.out.println((int) myChar); // printing numeric value
+-
+-
+-}
+Index: ../../web-technologies/worksheet13/employee.js
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/../../web-technologies/worksheet13/employee.js b/../../web-technologies/worksheet13/employee.js
+deleted file mode 100644
+--- a/../../web-technologies/worksheet13/employee.js	(revision aa88b5680be6f40cc938ad500ae9303f82cf2bc6)
++++ /dev/null	(revision aa88b5680be6f40cc938ad500ae9303f82cf2bc6)
+@@ -1,59 +0,0 @@
+-// read EmpLogin.txt file
+-const prompts = require("prompts");
+-const { appendFile } = require("fs/promises");
+-
+-console.log("EMPLOYEE LOGIN DETAILS");
+-
+-(async () => {
+-  const response = await prompts([
+-    {
+-      type: "select",
+-      name: "choice",
+-      message: "Choose from menu",
+-      choices: [
+-        { title: "Log: time-in", value: "logTimeIn" },
+-        { title: "Log: time-out", value: "logTimeOut" },
+-        {
+-          title: "View: late clock ins by date",
+-          value: "getLateClockInsByDate",
+-        },
+-      ],
+-    },
+-  ]);
+-
+-  eval(`${response["choice"]}()`);
+-})();
+-
+-function logTimeIn() {
+-  (async () => {
+-    const response = await prompts([
+-      {
+-        type: "text",
+-        name: "empId",
+-        message: "Enter employee id",
+-      },
+-    ]);
+-
+-    console.log({
+-      empId: response.empId,
+-      date: new Date().toLocaleDateString(),
+-      timeIn: new Date().toLocaleTimeString(),
+-    });
+-  })();
+-}
+-
+-function logTimeOut() {
+-  (async () => {
+-    const response = await prompts([
+-      {
+-        type: "text",
+-        name: "empId",
+-        message: "Enter employee id",
+-      },
+-    ]);
+-
+-    // TODO: If an entry for empId, with current date is found, then add the time out also and write to EmpLogin.txt
+-  })();
+-}
+-
+-function getLateClockInsByDate() {}
+Index: ../../web-technologies/worksheet13/package.json
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>{\r\n  \"dependencies\": {\r\n    \"prompts\": \"^2.4.2\"\r\n  }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/../../web-technologies/worksheet13/package.json b/../../web-technologies/worksheet13/package.json
+--- a/../../web-technologies/worksheet13/package.json	(revision aa88b5680be6f40cc938ad500ae9303f82cf2bc6)
++++ b/../../web-technologies/worksheet13/package.json	(date 1762202735782)
+@@ -1,5 +1,8 @@
+ {
+   "dependencies": {
+     "prompts": "^2.4.2"
++  },
++  "devDependencies": {
++    "@types/prompts": "^2.4.9"
+   }
+ }
+Index: ../../web-technologies/worksheet13/package-lock.json
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>{\r\n  \"name\": \"worksheet13\",\r\n  \"lockfileVersion\": 3,\r\n  \"requires\": true,\r\n  \"packages\": {\r\n    \"\": {\r\n      \"dependencies\": {\r\n        \"prompts\": \"^2.4.2\"\r\n      }\r\n    },\r\n    \"node_modules/kleur\": {\r\n      \"version\": \"3.0.3\",\r\n      \"resolved\": \"https://registry.npmjs.org/kleur/-/kleur-3.0.3.tgz\",\r\n      \"integrity\": \"sha512-eTIzlVOSUR+JxdDFepEYcBMtZ9Qqdef+rnzWdRZuMbOywu5tO2w2N7rqjoANZ5k9vywhL6Br1VRjUIgTQx4E8w==\",\r\n      \"license\": \"MIT\",\r\n      \"engines\": {\r\n        \"node\": \">=6\"\r\n      }\r\n    },\r\n    \"node_modules/prompts\": {\r\n      \"version\": \"2.4.2\",\r\n      \"resolved\": \"https://registry.npmjs.org/prompts/-/prompts-2.4.2.tgz\",\r\n      \"integrity\": \"sha512-NxNv/kLguCA7p3jE8oL2aEBsrJWgAakBpgmgK6lpPWV+WuOmY6r2/zbAVnP+T8bQlA0nzHXSJSJW0Hq7ylaD2Q==\",\r\n      \"license\": \"MIT\",\r\n      \"dependencies\": {\r\n        \"kleur\": \"^3.0.3\",\r\n        \"sisteransi\": \"^1.0.5\"\r\n      },\r\n      \"engines\": {\r\n        \"node\": \">= 6\"\r\n      }\r\n    },\r\n    \"node_modules/sisteransi\": {\r\n      \"version\": \"1.0.5\",\r\n      \"resolved\": \"https://registry.npmjs.org/sisteransi/-/sisteransi-1.0.5.tgz\",\r\n      \"integrity\": \"sha512-bLGGlR1QxBcynn2d5YmDX4MGjlZvy2MRBDRNHLJ8VI6l6+9FUiyTFNJ0IveOSP0bcXgVDPRcfGqA0pjaqUpfVg==\",\r\n      \"license\": \"MIT\"\r\n    }\r\n  }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/../../web-technologies/worksheet13/package-lock.json b/../../web-technologies/worksheet13/package-lock.json
+--- a/../../web-technologies/worksheet13/package-lock.json	(revision aa88b5680be6f40cc938ad500ae9303f82cf2bc6)
++++ b/../../web-technologies/worksheet13/package-lock.json	(date 1762202735806)
+@@ -6,6 +6,30 @@
+     "": {
+       "dependencies": {
+         "prompts": "^2.4.2"
++      },
++      "devDependencies": {
++        "@types/prompts": "^2.4.9"
++      }
++    },
++    "node_modules/@types/node": {
++      "version": "24.10.0",
++      "resolved": "https://registry.npmjs.org/@types/node/-/node-24.10.0.tgz",
++      "integrity": "sha512-qzQZRBqkFsYyaSWXuEHc2WR9c0a0CXwiE5FWUvn7ZM+vdy1uZLfCunD38UzhuB7YN/J11ndbDBcTmOdxJo9Q7A==",
++      "dev": true,
++      "license": "MIT",
++      "dependencies": {
++        "undici-types": "~7.16.0"
++      }
++    },
++    "node_modules/@types/prompts": {
++      "version": "2.4.9",
++      "resolved": "https://registry.npmjs.org/@types/prompts/-/prompts-2.4.9.tgz",
++      "integrity": "sha512-qTxFi6Buiu8+50/+3DGIWLHM6QuWsEKugJnnP6iv2Mc4ncxE4A/OJkjuVOA+5X0X1S/nq5VJRa8Lu+nwcvbrKA==",
++      "dev": true,
++      "license": "MIT",
++      "dependencies": {
++        "@types/node": "*",
++        "kleur": "^3.0.3"
+       }
+     },
+     "node_modules/kleur": {
+@@ -35,6 +59,13 @@
+       "resolved": "https://registry.npmjs.org/sisteransi/-/sisteransi-1.0.5.tgz",
+       "integrity": "sha512-bLGGlR1QxBcynn2d5YmDX4MGjlZvy2MRBDRNHLJ8VI6l6+9FUiyTFNJ0IveOSP0bcXgVDPRcfGqA0pjaqUpfVg==",
+       "license": "MIT"
++    },
++    "node_modules/undici-types": {
++      "version": "7.16.0",
++      "resolved": "https://registry.npmjs.org/undici-types/-/undici-types-7.16.0.tgz",
++      "integrity": "sha512-Zz+aZWSj8LE6zoxD+xrjh4VfkIG8Ya6LvYkZqtUQGJPZjYl53ypCaUwWqo7eI0x66KBGeRo+mlBEkMSeSZ38Nw==",
++      "dev": true,
++      "license": "MIT"
+     }
+   }
+ }
+Index: ../../Java/src/LongestSubstringWithoutRepeatingCharacters.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/../../Java/src/LongestSubstringWithoutRepeatingCharacters.java b/../../Java/src/LongestSubstringWithoutRepeatingCharacters.java
+new file mode 100644
+--- /dev/null	(date 1768644172364)
++++ b/../../Java/src/LongestSubstringWithoutRepeatingCharacters.java	(date 1768644172364)
+@@ -0,0 +1,26 @@
++import java.util.HashMap;
++
++public class LongestSubstringWithoutRepeatingCharacters {
++    static void main() {
++        Solution solution = new Solution();
++        System.out.println(solution.lengthOfLongestSubstring("pwwkew"));
++    }
++}
++
++class Solution {
++    public int lengthOfLongestSubstring(String s) {
++        int maxLen = 0;
++        int p = 0;
++        HashMap<Character, Integer> map = new HashMap<>();
++
++        for  (int i = p; i < s.length(); i++) {
++            if(map.containsKey(s.charAt(i))) {
++                p = Math.max(p, map.get(s.charAt(i)) + 1);
++            }
++            map.put(s.charAt(i), i);
++            maxLen = Math.max(maxLen, i - p + 1);
++        }
++
++        return maxLen;
++    }
++}
+\ No newline at end of file
+Index: ../../web-technologies/worksheet13/EmpLogin.txt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/../../web-technologies/worksheet13/EmpLogin.txt b/../../web-technologies/worksheet13/EmpLogin.txt
+--- a/../../web-technologies/worksheet13/EmpLogin.txt	(revision aa88b5680be6f40cc938ad500ae9303f82cf2bc6)
++++ b/../../web-technologies/worksheet13/EmpLogin.txt	(date 1762207477754)
+@@ -1,0 +1,18 @@
++[
++  {
++    "empId": "3",
++    "date": "2025-11-03T22:04:29.897Z",
++    "timeIn": "2025-11-03T22:04:29.897Z"
++  },
++  {
++    "empId": "2",
++    "date": "2025-11-03T22:02:38.116Z",
++    "timeIn": "2025-11-03T22:02:38.116Z"
++  },
++  {
++    "empId": "1",
++    "date": "2025-11-03T22:02:26.992Z",
++    "timeIn": "2025-11-03T22:02:26.992Z",
++    "timeOut": "2025-11-03T22:04:37.753Z"
++  }
++]
+\ No newline at end of file

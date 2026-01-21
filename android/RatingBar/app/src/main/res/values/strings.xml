@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">RatingBar</string>
+    <string name="we_hope_you_enjoyed_your_meal_with_us_today">We hope you enjoyed your meal with us today</string>
+    <string name="the_food_was_fresh_properly_prepared_and_a_great_value_for_the_price_we_highly_recommend_it">The food was fresh, properly prepared and a great value for the price. We highly recommend it.</string>
+</resources>

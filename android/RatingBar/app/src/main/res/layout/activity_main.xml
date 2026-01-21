@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:gravity="center_horizontal"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/we_hope_you_enjoyed_your_meal_with_us_today"
+        android:textAlignment="center"
+        android:textSize="18sp"
+        android:textStyle="italic"
+        android:textColor="@color/gray_text"
+        android:layout_marginBottom="24dp" />
+
+    <RatingBar
+        android:id="@+id/ratingBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:numStars="5"
+        android:stepSize="1.0"
+        android:progressTint="@color/pink_accent"
+        android:secondaryProgressTint="@color/pink_accent"
+        android:layout_marginBottom="16dp" />
+
+    <TextView
+        android:id="@+id/tvRatingStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:textColor="@color/gray_text"
+        android:layout_marginBottom="32dp" />
+
+    <EditText
+        android:id="@+id/etFeedback"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:autofillHints=""
+        android:hint="@string/the_food_was_fresh_properly_prepared_and_a_great_value_for_the_price_we_highly_recommend_it"
+        android:lines="4"
+        android:gravity="top|start"
+        android:maxLength="100"
+        android:background="@null"
+        android:layout_marginBottom="8dp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/pink_accent"
+        android:layout_marginBottom="24dp" />
+
+    <Button
+        android:id="@+id/btnSendFeedback"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="SEND FEEDBACK"
+        android:backgroundTint="@color/pink_accent"
+        android:textColor="@color/white" />
+
+</LinearLayout>
