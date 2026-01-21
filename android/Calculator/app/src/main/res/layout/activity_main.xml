@@ -9,18 +9,33 @@
     tools:context=".MainActivity">
 
     <TextView
+        android:id="@+id/tvFormula"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginTop="24dp"
+        android:gravity="end"
+        android:textColor="?attr/colorOnSurfaceVariant"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="12 + " />
+
+    <TextView
         android:id="@+id/tvDisplay"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_margin="24dp"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginBottom="24dp"
         android:gravity="end"
-        android:text="0"
+        android:text="@string/initial_display"
         android:textColor="?attr/colorOnSurface"
         android:textSize="64sp"
         app:layout_constraintBottom_toTopOf="@+id/layoutButtons"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvFormula"
         app:layout_constraintVertical_bias="1.0" />
 
     <LinearLayout
@@ -41,38 +56,11 @@
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnAC"
                 style="@style/Widget.Material3.Button.TonalButton"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="80dp"
                 android:layout_margin="4dp"
-                android:layout_weight="1"
-                android:text="AC" />
+                android:text="@string/btn_ac" />
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnPlusMinus"
-                style="@style/Widget.Material3.Button.TonalButton"
-                android:layout_width="0dp"
-                android:layout_height="80dp"
-                android:layout_margin="4dp"
-                android:layout_weight="1"
-                android:text="+/-" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnPercent"
-                style="@style/Widget.Material3.Button.TonalButton"
-                android:layout_width="0dp"
-                android:layout_height="80dp"
-                android:layout_margin="4dp"
-                android:layout_weight="1"
-                android:text="%" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnDivide"
-                style="@style/Widget.Material3.Button.IconButton.Filled"
-                android:layout_width="0dp"
-                android:layout_height="80dp"
-                android:layout_margin="4dp"
-                android:layout_weight="1"
-                android:text="/" />
         </LinearLayout>
 
         <LinearLayout
@@ -87,7 +75,7 @@
                 android:layout_height="80dp"
                 android:layout_margin="4dp"
                 android:layout_weight="1"
-                android:text="7" />
+                android:text="@string/digit_7" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn8"
@@ -96,7 +84,7 @@
                 android:layout_height="80dp"
                 android:layout_margin="4dp"
                 android:layout_weight="1"
-                android:text="8" />
+                android:text="@string/digit_8" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn9"
@@ -105,16 +93,16 @@
                 android:layout_height="80dp"
                 android:layout_margin="4dp"
                 android:layout_weight="1"
-                android:text="9" />
+                android:text="@string/digit_9" />
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnMultiply"
+                android:id="@+id/btnDivide"
                 style="@style/Widget.Material3.Button.IconButton.Filled"
                 android:layout_width="0dp"
                 android:layout_height="80dp"
                 android:layout_margin="4dp"
                 android:layout_weight="1"
-                android:text="*" />
+                android:text="@string/op_divide" />
         </LinearLayout>
 
         <LinearLayout
@@ -129,7 +117,7 @@
                 android:layout_height="80dp"
                 android:layout_margin="4dp"
                 android:layout_weight="1"
-                android:text="4" />
+                android:text="@string/digit_4" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn5"
@@ -138,7 +126,7 @@
                 android:layout_height="80dp"
                 android:layout_margin="4dp"
                 android:layout_weight="1"
-                android:text="5" />
+                android:text="@string/digit_5" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn6"
@@ -147,16 +135,16 @@
                 android:layout_height="80dp"
                 android:layout_margin="4dp"
                 android:layout_weight="1"
-                android:text="6" />
+                android:text="@string/digit_6" />
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnSubtract"
+                android:id="@+id/btnMultiply"
                 style="@style/Widget.Material3.Button.IconButton.Filled"
                 android:layout_width="0dp"
                 android:layout_height="80dp"
                 android:layout_margin="4dp"
                 android:layout_weight="1"
-                android:text="-" />
+                android:text="@string/op_multiply" />
         </LinearLayout>
 
         <LinearLayout
@@ -171,7 +159,7 @@
                 android:layout_height="80dp"
                 android:layout_margin="4dp"
                 android:layout_weight="1"
-                android:text="1" />
+                android:text="@string/digit_1" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn2"
@@ -180,7 +168,7 @@
                 android:layout_height="80dp"
                 android:layout_margin="4dp"
                 android:layout_weight="1"
-                android:text="2" />
+                android:text="@string/digit_2" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn3"
@@ -189,16 +177,16 @@
                 android:layout_height="80dp"
                 android:layout_margin="4dp"
                 android:layout_weight="1"
-                android:text="3" />
+                android:text="@string/digit_3" />
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnAdd"
+                android:id="@+id/btnSubtract"
                 style="@style/Widget.Material3.Button.IconButton.Filled"
                 android:layout_width="0dp"
                 android:layout_height="80dp"
                 android:layout_margin="4dp"
                 android:layout_weight="1"
-                android:text="+" />
+                android:text="@string/op_subtract" />
         </LinearLayout>
 
         <LinearLayout
@@ -212,8 +200,8 @@
                 android:layout_width="0dp"
                 android:layout_height="80dp"
                 android:layout_margin="4dp"
-                android:layout_weight="2"
-                android:text="0" />
+                android:layout_weight="1"
+                android:text="@string/digit_0" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnDot"
@@ -222,16 +210,25 @@
                 android:layout_height="80dp"
                 android:layout_margin="4dp"
                 android:layout_weight="1"
-                android:text="." />
+                android:text="@string/btn_dot" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnEqual"
+                style="@style/Widget.Material3.Button.IconButton.Filled.Tonal"
+                android:layout_width="0dp"
+                android:layout_height="80dp"
+                android:layout_margin="4dp"
+                android:layout_weight="1"
+                android:text="@string/op_equal" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnAdd"
                 style="@style/Widget.Material3.Button.IconButton.Filled"
                 android:layout_width="0dp"
                 android:layout_height="80dp"
                 android:layout_margin="4dp"
                 android:layout_weight="1"
-                android:text="=" />
+                android:text="@string/op_add" />
         </LinearLayout>
 
     </LinearLayout>
