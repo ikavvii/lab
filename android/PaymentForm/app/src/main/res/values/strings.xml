@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">PaymentForm</string>
+    <string name="security_code">Security code</string>
+    <string name="expiry">Expiry</string>
+    <string name="billing_information">Billing Information</string>
+    <string name="country">Country</string>
+    <string name="zip_code">ZIP Code</string>
+    <string name="city">City</string>
+    <string name="address">Address</string>
+    <string name="state">State</string>
+    <string name="payment_information">Payment Information</string>
+    <string name="submit">Submit</string>
+    <string name="_16_digit_number">16-digit number</string>
+    <string name="card_type_card_number_expiry_date_cvv_address_city_state_zip_country">"\n            Card Type : %1$s\n            Card Number : %2$s\n            Expiry Date : %3$s\n            CVV : %4$s\n            Address : %5$s\n            City : %6$s\n            State : %7$s\n            ZIP : %8$s\n            Country : %9$s\n        "</string>
+
+
+</resources>
