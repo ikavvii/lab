@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "camunda-external-task-client-js": "^3.1.0",
+    "zeebe-node": "^8.3.2"
+  }
+}
