@@ -46,11 +46,7 @@ class MainActivity : AppCompatActivity() {
         submitButton.setOnClickListener {
 
             val card = cardNumber.text.toString()
-            val expiry = expiryDate.text.toString()
             val securityCode = cvv.text.toString()
-            val addr = address.text.toString()
-            val cityName = city.text.toString()
-            val zip = zipCode.text.toString()
 
             if (card.length != 16) {
                 cardNumber.error = "Enter valid 16-digit card number"
