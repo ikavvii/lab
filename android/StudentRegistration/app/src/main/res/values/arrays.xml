@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="programme_array">
+        <item>B.Tech</item>
+        <item>M.Tech</item>
+        <item>B.Sc</item>
+        <item>M.Sc</item>
+        <item>MCA</item>
+    </string-array>
+</resources>

@@ -20,8 +20,8 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/editTextText"
-        android:layout_width="400dp"
+        android:id="@+id/name"
+        android:layout_width="370dp"
         android:layout_height="48dp"
         android:layout_marginStart="5dp"
         android:layout_marginTop="35dp"
@@ -31,14 +31,14 @@
         android:ems="10"
         android:hint="@string/name"
         android:inputType="text"
-        app:layout_constraintBottom_toTopOf="@+id/editTextText2"
+        app:layout_constraintBottom_toTopOf="@+id/roll"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <EditText
-        android:id="@+id/editTextText2"
-        android:layout_width="400dp"
+        android:id="@+id/roll"
+        android:layout_width="370dp"
         android:layout_height="48dp"
         android:layout_marginStart="5dp"
         android:layout_marginTop="14dp"
@@ -47,13 +47,14 @@
         android:ems="10"
         android:hint="@string/roll_number"
         android:inputType="text"
+        android:textColorHint="#546E7A"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextText" />
+        app:layout_constraintTop_toBottomOf="@+id/name" />
 
     <RadioGroup
-        android:id="@+id/radioGroup"
-        android:layout_width="400dp"
+        android:id="@+id/gender"
+        android:layout_width="370dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
         android:layout_marginTop="12dp"
@@ -64,19 +65,19 @@
         app:layout_constraintTop_toBottomOf="@+id/textView2">
 
         <RadioButton
-            android:id="@+id/radioButton"
+            android:id="@+id/male"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/male" />
 
         <RadioButton
-            android:id="@+id/radioButton2"
+            android:id="@+id/female"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/female" />
 
         <RadioButton
-            android:id="@+id/radioButton4"
+            android:id="@+id/others"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/others" />
@@ -84,21 +85,21 @@
     </RadioGroup>
 
     <MultiAutoCompleteTextView
-        android:id="@+id/multiAutoCompleteTextView"
-        android:layout_width="400dp"
+        android:id="@+id/hobbies"
+        android:layout_width="370dp"
         android:layout_height="48dp"
         android:layout_marginStart="5dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="6dp"
         android:layout_marginBottom="18dp"
         android:hint="@string/hobbies"
-        app:layout_constraintBottom_toTopOf="@+id/spinner"
+        app:layout_constraintBottom_toTopOf="@+id/programme"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
+        app:layout_constraintTop_toBottomOf="@+id/gender" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/submit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="159dp"
@@ -107,41 +108,44 @@
         android:text="@string/submit"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextDate" />
+        app:layout_constraintTop_toBottomOf="@+id/dob" />
 
     <EditText
-        android:id="@+id/editTextDate"
-        android:layout_width="400dp"
+        android:id="@+id/dob"
+        android:layout_width="370dp"
         android:layout_height="48dp"
         android:layout_marginStart="5dp"
         android:layout_marginTop="18dp"
         android:layout_marginEnd="6dp"
         android:layout_marginBottom="35dp"
         android:autofillHints="Birthday"
+        android:clickable="true"
+        android:focusable="false"
         android:ems="10"
         android:hint="@string/date_of_birth"
         android:inputType="date"
-        app:layout_constraintBottom_toTopOf="@+id/button"
+        android:textColorHint="#546E7A"
+        app:layout_constraintBottom_toTopOf="@+id/submit"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinner" />
+        app:layout_constraintTop_toBottomOf="@+id/programme" />
 
     <Spinner
-        android:id="@+id/spinner"
-        android:layout_width="400dp"
+        android:id="@+id/programme"
+        android:layout_width="370dp"
         android:layout_height="48dp"
         android:layout_marginStart="5dp"
         android:layout_marginTop="18dp"
         android:layout_marginEnd="6dp"
         android:layout_marginBottom="18dp"
-        app:layout_constraintBottom_toTopOf="@+id/editTextDate"
+        app:layout_constraintBottom_toTopOf="@+id/dob"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/multiAutoCompleteTextView" />
+        app:layout_constraintTop_toBottomOf="@+id/hobbies" />
 
     <TextView
         android:id="@+id/textView2"
-        android:layout_width="400dp"
+        android:layout_width="370dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
         android:layout_marginTop="15dp"
@@ -149,8 +153,8 @@
         android:layout_marginBottom="12dp"
         android:text="@string/select_gender"
         android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/radioGroup"
+        app:layout_constraintBottom_toTopOf="@+id/gender"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextText2" />
+        app:layout_constraintTop_toBottomOf="@+id/roll" />
 </androidx.constraintlayout.widget.ConstraintLayout>
