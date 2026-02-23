@@ -1,6 +1,5 @@
 package com.example.broadcastreceiver
 
-import android.app.Activity
 import android.content.ActivityNotFoundException
 import android.content.BroadcastReceiver
 import android.content.Context
@@ -27,7 +26,7 @@ class OtpInputActivity : AppCompatActivity() {
     private var mobileNumber: String? = null
 
     private val smsConsentLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-        if (result.resultCode == Activity.RESULT_OK && result.data != null) {
+        if (result.resultCode == RESULT_OK && result.data != null) {
             val message = result.data?.getStringExtra(SmsRetriever.EXTRA_SMS_MESSAGE)
             message?.let {
                 etOtp.setText(parseOtp(it))
@@ -45,7 +44,7 @@ class OtpInputActivity : AppCompatActivity() {
 
                 when (smsRetrieverStatus?.statusCode) {
                     CommonStatusCodes.SUCCESS -> {
-                        val consentIntent = extras?.let {
+                        val consentIntent = extras.let {
                             BundleCompat.getParcelable(it, SmsRetriever.EXTRA_CONSENT_INTENT, Intent::class.java)
                         }
                         try {
@@ -132,7 +131,7 @@ class OtpInputActivity : AppCompatActivity() {
         super.onDestroy()
         try {
             unregisterReceiver(smsVerificationReceiver)
-        } catch (e: Exception) {
+        } catch (_: Exception) {
             // Receiver already unregistered
         }
     }

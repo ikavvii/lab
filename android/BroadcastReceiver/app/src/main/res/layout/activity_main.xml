@@ -12,27 +12,20 @@
         android:layout_height="wrap_content"
         android:textSize="18sp"
         android:textStyle="bold"
-        android:text="Mobile: " />
+        android:text="@string/mobile" />
 
     <TextView
         android:id="@+id/tv_internet_status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:text="Internet: Checking..." />
+        android:text="@string/internet_checking" />
 
     <TextView
         android:id="@+id/tv_location_status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:text="Location: Checking..." />
-
-    <Button
-        android:id="@+id/btn_refresh"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="Refresh Status" />
+        android:text="@string/location_checking" />
 
 </LinearLayout>

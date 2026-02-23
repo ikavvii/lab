@@ -8,18 +8,20 @@
 
     <EditText
         android:id="@+id/et_otp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Enter OTP"
+        android:layout_width="380dp"
+        android:layout_height="48dp"
+        android:autofillHints=""
+        android:hint="@string/enter_otp"
         android:inputType="number"
-        android:maxLength="6" />
+        android:maxLength="6"
+        android:minHeight="48dp" />
 
     <Button
         android:id="@+id/btn_verify_otp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="Verify OTP" />
+        android:text="@string/verify_otp" />
 
     <Button
         android:id="@+id/btn_resend_otp"
@@ -27,5 +29,5 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:text="Resend OTP" />
+        android:text="@string/resend_otp" />
 </LinearLayout>

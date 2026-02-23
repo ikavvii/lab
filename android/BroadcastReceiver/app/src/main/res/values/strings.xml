@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">BroadcastReceiver</string>
+    <string name="get_otp">Get OTP</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="internet_checking">Internet: Checking...</string>
+    <string name="location_checking">Location: Checking...</string>
+    <string name="mobile">Mobile:</string>
+    <string name="resend_otp">Resend OTP</string>
+    <string name="verify_otp">Verify OTP</string>
+    <string name="enter_otp">Enter OTP</string>
 </resources>
