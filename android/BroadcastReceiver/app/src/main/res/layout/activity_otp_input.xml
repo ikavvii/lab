@@ -8,7 +8,7 @@
 
     <EditText
         android:id="@+id/et_otp"
-        android:layout_width="380dp"
+        android:layout_width="370dp"
         android:layout_height="48dp"
         android:autofillHints=""
         android:hint="@string/enter_otp"
