@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Email</string>
+    <string name="send_to">Send To:</string>
+    <string name="email_subject">Email Subject:</string>
+    <string name="email_body">Email Body:</string>
+    <string name="send_email">Send email!!</string>
+    <string name="type_your_message_here">Type your message here</string>
+    <string name="type_your_subject_here">Type your subject here</string>
+    <string name="enter_email_address">Enter email address</string>
+</resources>
