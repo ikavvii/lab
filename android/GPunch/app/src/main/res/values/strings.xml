@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">GPunch</string>
+    <string name="gps_attendance">GPS Attendance</string>
+    <string name="punch_in_instruction">Press \'Punch In\' to verify location</string>
+    <string name="location_unknown">Location: Unknown</string>
+    <string name="punch_in">Punch In</string>
+    <string name="verifying_location">Verifying location...</string>
+    <string name="failed_get_location">Failed to get location. Try again.</string>
+    <string name="error_message">Error: %1$s</string>
+    <string name="location_format">Lat: %1$.4f, Lng: %2$.4f</string>
+    <string name="punch_in_success">Punch In Successful!\nYou are onsite.</string>
+    <string name="punch_in_failed">Punch In Failed.\nYou are %1$dm away from onsite.</string>
+    <string name="permission_denied">Location permission denied</string>
 </resources>
