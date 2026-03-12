@@ -123,8 +123,14 @@ class OtpInputActivity : AppCompatActivity() {
     }
 
     private fun parseOtp(message: String): String {
-        val otpPattern = "\\d{4,6}".toRegex()
-        return otpPattern.find(message)?.value ?: ""
+        // \b ensures we match a standalone number (word boundary).
+        // \d{4,6} matches exactly 4 to 6 digits.
+        val otpPattern = "\\b\\d{4,6}\\b".toRegex()
+        
+        // Find all standalone 4-6 digit numbers. We take the last one because 
+        // the actual OTP usually follows any sender IDs or reference codes.
+        val matches = otpPattern.findAll(message).map { it.value }.toList()
+        return matches.lastOrNull() ?: ""
     }
 
     override fun onDestroy() {

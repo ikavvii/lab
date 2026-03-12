@@ -8,4 +8,6 @@
     <string name="resend_otp">Resend OTP</string>
     <string name="verify_otp">Verify OTP</string>
     <string name="enter_otp">Enter OTP</string>
+    <string name="usb_debugging_checking">USB Debugging: Checking...</string>
+    <string name="keyboard_checking">Keyboard: Checking...</string>
 </resources>

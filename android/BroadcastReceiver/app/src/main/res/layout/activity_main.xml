@@ -28,4 +28,18 @@
         android:layout_marginTop="10dp"
         android:text="@string/location_checking" />
 
+    <TextView
+        android:id="@+id/tv_usb_debugging_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="@string/usb_debugging_checking" />
+
+    <TextView
+        android:id="@+id/tv_keyboard_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="@string/keyboard_checking" />
+
 </LinearLayout>
