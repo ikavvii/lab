@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">MockTest1</string>
+    <string name="send_whatsapp_msg">Send Whatsapp Msg</string>
+    <string name="play_stop_music">Play/Stop Music</string>
+    <string name="toggle_theme">Toggle Dark Theme</string>
+    <string name="light_dark">Light / Dark</string>
+    <string name="music">Music</string>
+    <string name="send">Send</string>
+    <string name="mobile_number">Mobile Number</string>
+    <string name="type_your_message">Type your message ...</string>
+</resources>

@@ -1,0 +1,486 @@
+Index: app/src/main/java/com/example/gpunch/MainActivity.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.gpunch\r\n\r\nimport android.os.Bundle\r\nimport androidx.activity.enableEdgeToEdge\r\nimport androidx.appcompat.app.AppCompatActivity\r\nimport androidx.core.view.ViewCompat\r\nimport androidx.core.view.WindowInsetsCompat\r\n\r\nclass MainActivity : AppCompatActivity() {\r\n    override fun onCreate(savedInstanceState: Bundle?) {\r\n        super.onCreate(savedInstanceState)\r\n        enableEdgeToEdge()\r\n        setContentView(R.layout.activity_main)\r\n        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->\r\n            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())\r\n            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)\r\n            insets\r\n        }\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/gpunch/MainActivity.kt b/app/src/main/java/com/example/gpunch/MainActivity.kt
+--- a/app/src/main/java/com/example/gpunch/MainActivity.kt	(revision 059589216ea9f516e27406ea5343e311b8139723)
++++ b/app/src/main/java/com/example/gpunch/MainActivity.kt	(date 1773312272717)
+@@ -1,12 +1,54 @@
+ package com.example.gpunch
+ 
++import android.Manifest
++import android.content.pm.PackageManager
++import android.location.Location
++import android.os.Build
+ import android.os.Bundle
++import android.widget.Button
++import android.widget.TextView
++import android.widget.Toast
+ import androidx.activity.enableEdgeToEdge
++import androidx.activity.result.contract.ActivityResultContracts
+ import androidx.appcompat.app.AppCompatActivity
++import androidx.core.app.ActivityCompat
++import androidx.core.content.ContextCompat
+ import androidx.core.view.ViewCompat
+ import androidx.core.view.WindowInsetsCompat
++import com.google.android.gms.location.FusedLocationProviderClient
++import com.google.android.gms.location.LocationServices
++import com.google.android.gms.location.Priority
++import com.google.android.gms.tasks.CancellationTokenSource
+ 
+ class MainActivity : AppCompatActivity() {
++
++    private lateinit var fusedLocationClient: FusedLocationProviderClient
++    private lateinit var statusTextView: TextView
++    private lateinit var locationTextView: TextView
++    private lateinit var punchInButton: Button
++
++    // Target location: 11°01'28.2"N 77°00'16.1"E
++    // Converted to Decimal Degrees: 11.0245, 77.004472
++    private val targetLat = 11.0245 
++    private val targetLng = 77.004472
++    private val geofenceRadiusMeters = 100.0
++
++    private val requestPermissionLauncher = registerForActivityResult(
++        ActivityResultContracts.RequestMultiplePermissions()
++    ) { permissions ->
++        when {
++            permissions.getOrDefault(Manifest.permission.ACCESS_FINE_LOCATION, false) -> {
++                getCurrentLocation()
++            }
++            permissions.getOrDefault(Manifest.permission.ACCESS_COARSE_LOCATION, false) -> {
++                getCurrentLocation()
++            }
++            else -> {
++                Toast.makeText(this, getString(R.string.permission_denied), Toast.LENGTH_SHORT).show()
++            }
++        }
++    }
++
+     override fun onCreate(savedInstanceState: Bundle?) {
+         super.onCreate(savedInstanceState)
+         enableEdgeToEdge()
+@@ -16,5 +58,99 @@
+             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+             insets
+         }
++
++        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
++        
++        statusTextView = findViewById(R.id.statusTextView)
++        locationTextView = findViewById(R.id.locationTextView)
++        punchInButton = findViewById(R.id.punchInButton)
++
++        punchInButton.setOnClickListener {
++            checkPermissionsAndGetLocation()
++        }
++    }
++
++    private fun checkPermissionsAndGetLocation() {
++        if (ActivityCompat.checkSelfPermission(
++                this,
++                Manifest.permission.ACCESS_FINE_LOCATION
++            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
++                this,
++                Manifest.permission.ACCESS_COARSE_LOCATION
++            ) != PackageManager.PERMISSION_GRANTED
++        ) {
++            requestPermissionLauncher.launch(
++                arrayOf(
++                    Manifest.permission.ACCESS_FINE_LOCATION,
++                    Manifest.permission.ACCESS_COARSE_LOCATION
++                )
++            )
++            return
++        }
++        getCurrentLocation()
++    }
++
++    private fun getCurrentLocation() {
++        if (ActivityCompat.checkSelfPermission(
++                this,
++                Manifest.permission.ACCESS_FINE_LOCATION
++            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
++                this,
++                Manifest.permission.ACCESS_COARSE_LOCATION
++            ) != PackageManager.PERMISSION_GRANTED
++        ) {
++            return
++        }
++
++        statusTextView.text = getString(R.string.verifying_location)
++        
++        fusedLocationClient.getCurrentLocation(
++            Priority.PRIORITY_HIGH_ACCURACY,
++            CancellationTokenSource().token
++        ).addOnSuccessListener { location: Location? ->
++            if (location != null) {
++                // Basic check for mock locations to improve security
++                val isMock = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
++                    location.isMock
++                } else {
++                    @Suppress("DEPRECATION")
++                    location.isFromMockProvider
++                }
++
++                if (isMock) {
++                    statusTextView.text = "Error: Mocked location detected.\nPlease disable fake GPS."
++                    statusTextView.setTextColor(ContextCompat.getColor(this, android.R.color.holo_red_dark))
++                } else {
++                    verifyPresence(location)
++                }
++            } else {
++                statusTextView.text = getString(R.string.failed_get_location)
++            }
++        }.addOnFailureListener {
++            statusTextView.text = getString(R.string.error_message, it.message)
++        }
++    }
++
++    private fun verifyPresence(currentLocation: Location) {
++        val results = FloatArray(1)
++        Location.distanceBetween(
++            currentLocation.latitude,
++            currentLocation.longitude,
++            targetLat,
++            targetLng,
++            results
++        )
++
++        val distanceInMeters = results[0]
++        locationTextView.text = getString(R.string.location_format, currentLocation.latitude, currentLocation.longitude)
++
++        if (distanceInMeters <= geofenceRadiusMeters) {
++            statusTextView.text = getString(R.string.punch_in_success)
++            statusTextView.setTextColor(ContextCompat.getColor(this, android.R.color.holo_green_dark))
++            punchInButton.isEnabled = false
++        } else {
++            statusTextView.text = getString(R.string.punch_in_failed, distanceInMeters.toInt())
++            statusTextView.setTextColor(ContextCompat.getColor(this, android.R.color.holo_red_dark))
++        }
+     }
+ }
+\ No newline at end of file
+Index: app/build.gradle.kts
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>plugins {\r\n    alias(libs.plugins.android.application)\r\n    alias(libs.plugins.kotlin.android)\r\n}\r\n\r\nandroid {\r\n    namespace = \"com.example.gpunch\"\r\n    compileSdk {\r\n        version = release(36)\r\n    }\r\n\r\n    defaultConfig {\r\n        applicationId = \"com.example.gpunch\"\r\n        minSdk = 24\r\n        targetSdk = 36\r\n        versionCode = 1\r\n        versionName = \"1.0\"\r\n\r\n        testInstrumentationRunner = \"androidx.test.runner.AndroidJUnitRunner\"\r\n    }\r\n\r\n    buildTypes {\r\n        release {\r\n            isMinifyEnabled = false\r\n            proguardFiles(\r\n                getDefaultProguardFile(\"proguard-android-optimize.txt\"),\r\n                \"proguard-rules.pro\"\r\n            )\r\n        }\r\n    }\r\n    compileOptions {\r\n        sourceCompatibility = JavaVersion.VERSION_11\r\n        targetCompatibility = JavaVersion.VERSION_11\r\n    }\r\n    kotlinOptions {\r\n        jvmTarget = \"11\"\r\n    }\r\n}\r\n\r\ndependencies {\r\n    implementation(libs.androidx.core.ktx)\r\n    implementation(libs.androidx.appcompat)\r\n    implementation(libs.material)\r\n    implementation(libs.androidx.activity)\r\n    implementation(libs.androidx.constraintlayout)\r\n    testImplementation(libs.junit)\r\n    androidTestImplementation(libs.androidx.junit)\r\n    androidTestImplementation(libs.androidx.espresso.core)\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/build.gradle.kts b/app/build.gradle.kts
+--- a/app/build.gradle.kts	(revision 059589216ea9f516e27406ea5343e311b8139723)
++++ b/app/build.gradle.kts	(date 1773312763584)
+@@ -5,9 +5,7 @@
+ 
+ android {
+     namespace = "com.example.gpunch"
+-    compileSdk {
+-        version = release(36)
+-    }
++    compileSdk = 36
+ 
+     defaultConfig {
+         applicationId = "com.example.gpunch"
+@@ -43,6 +41,13 @@
+     implementation(libs.material)
+     implementation(libs.androidx.activity)
+     implementation(libs.androidx.constraintlayout)
++    implementation(libs.playServicesLocation)
++    
++    // Networking
++    implementation(libs.retrofit)
++    implementation(libs.retrofitConverterGson)
++    implementation(libs.gson)
++
+     testImplementation(libs.junit)
+     androidTestImplementation(libs.androidx.junit)
+     androidTestImplementation(libs.androidx.espresso.core)
+Index: app/src/main/res/layout/activity_main.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<androidx.constraintlayout.widget.ConstraintLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:id=\"@+id/main\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    tools:context=\".MainActivity\">\r\n\r\n    <TextView\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:text=\"Hello World!\"\r\n        app:layout_constraintBottom_toBottomOf=\"parent\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"parent\" />\r\n\r\n</androidx.constraintlayout.widget.ConstraintLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/activity_main.xml b/app/src/main/res/layout/activity_main.xml
+--- a/app/src/main/res/layout/activity_main.xml	(revision 059589216ea9f516e27406ea5343e311b8139723)
++++ b/app/src/main/res/layout/activity_main.xml	(date 1773311945835)
+@@ -5,15 +5,54 @@
+     android:id="@+id/main"
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
++    android:padding="16dp"
+     tools:context=".MainActivity">
+ 
+     <TextView
++        android:id="@+id/titleTextView"
++        android:layout_width="wrap_content"
++        android:layout_height="wrap_content"
++        android:text="GPS Attendance"
++        android:textSize="24sp"
++        android:textStyle="bold"
++        app:layout_constraintBottom_toTopOf="@+id/statusTextView"
++        app:layout_constraintEnd_toEndOf="parent"
++        app:layout_constraintStart_toStartOf="parent"
++        app:layout_constraintTop_toTopOf="parent"
++        app:layout_constraintVertical_chainStyle="packed" />
++
++    <TextView
++        android:id="@+id/statusTextView"
++        android:layout_width="wrap_content"
++        android:layout_height="wrap_content"
++        android:layout_marginTop="16dp"
++        android:text="Press 'Punch In' to verify location"
++        android:textAlignment="center"
++        app:layout_constraintBottom_toTopOf="@+id/locationTextView"
++        app:layout_constraintEnd_toEndOf="parent"
++        app:layout_constraintStart_toStartOf="parent"
++        app:layout_constraintTop_toBottomOf="@+id/titleTextView" />
++
++    <TextView
++        android:id="@+id/locationTextView"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+-        android:text="Hello World!"
++        android:layout_marginTop="8dp"
++        android:text="Location: Unknown"
++        app:layout_constraintBottom_toTopOf="@+id/punchInButton"
++        app:layout_constraintEnd_toEndOf="parent"
++        app:layout_constraintStart_toStartOf="parent"
++        app:layout_constraintTop_toBottomOf="@+id/statusTextView" />
++
++    <Button
++        android:id="@+id/punchInButton"
++        android:layout_width="wrap_content"
++        android:layout_height="wrap_content"
++        android:layout_marginTop="32dp"
++        android:text="Punch In"
+         app:layout_constraintBottom_toBottomOf="parent"
+         app:layout_constraintEnd_toEndOf="parent"
+         app:layout_constraintStart_toStartOf="parent"
+-        app:layout_constraintTop_toTopOf="parent" />
++        app:layout_constraintTop_toBottomOf="@+id/locationTextView" />
+ 
+ </androidx.constraintlayout.widget.ConstraintLayout>
+\ No newline at end of file
+Index: .idea/.gitignore
+===================================================================
+diff --git a/.idea/.gitignore b/.idea/.gitignore
+deleted file mode 100644
+--- a/.idea/.gitignore	(revision 059589216ea9f516e27406ea5343e311b8139723)
++++ /dev/null	(revision 059589216ea9f516e27406ea5343e311b8139723)
+@@ -1,3 +0,0 @@
+-# Default ignored files
+-/shelf/
+-/workspace.xml
+Index: app/src/main/java/com/example/gpunch/network/AttendanceApi.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/gpunch/network/AttendanceApi.kt b/app/src/main/java/com/example/gpunch/network/AttendanceApi.kt
+new file mode 100644
+--- /dev/null	(date 1773312795578)
++++ b/app/src/main/java/com/example/gpunch/network/AttendanceApi.kt	(date 1773312795578)
+@@ -0,0 +1,10 @@
++package com.example.gpunch.network
++
++import retrofit2.Response
++import retrofit2.http.Body
++import retrofit2.http.POST
++
++interface AttendanceApi {
++    @POST("attendance/punch-in")
++    suspend fun punchIn(@Body request: AttendanceRequest): Response<Unit>
++}
+\ No newline at end of file
+Index: app/src/main/res/values/strings.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><resources>\r\n    <string name=\"app_name\">GPunch</string>\r\n</resources>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/values/strings.xml b/app/src/main/res/values/strings.xml
+--- a/app/src/main/res/values/strings.xml	(revision 059589216ea9f516e27406ea5343e311b8139723)
++++ b/app/src/main/res/values/strings.xml	(date 1773312114219)
+@@ -1,3 +1,14 @@
+ <resources>
+     <string name="app_name">GPunch</string>
++    <string name="gps_attendance">GPS Attendance</string>
++    <string name="punch_in_instruction">Press \'Punch In\' to verify location</string>
++    <string name="location_unknown">Location: Unknown</string>
++    <string name="punch_in">Punch In</string>
++    <string name="verifying_location">Verifying location...</string>
++    <string name="failed_get_location">Failed to get location. Try again.</string>
++    <string name="error_message">Error: %1$s</string>
++    <string name="location_format">Lat: %1$.4f, Lng: %2$.4f</string>
++    <string name="punch_in_success">Punch In Successful!\nYou are onsite.</string>
++    <string name="punch_in_failed">Punch In Failed.\nYou are %1$dm away from onsite.</string>
++    <string name="permission_denied">Location permission denied</string>
+ </resources>
+\ No newline at end of file
+Index: gradle/wrapper/gradle-wrapper.properties
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>#Fri Feb 13 12:11:35 IST 2026\r\ndistributionBase=GRADLE_USER_HOME\r\ndistributionPath=wrapper/dists\r\ndistributionUrl=https\\://services.gradle.org/distributions/gradle-8.13-bin.zip\r\nnetworkTimeout=10000\r\nvalidateDistributionUrl=true\r\nzipStoreBase=GRADLE_USER_HOME\r\nzipStorePath=wrapper/dists\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>ISO-8859-1
+===================================================================
+diff --git a/gradle/wrapper/gradle-wrapper.properties b/gradle/wrapper/gradle-wrapper.properties
+--- a/gradle/wrapper/gradle-wrapper.properties	(revision 059589216ea9f516e27406ea5343e311b8139723)
++++ b/gradle/wrapper/gradle-wrapper.properties	(date 1773311734066)
+@@ -1,4 +1,4 @@
+-#Fri Feb 13 12:11:35 IST 2026
++#Thu Mar 12 16:05:34 IST 2026
+ distributionBase=GRADLE_USER_HOME
+ distributionPath=wrapper/dists
+ distributionUrl=https\://services.gradle.org/distributions/gradle-8.13-bin.zip
+Index: app/src/main/AndroidManifest.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<manifest xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\">\r\n\r\n    <application\r\n        android:allowBackup=\"true\"\r\n        android:dataExtractionRules=\"@xml/data_extraction_rules\"\r\n        android:fullBackupContent=\"@xml/backup_rules\"\r\n        android:icon=\"@mipmap/ic_launcher\"\r\n        android:label=\"@string/app_name\"\r\n        android:roundIcon=\"@mipmap/ic_launcher_round\"\r\n        android:supportsRtl=\"true\"\r\n        android:theme=\"@style/Theme.GPunch\">\r\n        <activity\r\n            android:name=\".MainActivity\"\r\n            android:exported=\"true\">\r\n            <intent-filter>\r\n                <action android:name=\"android.intent.action.MAIN\" />\r\n\r\n                <category android:name=\"android.intent.category.LAUNCHER\" />\r\n            </intent-filter>\r\n        </activity>\r\n    </application>\r\n\r\n</manifest>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/AndroidManifest.xml b/app/src/main/AndroidManifest.xml
+--- a/app/src/main/AndroidManifest.xml	(revision 059589216ea9f516e27406ea5343e311b8139723)
++++ b/app/src/main/AndroidManifest.xml	(date 1773311829081)
+@@ -2,6 +2,10 @@
+ <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+     xmlns:tools="http://schemas.android.com/tools">
+ 
++    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
++    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
++    <uses-permission android:name="android.permission.INTERNET" />
++
+     <application
+         android:allowBackup="true"
+         android:dataExtractionRules="@xml/data_extraction_rules"
+Index: gradle.properties
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+># Project-wide Gradle settings.\r\n# IDE (e.g. Android Studio) users:\r\n# Gradle settings configured through the IDE *will override*\r\n# any settings specified in this file.\r\n# For more details on how to configure your build environment visit\r\n# http://www.gradle.org/docs/current/userguide/build_environment.html\r\n# Specifies the JVM arguments used for the daemon process.\r\n# The setting is particularly useful for tweaking memory settings.\r\norg.gradle.jvmargs=-Xmx2048m -Dfile.encoding=UTF-8\r\n# When configured, Gradle will run in incubating parallel mode.\r\n# This option should only be used with decoupled projects. For more details, visit\r\n# https://developer.android.com/r/tools/gradle-multi-project-decoupled-projects\r\n# org.gradle.parallel=true\r\n# AndroidX package structure to make it clearer which packages are bundled with the\r\n# Android operating system, and which are packaged with your app's APK\r\n# https://developer.android.com/topic/libraries/support-library/androidx-rn\r\nandroid.useAndroidX=true\r\n# Kotlin code style for this project: \"official\" or \"obsolete\":\r\nkotlin.code.style=official\r\n# Enables namespacing of each library's R class so that its R class includes only the\r\n# resources declared in the library itself and none from the library's dependencies,\r\n# thereby reducing the size of the R class for that library\r\nandroid.nonTransitiveRClass=true\r\norg.gradle.configuration-cache=true
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>ISO-8859-1
+===================================================================
+diff --git a/gradle.properties b/gradle.properties
+--- a/gradle.properties	(revision 059589216ea9f516e27406ea5343e311b8139723)
++++ b/gradle.properties	(date 1773311734003)
+@@ -20,5 +20,4 @@
+ # Enables namespacing of each library's R class so that its R class includes only the
+ # resources declared in the library itself and none from the library's dependencies,
+ # thereby reducing the size of the R class for that library
+-android.nonTransitiveRClass=true
+-org.gradle.configuration-cache=true
+\ No newline at end of file
++android.nonTransitiveRClass=true
+\ No newline at end of file
+Index: settings.gradle.kts
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>pluginManagement {\r\n    repositories {\r\n        google {\r\n            content {\r\n                includeGroupByRegex(\"com\\\\.android.*\")\r\n                includeGroupByRegex(\"com\\\\.google.*\")\r\n                includeGroupByRegex(\"androidx.*\")\r\n            }\r\n        }\r\n        mavenCentral()\r\n        gradlePluginPortal()\r\n    }\r\n}\r\ndependencyResolutionManagement {\r\n    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)\r\n    repositories {\r\n        google()\r\n        mavenCentral()\r\n    }\r\n}\r\n\r\nrootProject.name = \"GPunch\"\r\ninclude(\":app\")\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/settings.gradle.kts b/settings.gradle.kts
+--- a/settings.gradle.kts	(revision 059589216ea9f516e27406ea5343e311b8139723)
++++ b/settings.gradle.kts	(date 1773311736034)
+@@ -21,3 +21,4 @@
+ 
+ rootProject.name = "GPunch"
+ include(":app")
++ 
+\ No newline at end of file
+Index: app/src/main/java/com/example/gpunch/network/AttendanceRequest.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/gpunch/network/AttendanceRequest.kt b/app/src/main/java/com/example/gpunch/network/AttendanceRequest.kt
+new file mode 100644
+--- /dev/null	(date 1773312788079)
++++ b/app/src/main/java/com/example/gpunch/network/AttendanceRequest.kt	(date 1773312788079)
+@@ -0,0 +1,9 @@
++package com.example.gpunch.network
++
++data class AttendanceRequest(
++    val userId: String,
++    val latitude: Double,
++    val longitude: Double,
++    val timestamp: Long,
++    val status: String = "ONSITE"
++)
+\ No newline at end of file
+Index: .idea/gradle.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"GradleMigrationSettings\" migrationVersion=\"1\" />\r\n  <component name=\"GradleSettings\">\r\n    <option name=\"linkedExternalProjectsSettings\">\r\n      <GradleProjectSettings>\r\n        <option name=\"testRunner\" value=\"CHOOSE_PER_TEST\" />\r\n        <option name=\"externalProjectPath\" value=\"$PROJECT_DIR$\" />\r\n        <option name=\"gradleJvm\" value=\"#GRADLE_LOCAL_JAVA_HOME\" />\r\n        <option name=\"modules\">\r\n          <set>\r\n            <option value=\"$PROJECT_DIR$\" />\r\n            <option value=\"$PROJECT_DIR$/app\" />\r\n          </set>\r\n        </option>\r\n      </GradleProjectSettings>\r\n    </option>\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/gradle.xml b/.idea/gradle.xml
+--- a/.idea/gradle.xml	(revision 059589216ea9f516e27406ea5343e311b8139723)
++++ b/.idea/gradle.xml	(date 1773311760201)
+@@ -1,6 +1,5 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <project version="4">
+-  <component name="GradleMigrationSettings" migrationVersion="1" />
+   <component name="GradleSettings">
+     <option name="linkedExternalProjectsSettings">
+       <GradleProjectSettings>
+Index: .idea/misc.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><project version=\"4\">\r\n  <component name=\"ExternalStorageConfigurationManager\" enabled=\"true\" />\r\n  <component name=\"ProjectRootManager\" version=\"2\" languageLevel=\"JDK_21\" default=\"true\" project-jdk-name=\"jbr-21\" project-jdk-type=\"JavaSDK\">\r\n    <output url=\"file://$PROJECT_DIR$/build/classes\" />\r\n  </component>\r\n  <component name=\"ProjectType\">\r\n    <option name=\"id\" value=\"Android\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/misc.xml b/.idea/misc.xml
+--- a/.idea/misc.xml	(revision 059589216ea9f516e27406ea5343e311b8139723)
++++ b/.idea/misc.xml	(date 1773311759779)
+@@ -1,3 +1,4 @@
++<?xml version="1.0" encoding="UTF-8"?>
+ <project version="4">
+   <component name="ExternalStorageConfigurationManager" enabled="true" />
+   <component name="ProjectRootManager" version="2" languageLevel="JDK_21" default="true" project-jdk-name="jbr-21" project-jdk-type="JavaSDK">
+Index: gradle/libs.versions.toml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>[versions]\r\nagp = \"8.13.2\"\r\nkotlin = \"2.0.21\"\r\ncoreKtx = \"1.17.0\"\r\njunit = \"4.13.2\"\r\njunitVersion = \"1.3.0\"\r\nespressoCore = \"3.7.0\"\r\nappcompat = \"1.7.1\"\r\nmaterial = \"1.13.0\"\r\nactivity = \"1.12.3\"\r\nconstraintlayout = \"2.2.1\"\r\n\r\n[libraries]\r\nandroidx-core-ktx = { group = \"androidx.core\", name = \"core-ktx\", version.ref = \"coreKtx\" }\r\njunit = { group = \"junit\", name = \"junit\", version.ref = \"junit\" }\r\nandroidx-junit = { group = \"androidx.test.ext\", name = \"junit\", version.ref = \"junitVersion\" }\r\nandroidx-espresso-core = { group = \"androidx.test.espresso\", name = \"espresso-core\", version.ref = \"espressoCore\" }\r\nandroidx-appcompat = { group = \"androidx.appcompat\", name = \"appcompat\", version.ref = \"appcompat\" }\r\nmaterial = { group = \"com.google.android.material\", name = \"material\", version.ref = \"material\" }\r\nandroidx-activity = { group = \"androidx.activity\", name = \"activity\", version.ref = \"activity\" }\r\nandroidx-constraintlayout = { group = \"androidx.constraintlayout\", name = \"constraintlayout\", version.ref = \"constraintlayout\" }\r\n\r\n[plugins]\r\nandroid-application = { id = \"com.android.application\", version.ref = \"agp\" }\r\nkotlin-android = { id = \"org.jetbrains.kotlin.android\", version.ref = \"kotlin\" }\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/gradle/libs.versions.toml b/gradle/libs.versions.toml
+--- a/gradle/libs.versions.toml	(revision 059589216ea9f516e27406ea5343e311b8139723)
++++ b/gradle/libs.versions.toml	(date 1773312707954)
+@@ -7,8 +7,11 @@
+ espressoCore = "3.7.0"
+ appcompat = "1.7.1"
+ material = "1.13.0"
+-activity = "1.12.3"
++activity = "1.12.4"
+ constraintlayout = "2.2.1"
++playServicesLocation = "21.3.0"
++retrofit = "2.9.0"
++gson = "2.10.1"
+ 
+ [libraries]
+ androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+@@ -19,8 +22,11 @@
+ material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+ androidx-activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
+ androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
++playServicesLocation = { group = "com.google.android.gms", name = "play-services-location", version.ref = "playServicesLocation" }
++retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
++retrofitConverterGson = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "retrofit" }
++gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson" }
+ 
+ [plugins]
+ android-application = { id = "com.android.application", version.ref = "agp" }
+ kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+-
