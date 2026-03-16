@@ -6,47 +6,69 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 
 class WhatsappSend : AppCompatActivity() {
+
+    private lateinit var phoneEditText: EditText
+    private lateinit var messageEditText: EditText
+    private lateinit var sendButton: Button
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContentView(R.layout.activity_whatsapp_send)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
 
-        val phone = findViewById<EditText>(R.id.editTextPhone)
-        val message = findViewById<EditText>(R.id.editTextTextMultiLine)
-
-        val sendButton = findViewById<Button>(R.id.button)
+        phoneEditText = findViewById(R.id.editTextPhone)
+        messageEditText = findViewById(R.id.editTextTextMultiLine)
+        sendButton = findViewById(R.id.button)
 
         sendButton.setOnClickListener {
-            val phoneNumber = phone.text.toString().trim()
-            val messageText = message.text.toString().trim()
+            val phoneNumber = phoneEditText.text.toString().trim()
+            val message = messageEditText.text.toString().trim()
 
-            if (phoneNumber.isNotEmpty() && messageText.isNotEmpty()) {
-                openWhatsapp(phoneNumber, messageText)
-            } else {
-                Toast.makeText(this, "Please enter a phone number and message", Toast.LENGTH_SHORT).show()
+            // 1. Validation: Fields cannot be empty
+            if (phoneNumber.isEmpty()) {
+                phoneEditText.error = "Phone number is required"
+                return@setOnClickListener
             }
+
+            // Allow basic phone length validation (e.g., at least 10 digits)
+            if (phoneNumber.length < 10) {
+                phoneEditText.error = "Enter a valid phone number"
+                return@setOnClickListener
+            }
+
+            if (message.isEmpty()) {
+                messageEditText.error = "Message is required"
+                return@setOnClickListener
+            }
+
+            // 2. Validation: Message cannot be more than 200 words
+            val wordCount = message.split("\\s+".toRegex()).size
+            if (wordCount > 200) {
+                messageEditText.error = "Message exceeds 200 words. Current: $wordCount"
+                Toast.makeText(this, "Message is too long ($wordCount/200 words)", Toast.LENGTH_LONG).show()
+                return@setOnClickListener
+            }
+
+            // 3. Open WhatsApp
+            openWhatsApp(phoneNumber, message)
         }
     }
 
-    private fun openWhatsapp(phone: String, message: String) {
-
-            val url = "https://api.whatsapp.com/send?phone=$phone&text=${Uri.encode(message)}"
-            val intent = Intent(Intent.ACTION_VIEW).apply {
-                data = Uri.parse(url)
-            }
-
+    private fun openWhatsApp(phoneNumber: String, message: String) {
+        try {
+            // Using the API format for broad device compatibility
+            val url = "https://api.whatsapp.com/send?phone=$phoneNumber&text=${Uri.encode(message)}"
+            val intent = Intent(Intent.ACTION_VIEW)
+            intent.data = Uri.parse(url)
+            intent.setPackage("com.whatsapp")
             startActivity(intent)
-
+        } catch (e: Exception) {
+            // Fallback if the official package is not found
+            Toast.makeText(this, "WhatsApp app not found. Opening in browser.", Toast.LENGTH_SHORT).show()
+            val fallbackIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://api.whatsapp.com/send?phone=$phoneNumber&text=${Uri.encode(message)}"))
+            startActivity(fallbackIntent)
+        }
     }
 }
