@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/action_whatsapp"
+        android:title="@string/send_whatsapp_msg"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_music"
+        android:title="@string/play_stop_music"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_theme"
+        android:title="@string/toggle_theme"
+        app:showAsAction="never" />
+</menu>
