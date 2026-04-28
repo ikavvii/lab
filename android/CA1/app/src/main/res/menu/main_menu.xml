@@ -1,4 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
 
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/action_form"
+        android:title="@string/personal_information_form"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_internet"
+        android:title="@string/monitor_internet"
+        app:showAsAction="never" />
+
+
+    <item
+        android:id="@+id/action_call_logs"
+        android:title="@string/call_logs"
+        app:showAsAction="never" />
 </menu>
