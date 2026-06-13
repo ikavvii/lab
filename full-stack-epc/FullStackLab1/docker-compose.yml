@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  booking-db:
+    image: mysql:8.0
+    container_name: booking_mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: bookingdb
+    ports:
+      - "3306:3306"
+
+  payment-db:
+    image: mysql:8.0
+    container_name: payment_mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: paymentdb
+    ports:
+      - "3307:3306"
