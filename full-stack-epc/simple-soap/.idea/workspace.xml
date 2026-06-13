@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="a6ccc3e6-e1a3-4b7e-b310-e7f028832ace" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/HelloWorld.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/HelloWorldImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/SoapClient.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/SoapServer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../android/BroadcastReceiverEx/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../android/BroadcastReceiverEx/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../android/BroadcastReceiverEx/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../android/BroadcastReceiverEx/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../android/CA1/app/src/main/java/com/example/ca1/CallLogActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../../android/CA1/app/src/main/java/com/example/ca1/CallLogActivity.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../android/CA1/app/src/main/java/com/example/ca1/FormActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../../android/CA1/app/src/main/java/com/example/ca1/FormActivity.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../android/CA1/app/src/main/java/com/example/ca1/InternetActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../../android/CA1/app/src/main/java/com/example/ca1/InternetActivity.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../android/CA1/app/src/main/java/com/example/ca1/MainActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../../android/CA1/app/src/main/java/com/example/ca1/MainActivity.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../android/CA1/app/src/main/res/layout/activity_call_log.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../android/CA1/app/src/main/res/layout/activity_call_log.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../android/CA1/app/src/main/res/layout/activity_form.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../android/CA1/app/src/main/res/layout/activity_form.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../android/CA1/app/src/main/res/layout/activity_internet.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../android/CA1/app/src/main/res/layout/activity_internet.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../android/CA1/app/src/main/res/layout/activity_main.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../android/CA1/app/src/main/res/layout/activity_main.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../android/CA1/app/src/main/res/menu/main_menu.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../android/CA1/app/src/main/res/menu/main_menu.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../android/MockTest1/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../android/MockTest1/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../android/MockTest1/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../android/MockTest1/.idea/misc.xml" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;ikavvii&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/ikavvii/lab.git&quot;,
+    &quot;accountId&quot;: &quot;cab21dfc-d0aa-41f5-93ab-a2dc327503e8&quot;
+  }
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 1
+}</component>
+  <component name="ProjectId" id="3BnPx71jHa0ADiOs0qNFQKKkPK1" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.SoapClient.executor&quot;: &quot;Run&quot;,
+    &quot;Application.SoapServer.executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;onboarding.tips.debug.path&quot;: &quot;Z:/25MXKavin/lab/full-stack-epc/simple-soap/src/main/java/com/example/Main.java&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-30f59d01ecdd-26cb7f24e5b0-intellij.indexing.shared.core-IU-253.29346.240" />
+        <option value="bundled-js-predefined-d6986cc7102b-9b0f141eb926-JavaScript-IU-253.29346.240" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="a6ccc3e6-e1a3-4b7e-b310-e7f028832ace" name="Changes" comment="" />
+      <created>1775122105199</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1775122105199</updated>
+      <workItem from="1775122106428" duration="2407000" />
+      <workItem from="1775549660551" duration="199000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>

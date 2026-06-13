@@ -1,0 +1,24 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:orientation="vertical" android:padding="20dp"
+    android:background="?android:attr/colorBackground">
+
+    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:text="Step 3: Payment Information" android:textSize="20sp" android:textStyle="bold" android:textColor="#7B61FF"/>
+
+    <ProgressBar style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:layout_marginTop="16dp" android:progress="75" android:progressTint="#7B61FF" />
+
+    <EditText
+        android:id="@+id/etCardNumber"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:hint="Credit Card Number"
+        android:inputType="number"
+        android:minHeight="48dp" />
+
+    <Button android:id="@+id/btnNext3" android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:text="Review Details" android:layout_marginTop="20dp" android:backgroundTint="#7B61FF"/>
+</LinearLayout>

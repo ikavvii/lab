@@ -1,0 +1,18 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:orientation="vertical" android:padding="20dp"
+    android:background="?android:attr/colorBackground">
+
+    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:text="Step 4: Confirm Details" android:textSize="20sp" android:textStyle="bold" android:textColor="#7B61FF"/>
+
+    <ProgressBar style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:layout_marginTop="16dp" android:progress="100" android:progressTint="#7B61FF" />
+
+    <TextView android:id="@+id/tvSummary" android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:layout_marginTop="20dp" android:textSize="18sp" android:lineSpacingExtra="8dp" android:textColor="#000000"/>
+
+    <Button android:id="@+id/btnSubmit" android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:text="Submit &amp; Save" android:layout_marginTop="30dp" android:backgroundTint="#4CAF50"/>
+</LinearLayout>
